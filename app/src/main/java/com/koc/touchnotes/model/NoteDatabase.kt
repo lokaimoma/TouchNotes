@@ -8,5 +8,5 @@ Created by kelvin_clark on 12/6/2020
  */
 @Database(entities = arrayOf(Note::class), version = 1, exportSchema = true)
 abstract class NoteDatabase : RoomDatabase() {
-
+    abstract fun getNotesDao() : NotesDao
 }
