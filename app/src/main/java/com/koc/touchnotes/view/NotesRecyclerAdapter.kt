@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.koc.touchnotes.databinding.NoteListLayoutBinding
 import com.koc.touchnotes.model.Note
+import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 12/5/2020
  */
-class NotesRecyclerAdapter : RecyclerView.Adapter<NotesRecyclerAdapter.NotesViewHolder>() {
+class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRecyclerAdapter.NotesViewHolder>() {
     var _binding : NoteListLayoutBinding? = null
     var notes = ArrayList<Note>()
 
