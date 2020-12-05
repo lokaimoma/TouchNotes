@@ -5,16 +5,17 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 
 /**
 Created by kelvin_clark on 12/6/2020
  */
 @Module
-@InstallIn(ActivityRetainedComponent::class)
-object databaseDI {
+@InstallIn(ActivityComponent::class)
+object DatabaseDI {
     private const val DATABASE_NAME = "Note_Database"
+
     @Provides
     fun getDatabase(@ActivityContext context: Context) : NoteDatabase {
         return Room

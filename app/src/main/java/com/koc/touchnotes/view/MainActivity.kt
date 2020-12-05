@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * Created by kelvin_clark on 5/12/20
  */
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
