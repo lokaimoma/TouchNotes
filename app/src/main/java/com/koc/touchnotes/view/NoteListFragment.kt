@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by kelvin_clark on 5/12/20
  */
+@AndroidEntryPoint
 class NoteListFragment : Fragment() {
     var _binding: FragmentNoteListBinding? = null
     val binding get() = _binding!!
