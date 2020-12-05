@@ -14,8 +14,25 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- CUSTOM NO ACTION BAR THEME   -->
     <style name="TouchThemeNoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--  NOTE TITLE STYLING  -->
+    <style name="Theme.TouchNotes.Title">
+        <item name="fontFamily">Roboto</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textColors</item>
+    </style>
+
+    <!-- NOTE BODY STYLING   -->
+    <style name="Theme.TouchNotes.Body">
+        <item name="fontFamily">Segoe UI</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textColors</item>
     </style>
 </resources>
