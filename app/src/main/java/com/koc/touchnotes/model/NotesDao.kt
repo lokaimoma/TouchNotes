@@ -17,7 +17,7 @@ interface NotesDao {
     fun removeNote(note: Note)
 
     @Query("SELECT * FROM Note")
-    fun getNotes() : Array<Note>
+    fun getNotes() : List<Note>
 
     @Query("SELECT * FROM Note WHERE id = :id")
     fun getNote(id: Int) : Note
