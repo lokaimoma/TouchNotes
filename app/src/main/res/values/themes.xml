@@ -35,4 +35,15 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/textColors</item>
     </style>
+
+    <!--  Note title  -->
+    <style name="Theme.TouchNotes.EditTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- Note Content -->
+    <style name="Theme.TouchNotes.EditBody">
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

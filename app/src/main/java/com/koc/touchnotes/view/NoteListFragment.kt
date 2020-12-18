@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.viewModel.NoteListViewModel
@@ -46,6 +48,9 @@ class NoteListFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         }
         observeNoteList()
+        binding.fabAdd.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_list_edit)
+        }
     }
 
     private fun observeNoteList() {
