@@ -3,19 +3,18 @@ package com.koc.touchnotes.view
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteEditFragment : Fragment() {
     private var _binding : FragmentNoteEditBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var noteEditViewModel : NoteEditViewModel
+    val noteEditViewModel : NoteEditViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
