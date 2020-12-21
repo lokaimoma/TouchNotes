@@ -1,18 +1,45 @@
 package com.koc.touchnotes.view
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.koc.touchnotes.R
+import com.koc.touchnotes.databinding.FragmentNoteEditBinding
+import com.koc.touchnotes.viewModel.NoteEditViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NoteEditFragment : Fragment() {
+    private var _binding : FragmentNoteEditBinding? = null
+    private val binding get() = _binding!!
+
+    @Inject
+    lateinit var noteEditViewModel : NoteEditViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_note_edit, container, false)
+        _binding =  FragmentNoteEditBinding.inflate(inflater, container, false)
+        return binding.root
     }
-    
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.note_edit_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.saveNote){
+            noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString())
+            return true
+        }else {
+            return super.onOptionsItemSelected(item)
+        }
+    }
 }
