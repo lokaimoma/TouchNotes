@@ -14,7 +14,8 @@
             android:id="@+id/action_list_edit"
             app:destination="@id/noteEditFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right" >
+        </action>
     </fragment>
     <fragment
         android:id="@+id/noteEditFragment"
@@ -27,5 +28,10 @@
             app:popEnterAnim="@android:anim/slide_out_right"
             app:popExitAnim="@android:anim/slide_in_left"
             app:popUpTo="@id/noteListFragment" />
+        <argument
+            android:name="note"
+            app:argType="com.koc.touchnotes.model.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

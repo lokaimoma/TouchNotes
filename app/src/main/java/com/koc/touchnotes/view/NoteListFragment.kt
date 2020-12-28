@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koc.touchnotes.R
@@ -25,7 +24,8 @@ class NoteListFragment : Fragment() {
     @Inject
     lateinit var notesAdapter: NotesRecyclerAdapter
 
-    val noteListViewModel: NoteListViewModel by viewModels()
+    @Inject
+    lateinit var noteListViewModel: NoteListViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +43,8 @@ class NoteListFragment : Fragment() {
         }
         observeNoteList()
         binding.fabAdd.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_list_edit)
+            val action = NoteListFragmentDirections.actionListEdit()
+            Navigation.findNavController(it).navigate(action)
         }
     }
 

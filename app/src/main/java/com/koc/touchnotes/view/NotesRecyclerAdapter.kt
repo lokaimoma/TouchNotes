@@ -2,6 +2,7 @@ package com.koc.touchnotes.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.koc.touchnotes.databinding.NoteListLayoutBinding
@@ -42,10 +43,15 @@ class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRec
     class NotesViewHolder(binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val textTitle = binding.textTitle
         val textBody = binding.textBody
+        val view = binding.root
 
         fun populateViews(note :Note) {
             textBody.text = note.body
             textTitle.text = note.title
+            view.setOnClickListener {
+                val action = NoteListFragmentDirections.actionListEdit(note)
+                it.findNavController().navigate(action)
+            }
         }
     }
 }

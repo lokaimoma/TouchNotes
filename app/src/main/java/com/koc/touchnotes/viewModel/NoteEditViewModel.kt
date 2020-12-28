@@ -36,4 +36,10 @@ class NoteEditViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
+
+    fun updateNote(noteId: Int, noteTitle: String, noteBody: String){
+        viewModelScope.launch(IO) {
+            notesDb.getNotesDao().updateNote(Note(noteTitle, noteBody, noteId))
+        }
+    }
 }
