@@ -16,8 +16,8 @@ Created by kelvin_clark on 12/5/2020
 class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRecyclerAdapter.NotesViewHolder>() {
     private var _binding : NoteListLayoutBinding? = null
 
-    var notes_DiffUtil_Callback : NotesDifUtil = NotesDifUtil()
-    private var differ = AsyncListDiffer(this, notes_DiffUtil_Callback)
+    var notesDiffutilCallback : NotesDifUtil = NotesDifUtil()
+    private var differ = AsyncListDiffer(this, notesDiffutilCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         _binding = NoteListLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
