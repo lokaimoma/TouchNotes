@@ -42,4 +42,10 @@ class NoteEditViewModel @Inject constructor() : ViewModel() {
             notesDb.getNotesDao().updateNote(Note(noteTitle, noteBody, noteId))
         }
     }
+
+    fun deleteNote(noteId: Int?) {
+        viewModelScope.launch(IO) {
+            notesDb.getNotesDao().removeNote(noteId!!)
+        }
+    }
 }

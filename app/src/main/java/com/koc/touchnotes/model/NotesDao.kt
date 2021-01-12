@@ -13,8 +13,8 @@ interface NotesDao {
     @Update(onConflict =  OnConflictStrategy.REPLACE)
     fun updateNote(note: Note)
 
-    @Delete
-    fun removeNote(note: Note)
+    @Query("DELETE FROM Note WHERE id = :id")
+    fun removeNote(id: Int)
 
     @Query("SELECT * FROM Note")
     fun getNotes() : List<Note>

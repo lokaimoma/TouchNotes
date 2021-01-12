@@ -3,6 +3,8 @@ package com.koc.touchnotes.view
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
@@ -17,8 +19,8 @@ class NoteEditFragment : Fragment() {
     private var _binding : FragmentNoteEditBinding? = null
     private val binding get() = _binding!!
 
-    val args: NoteEditFragmentArgs by navArgs()
-    var noteId: Int? = null
+    private val args: NoteEditFragmentArgs by navArgs()
+    private var noteId: Int? = null
 
     @Inject
     lateinit var noteEditViewModel : NoteEditViewModel
@@ -52,17 +54,31 @@ class NoteEditFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.saveNote){
-            if (noteId != null) {
-                noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(), binding.noteBody.text.toString())
-                Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT).show()
-            }else {
-                noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString())
-                Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT).show()
+        return when(item.itemId) {
+            R.id.actionSave -> {
+                if (noteId != null) {
+                    noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(), binding.noteBody.text.toString())
+                    Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT).show()
+                }else {
+                    noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString())
+                    Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT).show()
+                }
+                true
             }
-            true
-        }else {
-            super.onOptionsItemSelected(item)
+
+            R.id.actionDelete -> {
+                noteEditViewModel.deleteNote(noteId)
+                this.findNavController().navigate(R.id.action_edit_list)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val deleteButton = menu.findItem(R.id.actionDelete)
+        deleteButton.isVisible = noteId != null
     }
 }

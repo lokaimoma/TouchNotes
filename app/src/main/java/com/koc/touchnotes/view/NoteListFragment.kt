@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
 import com.koc.touchnotes.viewModel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
