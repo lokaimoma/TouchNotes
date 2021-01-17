@@ -19,6 +19,10 @@ class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRec
     var notesDiffutilCallback : NotesDifUtil = NotesDifUtil()
     private var differ = AsyncListDiffer(this, notesDiffutilCallback)
 
+    init {
+        setHasStableIds(true)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         _binding = NoteListLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NotesViewHolder(_binding!!)
@@ -40,9 +44,14 @@ class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRec
         differ.submitList(newNote)
     }
 
+    override fun getItemId(position: Int): Long {
+        val id = differ.currentList[position].id
+        return id.toLong()
+    }
+
     class NotesViewHolder(binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        val textTitle = binding.textTitle
-        val textBody = binding.textBody
+        private val textTitle = binding.textTitle
+        private val textBody = binding.textBody
         val view = binding.root
 
         fun populateViews(note :Note) {

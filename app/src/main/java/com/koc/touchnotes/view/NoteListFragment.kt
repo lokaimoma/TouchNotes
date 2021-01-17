@@ -40,6 +40,7 @@ class NoteListFragment : Fragment() {
             adapter = notesAdapter
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         }
+
         observeNoteList()
         binding.fabAdd.setOnClickListener {
             val action = NoteListFragmentDirections.actionListEdit()
