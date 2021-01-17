@@ -3,7 +3,6 @@ package com.koc.touchnotes.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteDatabase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext

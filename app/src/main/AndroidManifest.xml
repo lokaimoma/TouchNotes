@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TouchNotes">
         <activity android:name=".view.MainActivity"
-            android:theme="@style/TouchThemeNoActionBar">
+            android:theme="@style/TouchThemeNoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
