@@ -2,6 +2,9 @@ package com.koc.touchnotes.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,5 +22,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.mainToolbar)
+        setupActionBarWithNavController(findNavController(R.id.fragment))
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.fragment).navigateUp() || super.onSupportNavigateUp()
     }
 }
