@@ -29,6 +29,7 @@ class NoteEditFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -103,4 +104,5 @@ class NoteEditFragment : Fragment() {
         val deleteButton = menu.findItem(R.id.actionDelete)
         deleteButton.isVisible = noteId != null
     }
+
 }
