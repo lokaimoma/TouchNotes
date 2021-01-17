@@ -17,8 +17,8 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class NoteListFragment : Fragment() {
-    var _binding: FragmentNoteListBinding? = null
-    val binding get() = _binding!!
+    private var _binding: FragmentNoteListBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var notesAdapter: NotesRecyclerAdapter

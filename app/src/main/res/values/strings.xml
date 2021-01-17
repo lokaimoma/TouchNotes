@@ -6,4 +6,6 @@
     <string name="note_title">Note title</string>
     <string name="note_content">Note content</string>
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
 </resources>

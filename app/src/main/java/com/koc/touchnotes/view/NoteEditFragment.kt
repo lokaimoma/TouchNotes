@@ -1,9 +1,10 @@
 package com.koc.touchnotes.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -72,8 +73,29 @@ class NoteEditFragment : Fragment() {
                 true
             }
 
+            R.id.actionShare -> {
+                shareNote()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun shareNote() {
+        val title = binding.noteTitle.text.toString()
+        val body = binding.noteBody.text.toString()
+
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TITLE, "Share note")
+            putExtra(Intent.EXTRA_SUBJECT, title)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
+
+        startActivity(Intent.createChooser(sendIntent, resources.getString(R.string.share)))
+        Toast.makeText(context, "Sharing", Toast.LENGTH_SHORT).show()
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
