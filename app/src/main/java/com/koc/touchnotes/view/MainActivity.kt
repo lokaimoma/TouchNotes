@@ -22,10 +22,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.mainToolbar)
-        setupActionBarWithNavController(findNavController(R.id.fragment))
+        setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.fragment).navigateUp() || super.onSupportNavigateUp()
+        return findNavController(R.id.fragmentContainer).navigateUp() || super.onSupportNavigateUp()
     }
 }
