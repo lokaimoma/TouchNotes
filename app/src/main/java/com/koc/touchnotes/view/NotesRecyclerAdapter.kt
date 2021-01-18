@@ -16,8 +16,8 @@ Created by kelvin_clark on 12/5/2020
 class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRecyclerAdapter.NotesViewHolder>() {
     private var _binding : NoteListLayoutBinding? = null
 
-    var notesDiffutilCallback : NotesDifUtil = NotesDifUtil()
-    private var differ = AsyncListDiffer(this, notesDiffutilCallback)
+    private var notesDiffUtilCallback : NotesDifUtil = NotesDifUtil()
+    private var differ = AsyncListDiffer(this, notesDiffUtilCallback)
 
     init {
         setHasStableIds(true)
