@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/noteListFragment"
         android:name="com.koc.touchnotes.view.NoteListFragment"
-        android:label="fragment_note_list"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_note_list" >
         <action
             android:id="@+id/action_list_edit"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/noteEditFragment"
         android:name="com.koc.touchnotes.view.NoteEditFragment"
-        android:label="fragment_note_edit"
+        android:label="@string/note_edit"
         tools:layout="@layout/fragment_note_edit" >
         <action
             android:id="@+id/action_edit_list"

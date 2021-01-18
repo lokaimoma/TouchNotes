@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">TouchNotes</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_note">Add note</string>
     <string name="note_title">Note title</string>
     <string name="note_content">Note content</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="share">Share</string>
+    <string name="note_edit">Note Edit</string>
 </resources>
