@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -13,6 +15,8 @@ import com.koc.touchnotes.databinding.FragmentNoteEditBinding
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,6 +52,11 @@ class NoteEditFragment : Fragment() {
             binding.noteBody.setText(note.body)
             noteId = note.id
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, true){
+            saveNote()
+            findNavController().popBackStack()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -58,11 +67,10 @@ class NoteEditFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.actionSave -> {
+                saveNote()
                 if (noteId != null) {
-                    noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(), binding.noteBody.text.toString())
                     Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT).show()
                 }else {
-                    noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString())
                     Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT).show()
                 }
                 true
@@ -80,6 +88,16 @@ class NoteEditFragment : Fragment() {
             }
 
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun saveNote() {
+        lifecycleScope.launch(IO) {
+            if (noteId != null) {
+                noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(), binding.noteBody.text.toString())
+            }else {
+                noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString())
+            }
         }
     }
 
