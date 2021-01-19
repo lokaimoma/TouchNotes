@@ -14,7 +14,7 @@ Created by kelvin_clark on 12/6/2020
 @Module
 @InstallIn(ActivityComponent::class)
 object DatabaseDI {
-    private const val DATABASE_NAME = "Note_Database"
+    const val DATABASE_NAME = "Note_Database"
 
     @Provides
     fun getDatabase(@ActivityContext context: Context) : NoteDatabase {
