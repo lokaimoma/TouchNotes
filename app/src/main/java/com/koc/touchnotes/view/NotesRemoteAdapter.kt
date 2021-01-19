@@ -75,7 +75,7 @@ class NotesRemoteAdapter(val context: Context, private val intent: Intent?) :
     }
 
     companion object {
-        private const val NOTE_ID = "NoteID"
+        const val NOTE_ID = "NoteID"
     }
 }
 
