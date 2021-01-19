@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Make gradlew executable
-          run: chmod +x ./gradlew
-
+        
+      - name: Make executable
+        run: chmod +x ./gradlew
+        
       - name: Build
         run: ./gradlew build
