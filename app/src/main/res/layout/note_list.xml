@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:theme="@style/ThemeOverlay.TouchNotes.AppWidgetContainer">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -22,5 +22,25 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <android.widget.ListView
+        android:id="@+id/noteList"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"/>
 
-</FrameLayout>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/textColors"
+        android:textStyle="bold"
+        android:layout_below="@id/header"
+        android:layout_centerInParent="true"
+        android:text="@string/empty_add_notes"
+        android:textSize="20sp" />
+
+
+
+</RelativeLayout>
