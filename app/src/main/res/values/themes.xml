@@ -46,4 +46,9 @@
     <style name="Theme.TouchNotes.EditBody">
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="ThemeOverlay.TouchNotes.AppWidgetContainer" parent="">
+        <item name="appWidgetBackgroundColor">@color/light_blue_600</item>
+        <item name="appWidgetTextColor">@color/light_blue_50</item>
+    </style>
 </resources>

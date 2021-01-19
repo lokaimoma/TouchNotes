@@ -7,4 +7,6 @@
     <string name="delete">Delete</string>
     <string name="share">Share</string>
     <string name="note_edit">Note Edit</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

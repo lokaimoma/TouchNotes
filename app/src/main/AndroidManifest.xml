@@ -10,7 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TouchNotes">
-        <activity android:name=".view.MainActivity"
+        <receiver android:name=".NoteList">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/note_list_info" />
+        </receiver>
+
+        <activity
+            android:name=".view.MainActivity"
             android:theme="@style/TouchThemeNoActionBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
