@@ -108,10 +108,12 @@ class NoteEditFragment : Fragment() {
     private fun saveNote() {
         val time = System.currentTimeMillis()
         lifecycleScope.launch(IO) {
-            if (noteId != null && isModified) {
-                noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(),
-                    noteBody = binding.noteBody.text.toString(),
-                createdTime = createdTime!!, time)
+            if (noteId != null) {
+                if (isModified){
+                    noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(),
+                        noteBody = binding.noteBody.text.toString(),
+                        createdTime = createdTime!!, time)
+                }
             }else {
                 noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString(), time,time)
             }

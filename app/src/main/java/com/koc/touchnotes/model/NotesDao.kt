@@ -7,7 +7,7 @@ Created by kelvin_clark on 12/5/2020
  */
 @Dao
 interface NotesDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNote(note: Note)
 
     @Update(onConflict =  OnConflictStrategy.REPLACE)
