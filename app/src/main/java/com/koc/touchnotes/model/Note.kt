@@ -14,5 +14,7 @@ Created by kelvin_clark on 12/5/2020
 data class Note(
     var title : String? = "New Note",
     var body : String? = "",
+    var createdTime : Long?,
+    var modifiedTime : Long?,
     @PrimaryKey(autoGenerate = true) val id :Int = 0
 ) : Parcelable
