@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,9 @@ class NoteEditFragment : Fragment() {
 
     private val args: NoteEditFragmentArgs by navArgs()
     private var noteId: Int? = null
+    private var createdTime :Long? = null
+    private var modifiedTime :Long? = null
+    private var isModified = false
 
     @Inject
     lateinit var noteEditViewModel : NoteEditViewModel
@@ -51,6 +55,16 @@ class NoteEditFragment : Fragment() {
             binding.noteTitle.setText(note.title)
             binding.noteBody.setText(note.body)
             noteId = note.id
+            createdTime = note.createdTime
+            modifiedTime = note.modifiedTime
+        }
+
+        binding.noteTitle.doAfterTextChanged {
+            isModified = true
+        }
+
+        binding.noteBody.doAfterTextChanged {
+            isModified = true
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this, true){
@@ -92,11 +106,14 @@ class NoteEditFragment : Fragment() {
     }
 
     private fun saveNote() {
+        val time = System.currentTimeMillis()
         lifecycleScope.launch(IO) {
-            if (noteId != null) {
-                noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(), binding.noteBody.text.toString())
+            if (noteId != null && isModified) {
+                noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(),
+                    noteBody = binding.noteBody.text.toString(),
+                createdTime = createdTime!!, time)
             }else {
-                noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString())
+                noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString(), time,time)
             }
         }
     }
