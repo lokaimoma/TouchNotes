@@ -16,7 +16,7 @@ Created by kelvin_clark on 1/19/2021 6:39 PM
  */
 class NotesRemoteAdapter(val context: Context, private val intent: Intent?) :
     RemoteViewsService.RemoteViewsFactory {
-    private val widgetItems = arrayListOf<Note>()
+    private val widgetItems = arrayListOf<String>()
     private var widgetId: Int? = null
     private var database: NoteDatabase? = null
 
@@ -34,7 +34,7 @@ class NotesRemoteAdapter(val context: Context, private val intent: Intent?) :
     }
 
     override fun onDataSetChanged() {
-        database?.getNotesDao()?.getNotes()?.let { widgetItems.addAll(it) }
+        database?.getNotesDao()?.getNoteTitles()?.let { widgetItems.addAll(it) }
     }
 
     override fun onDestroy() {
@@ -47,12 +47,7 @@ class NotesRemoteAdapter(val context: Context, private val intent: Intent?) :
 
     override fun getViewAt(position: Int): RemoteViews {
         val remoteView = RemoteViews(context.packageName, R.layout.widget_item)
-        remoteView.setTextViewText(R.id.noteTitle, widgetItems[position].title)
-
-        val fillingIntent = Intent()
-        fillingIntent.putExtra(NOTE_ID, widgetItems[position].id)
-
-        remoteView.setOnClickFillInIntent(R.id.widgetItem, fillingIntent)
+        remoteView.setTextViewText(R.id.noteTitle, widgetItems[position])
 
         return remoteView
     }
@@ -74,9 +69,6 @@ class NotesRemoteAdapter(val context: Context, private val intent: Intent?) :
         return true
     }
 
-    companion object {
-        const val NOTE_ID = "NoteID"
-    }
 }
 
 class NotesService : RemoteViewsService() {
