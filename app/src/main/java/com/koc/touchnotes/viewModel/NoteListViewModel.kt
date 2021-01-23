@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.NoteDatabase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 12/7/2020

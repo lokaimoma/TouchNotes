@@ -7,7 +7,6 @@ import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteDatabase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 12/20/2020

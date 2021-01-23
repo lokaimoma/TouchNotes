@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,20 +18,19 @@ import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteEditFragment : Fragment() {
-    private var _binding : FragmentNoteEditBinding? = null
+    private var _binding: FragmentNoteEditBinding? = null
     private val binding get() = _binding!!
 
     private val args: NoteEditFragmentArgs by navArgs()
     private var noteId: Int? = null
-    private var createdTime :Long? = null
-    private var modifiedTime :Long? = null
+    private var createdTime: Long? = null
+    private var modifiedTime: Long? = null
     private var isModified = false
 
-    private val noteEditViewModel : NoteEditViewModel by viewModels()
+    private val noteEditViewModel: NoteEditViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +38,20 @@ class NoteEditFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-        _binding =  FragmentNoteEditBinding.inflate(inflater, container, false)
+        _binding = FragmentNoteEditBinding.inflate(inflater, container, false)
         return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val note : Note? = args.note
+        val note: Note? = args.note
 
-        if(note != null){
+        if (note != null) {
             binding.noteTitle.setText(note.title)
             binding.noteBody.setText(note.body)
             noteId = note.id
@@ -74,12 +74,12 @@ class NoteEditFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.actionSave -> {
                 saveNote()
                 if (noteId != null) {
                     Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT).show()
-                }else {
+                } else {
                     Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT).show()
                 }
                 true
@@ -104,13 +104,18 @@ class NoteEditFragment : Fragment() {
         val time = System.currentTimeMillis()
         lifecycleScope.launch(IO) {
             if (noteId != null) {
-                if (isModified){
-                    noteEditViewModel.updateNote(noteId!!, binding.noteTitle.text.toString(),
+                if (isModified) {
+                    noteEditViewModel.updateNote(
+                        noteId!!, binding.noteTitle.text.toString(),
                         noteBody = binding.noteBody.text.toString(),
-                        createdTime = createdTime!!, time)
+                        createdTime = createdTime!!, time
+                    )
                 }
-            }else {
-                noteEditViewModel.saveNote(binding.noteTitle.text.toString(), binding.noteBody.text.toString(), time,time)
+            } else {
+                noteEditViewModel.saveNote(
+                    binding.noteTitle.text.toString(),
+                    binding.noteBody.text.toString(), time, time
+                )
             }
         }
     }
