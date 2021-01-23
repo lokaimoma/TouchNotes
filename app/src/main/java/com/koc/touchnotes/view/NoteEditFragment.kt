@@ -66,11 +66,6 @@ class NoteEditFragment : Fragment() {
         binding.noteBody.doAfterTextChanged {
             isModified = true
         }
-
-        requireActivity().onBackPressedDispatcher.addCallback(this, true){
-            saveNote()
-            findNavController().popBackStack()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
