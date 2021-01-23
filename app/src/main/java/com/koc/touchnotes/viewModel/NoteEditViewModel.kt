@@ -1,5 +1,6 @@
 package com.koc.touchnotes.viewModel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.Note
@@ -11,9 +12,7 @@ import javax.inject.Inject
 /**
 Created by kelvin_clark on 12/20/2020
  */
-class NoteEditViewModel @Inject constructor() : ViewModel() {
-    @Inject
-    lateinit var notesDb: NoteDatabase
+class NoteEditViewModel @ViewModelInject constructor(private val notesDb: NoteDatabase) : ViewModel() {
 
     fun saveNote(noteTitle: String, noteBody: String, createdTime:Long, modifiedTime:Long) {
         viewModelScope.launch(IO) {

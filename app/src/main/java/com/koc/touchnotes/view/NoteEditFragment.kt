@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -31,8 +32,7 @@ class NoteEditFragment : Fragment() {
     private var modifiedTime :Long? = null
     private var isModified = false
 
-    @Inject
-    lateinit var noteEditViewModel : NoteEditViewModel
+    private val noteEditViewModel : NoteEditViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
