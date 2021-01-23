@@ -47,7 +47,7 @@ class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRec
         differ.submitList(newNote)
     }
 
-    class NotesViewHolder(binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NotesViewHolder(binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         private val textTitle = binding.textTitle
         private val textBody = binding.textBody
         val view = binding.root
