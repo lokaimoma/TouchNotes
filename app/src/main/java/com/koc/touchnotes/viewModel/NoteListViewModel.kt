@@ -1,18 +1,17 @@
 package com.koc.touchnotes.viewModel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.NoteDatabase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 12/7/2020
  */
-class NoteListViewModel @Inject constructor(): ViewModel(){
-    @Inject lateinit var notesDb : NoteDatabase
+class NoteListViewModel @ViewModelInject constructor(private val notesDb : NoteDatabase): ViewModel(){
 
     fun getAllNotes() = liveData {
         withContext(viewModelScope.coroutineContext + IO) {
