@@ -19,7 +19,7 @@ interface NotesDao {
     @Query("SELECT * FROM Note")
     fun getNotes() : List<Note>
 
-    @Query("SELECT 'title' FROM Note")
+    @Query("SELECT title FROM Note")
     fun getNoteTitles() : List<String>
 
     @Query("SELECT * FROM Note WHERE id = :id")
