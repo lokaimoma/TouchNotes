@@ -30,11 +30,8 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
             }
         }
         .map { preferences ->
-            val sortOrder = NoteSort.valueOf(
-                    preferences[PreferencesKeys.NOTE_SORT_ORDER] ?: NoteSort.BY_CREATED_TIME.name
-                )
-            sortOrder
-        }
+            NoteSort.valueOf(
+                    preferences[PreferencesKeys.NOTE_SORT_ORDER] ?: NoteSort.BY_CREATED_TIME.name) }
 
     suspend fun updateSortOrder(sortOrder: NoteSort) {
         dataStore.edit { preferences ->
