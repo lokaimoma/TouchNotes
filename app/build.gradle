@@ -50,6 +50,9 @@ android {
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
+
     // Fragment
     def fragment_version = "1.2.5"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"

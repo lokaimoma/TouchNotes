@@ -9,9 +9,9 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
+import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.view.extensions.queryTextListener
 import com.koc.touchnotes.viewModel.NoteListViewModel
-import com.koc.touchnotes.viewModel.NoteSort
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -77,16 +77,16 @@ class NoteListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.actionSortByCreatedTime -> {
-                noteListViewModel.noteSort.value = NoteSort.BY_CREATED_TIME
+                noteListViewModel.updateSortOrder(NoteSort.BY_CREATED_TIME)
                 true
             }
 
             R.id.actionSortByModifiedTime -> {
-                noteListViewModel.noteSort.value = NoteSort.BY_MODIFIED_TIME
+                noteListViewModel.updateSortOrder(NoteSort.BY_MODIFIED_TIME)
                 true
             }
             R.id.actionSortByTitle -> {
-                noteListViewModel.noteSort.value = NoteSort.BY_TITLE
+                noteListViewModel.updateSortOrder(NoteSort.BY_TITLE)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
