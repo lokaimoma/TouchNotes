@@ -1,6 +1,7 @@
 package com.koc.touchnotes.model
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 /**
 Created by kelvin_clark on 12/5/2020
@@ -17,7 +18,7 @@ interface NotesDao {
     suspend fun removeNote(id: Int)
 
     @Query("SELECT * FROM Note")
-    fun getNotes() : List<Note>
+    fun getNotes() : Flow<List<Note>>
 
     @Query("SELECT title FROM Note")
     fun getNoteTitles() : List<String>
