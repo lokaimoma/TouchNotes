@@ -24,7 +24,7 @@ class NoteListViewModel @ViewModelInject constructor(
 
     val searchQuery = MutableStateFlow("")
 
-    val noteSort = preferenceManager.sortPreferencesFlow
+    private val noteSort = preferenceManager.sortPreferencesFlow
 
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     private val noteListFlow = combine(

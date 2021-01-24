@@ -8,7 +8,6 @@ import android.widget.RemoteViewsService
 import androidx.room.Room
 import com.koc.touchnotes.R
 import com.koc.touchnotes.model.DatabaseDI.DATABASE_NAME
-import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteDatabase
 
 /**

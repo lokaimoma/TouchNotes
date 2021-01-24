@@ -1,17 +1,12 @@
 package com.koc.touchnotes.model
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.koc.touchnotes.model.NoteDatabase.Companion.migrateFrom1To2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Singleton
 
 /**
