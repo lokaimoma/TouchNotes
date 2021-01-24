@@ -19,8 +19,8 @@ object DatabaseDI {
     const val DATABASE_NAME = "Note_Database"
 
     @Provides
-    fun getDatabase(@ActivityContext context: Context) : NoteDatabase {
-        return Room
+    fun getDatabase(@ActivityContext context: Context) =
+        Room
             .databaseBuilder(
                 context,
                 NoteDatabase::class.java,
@@ -28,7 +28,6 @@ object DatabaseDI {
             )
             .addMigrations(migrateFrom1To2)
             .build()
-    }
 
     var migrateFrom1To2 : Migration = object : Migration(1,2) {
         override fun migrate(database: SupportSQLiteDatabase) {
