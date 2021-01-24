@@ -7,5 +7,4 @@
     <string name="sort_by_title">Sort by title</string>
     <string name="sort_by_created_time">Sort by created time</string>
     <string name="sort_by_modified_time">Sort by modified time</string>
-    <string name="use_default">Use default sorting</string>
 </resources>

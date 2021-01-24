@@ -27,10 +27,6 @@
                 android:id="@+id/actionSortByModifiedTime"
                 android:title="@string/sort_by_modified_time"
                 android:icon="@drawable/ic_modified_time"/>
-            <item
-                android:id="@+id/actionSortById"
-                android:title="@string/use_default"
-                android:icon="@drawable/ic_history"/>
         </menu>
 
     </item>

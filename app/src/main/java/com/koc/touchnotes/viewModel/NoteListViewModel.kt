@@ -3,13 +3,11 @@ package com.koc.touchnotes.viewModel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.NoteDatabase
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.withContext
+
 
 /**
 Created by kelvin_clark on 12/7/2020
@@ -18,18 +16,24 @@ class NoteListViewModel @ViewModelInject constructor(private val notesDb : NoteD
 
     val searchQuery = MutableStateFlow("")
 
-    val noteSort = MutableStateFlow(NoteSort.BY_ID)
+    val noteSort = MutableStateFlow(NoteSort.BY_CREATED_TIME)
 
-    private val noteListFlow = searchQuery.flatMapLatest { query ->
-        notesDb.getNotesDao().getNotes(query)
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
+    private val noteListFlow = combine(
+        searchQuery,
+        noteSort
+    ){searchQuery, noteSort ->
+        Pair(searchQuery, noteSort)
+    }.flatMapLatest { (query, sortMethod) ->
+        notesDb.getNotesDao().getNotes(query, sortMethod)
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun getAllNotes() = noteListFlow.asLiveData()
 }
 
 enum class NoteSort{
     BY_TITLE,
     BY_CREATED_TIME,
-    BY_MODIFIED_TIME,
-    BY_ID
+    BY_MODIFIED_TIME
 }
