@@ -19,31 +19,31 @@ class NoteEditViewModel @ViewModelInject constructor(private val notesDb: NoteDa
                 notesDb.getNotesDao().insertNote(Note(noteTitle, noteBody,createdTime, modifiedTime))
             }else if (noteTitle == ""){
                 if (noteBody != ""){
-                    notesDb.getNotesDao().insertNote(Note(body = noteBody, createdTime = createdTime,
-                        modifiedTime = modifiedTime))
+                    notesDb.getNotesDao().insertNote(Note(body = noteBody, _createdTime = createdTime,
+                        _modifiedTime = modifiedTime))
                 }else{
-                    notesDb.getNotesDao().insertNote(Note(createdTime = createdTime,
-                        modifiedTime = modifiedTime))
+                    notesDb.getNotesDao().insertNote(Note(_createdTime = createdTime,
+                        _modifiedTime = modifiedTime))
                 }
             }else if (noteBody == ""){
                 if (noteTitle != ""){
-                    notesDb.getNotesDao().insertNote(Note(title = noteTitle,createdTime = createdTime,
-                        modifiedTime = modifiedTime))
+                    notesDb.getNotesDao().insertNote(Note(title = noteTitle,_createdTime = createdTime,
+                        _modifiedTime = modifiedTime))
                 }else{
-                    notesDb.getNotesDao().insertNote(Note(createdTime = createdTime,
-                        modifiedTime = modifiedTime))
+                    notesDb.getNotesDao().insertNote(Note(_createdTime = createdTime,
+                        _modifiedTime = modifiedTime))
                 }
             }else{
-                notesDb.getNotesDao().insertNote(Note(createdTime = createdTime,
-                    modifiedTime = modifiedTime))
+                notesDb.getNotesDao().insertNote(Note(_createdTime = createdTime,
+                    _modifiedTime = modifiedTime))
             }
         }
     }
 
     fun updateNote(noteId: Int, noteTitle: String, noteBody: String, createdTime:Long, modifiedTime:Long){
         viewModelScope.launch(IO) {
-            notesDb.getNotesDao().updateNote(Note(noteTitle, noteBody,id = noteId, createdTime = createdTime,
-                modifiedTime = modifiedTime))
+            notesDb.getNotesDao().updateNote(Note(noteTitle, noteBody,id = noteId, _createdTime = createdTime,
+                _modifiedTime = modifiedTime))
         }
     }
 
