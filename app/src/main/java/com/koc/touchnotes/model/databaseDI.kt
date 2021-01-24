@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.koc.touchnotes.model.NoteDatabase.Companion.migrateFrom1To2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,11 +33,4 @@ object DatabaseDI {
             )
             .addMigrations(migrateFrom1To2)
             .build()
-
-    var migrateFrom1To2 : Migration = object : Migration(1,2) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("ALTER TABLE Note ADD COLUMN createdTime BIGINT DEFAULT 0")
-            database.execSQL("ALTER TABLE Note ADD COLUMN modifiedTime BIGINT DEFAULT 0")
-        }
-    }
 }
