@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.text.DateFormat
 
 /**
 Created by kelvin_clark on 12/5/2020
@@ -14,10 +15,18 @@ Created by kelvin_clark on 12/5/2020
 @Entity
 data class Note(
     @ColumnInfo(name = "title")
-    var title : String? = "New Note",
+    val title : String? = "New Note",
     @ColumnInfo(name = "body")
-    var body : String? = "",
-    var createdTime : Long?,
-    var modifiedTime : Long?,
+    val body : String? = "",
+    @ColumnInfo(name = "createdTime")
+    val _createdTime : Long?,
+    @ColumnInfo(name = "modifiedTime")
+    val _modifiedTime : Long?,
     @PrimaryKey(autoGenerate = true) val id :Int = 0
-) : Parcelable
+) : Parcelable {
+    val createdTime :String
+        get() = DateFormat.getDateTimeInstance().format(_createdTime)
+
+    val modifiedTime : String
+        get() = DateFormat.getDateTimeInstance().format(_modifiedTime)
+}

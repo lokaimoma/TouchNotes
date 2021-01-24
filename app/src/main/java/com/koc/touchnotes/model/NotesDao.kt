@@ -10,7 +10,7 @@ interface NotesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note)
 
-    @Update(onConflict =  OnConflictStrategy.REPLACE)
+    @Update
     fun updateNote(note: Note)
 
     @Query("DELETE FROM Note WHERE id = :id")

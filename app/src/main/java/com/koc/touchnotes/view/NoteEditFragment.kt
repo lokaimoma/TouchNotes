@@ -55,8 +55,8 @@ class NoteEditFragment : Fragment() {
             binding.noteTitle.setText(note.title)
             binding.noteBody.setText(note.body)
             noteId = note.id
-            createdTime = note.createdTime
-            modifiedTime = note.modifiedTime
+            createdTime = note._createdTime
+            modifiedTime = note._modifiedTime
         }
 
         binding.noteTitle.doAfterTextChanged {
