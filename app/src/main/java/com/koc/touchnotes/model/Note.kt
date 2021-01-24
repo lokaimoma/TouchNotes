@@ -14,10 +14,12 @@ Created by kelvin_clark on 12/5/2020
 @Entity
 data class Note(
     @ColumnInfo(name = "title")
-    var title : String? = "New Note",
+    val title : String? = "New Note",
     @ColumnInfo(name = "body")
-    var body : String? = "",
-    var createdTime : Long?,
-    var modifiedTime : Long?,
+    val body : String? = "",
+    @ColumnInfo(name = "createdTime")
+    val createdTime : Long?,
+    @ColumnInfo(name = "modifiedTime")
+    val modifiedTime : Long?,
     @PrimaryKey(autoGenerate = true) val id :Int = 0
 ) : Parcelable
