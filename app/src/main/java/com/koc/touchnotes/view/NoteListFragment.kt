@@ -77,16 +77,16 @@ class NoteListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.actionSortByCreatedTime -> {
-                noteListViewModel.noteSort.value = NoteSort.BY_CREATED_TIME
+                noteListViewModel.updateSortOrder(NoteSort.BY_CREATED_TIME)
                 true
             }
 
             R.id.actionSortByModifiedTime -> {
-                noteListViewModel.noteSort.value = NoteSort.BY_MODIFIED_TIME
+                noteListViewModel.updateSortOrder(NoteSort.BY_MODIFIED_TIME)
                 true
             }
             R.id.actionSortByTitle -> {
-                noteListViewModel.noteSort.value = NoteSort.BY_TITLE
+                noteListViewModel.updateSortOrder(NoteSort.BY_TITLE)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
