@@ -13,7 +13,8 @@ import javax.inject.Inject
 /**
 Created by kelvin_clark on 12/5/2020
  */
-class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRecyclerAdapter.NotesViewHolder>() {
+class NotesRecyclerAdapter @Inject constructor()
+    : RecyclerView.Adapter<NotesRecyclerAdapter.NotesViewHolder>() {
     private var _binding : NoteListLayoutBinding? = null
 
     private var notesDiffUtilCallback = object : DiffUtil.ItemCallback<Note>() {
@@ -47,15 +48,15 @@ class NotesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<NotesRec
         differ.submitList(newNote)
     }
 
-    inner class NotesViewHolder(binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val textTitle = binding.textTitle
-        private val textBody = binding.textBody
-        val view = binding.root
+    inner class NotesViewHolder(private val binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun populateViews(note :Note) {
-            textBody.text = note.body
-            textTitle.text = note.title
-            view.setOnClickListener {
+            binding.apply {
+                textTitle.text = note.title
+                textBody.text = note.body
+
+            }
+            binding.root.setOnClickListener {
                 val action = NoteListFragmentDirections.actionListEdit(note)
                 it.findNavController().navigate(action)
             }
