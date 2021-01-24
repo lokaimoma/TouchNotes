@@ -8,4 +8,30 @@
         android:title="@string/search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <item
+        android:icon="@drawable/ic_sort"
+        android:title="@string/sort"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/actionSortByTitle"
+                android:title="@string/sort_by_title"
+                android:icon="@drawable/ic_text"/>
+            <item
+                android:id="@+id/actionSortByCreatedTime"
+                android:title="@string/sort_by_created_time"
+                android:icon="@drawable/ic_created_time"/>
+            <item
+                android:id="@+id/actionSortByModifiedTime"
+                android:title="@string/sort_by_modified_time"
+                android:icon="@drawable/ic_modified_time"/>
+            <item
+                android:id="@+id/actionSortById"
+                android:title="@string/use_default"
+                android:icon="@drawable/ic_history"/>
+        </menu>
+
+    </item>
 </menu>

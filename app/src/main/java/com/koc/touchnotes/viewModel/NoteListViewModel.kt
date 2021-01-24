@@ -18,9 +18,18 @@ class NoteListViewModel @ViewModelInject constructor(private val notesDb : NoteD
 
     val searchQuery = MutableStateFlow("")
 
+    val noteSort = MutableStateFlow(NoteSort.BY_ID)
+
     private val noteListFlow = searchQuery.flatMapLatest { query ->
         notesDb.getNotesDao().getNotes(query)
     }
 
     fun getAllNotes() = noteListFlow.asLiveData()
+}
+
+enum class NoteSort{
+    BY_TITLE,
+    BY_CREATED_TIME,
+    BY_MODIFIED_TIME,
+    BY_ID
 }
