@@ -7,6 +7,8 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.NoteDatabase
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.withContext
 
 /**
@@ -14,5 +16,11 @@ Created by kelvin_clark on 12/7/2020
  */
 class NoteListViewModel @ViewModelInject constructor(private val notesDb : NoteDatabase): ViewModel(){
 
-    fun getAllNotes() = notesDb.getNotesDao().getNotes().asLiveData()
+    val searchQuery = MutableStateFlow("")
+
+    private val noteListFlow = searchQuery.flatMapLatest { query ->
+        notesDb.getNotesDao().getNotes(query)
+    }
+
+    fun getAllNotes() = noteListFlow.asLiveData()
 }

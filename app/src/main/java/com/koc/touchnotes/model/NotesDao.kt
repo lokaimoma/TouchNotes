@@ -17,8 +17,8 @@ interface NotesDao {
     @Query("DELETE FROM Note WHERE id = :id")
     suspend fun removeNote(id: Int)
 
-    @Query("SELECT * FROM Note")
-    fun getNotes() : Flow<List<Note>>
+    @Query("SELECT * FROM Note WHERE title LIKE '%' || :searchQuery || '%'")
+    fun getNotes(searchQuery: String) : Flow<List<Note>>
 
     @Query("SELECT title FROM Note")
     fun getNoteTitles() : List<String>

@@ -1,14 +1,15 @@
 package com.koc.touchnotes.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
+import com.koc.touchnotes.view.extensions.queryTextListener
 import com.koc.touchnotes.viewModel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -36,6 +37,9 @@ class NoteListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
+
         binding.apply {
             itemsNotes.adapter = notesAdapter
             itemsNotes.layoutManager = GridLayoutManager(context, 2,
@@ -45,15 +49,26 @@ class NoteListFragment : Fragment() {
                 Navigation.findNavController(it).navigate(action)
             }
         }
+
         observeNoteList()
     }
 
     private fun observeNoteList() {
-        noteListViewModel.getAllNotes().observe(viewLifecycleOwner, { notesList ->
+        noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
             notesAdapter.submitList(notesList)
-        })
+        }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.note_list_menu, menu)
+
+        val searchItem = menu.findItem(R.id.actionSearch)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.queryTextListener {
+            noteListViewModel.searchQuery.value = it
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
