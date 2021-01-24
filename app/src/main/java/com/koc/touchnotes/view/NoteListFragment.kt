@@ -38,6 +38,8 @@ class NoteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         binding.apply {
             itemsNotes.adapter = notesAdapter
             itemsNotes.layoutManager = GridLayoutManager(context, 2,
@@ -64,7 +66,7 @@ class NoteListFragment : Fragment() {
         val searchView = searchItem.actionView as SearchView
 
         searchView.queryTextListener {
-            //TODO
+            noteListViewModel.searchQuery.value = it
         }
     }
 
