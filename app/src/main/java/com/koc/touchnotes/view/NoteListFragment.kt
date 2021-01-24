@@ -27,8 +27,8 @@ class NoteListFragment : Fragment() {
     private val noteListViewModel: NoteListViewModel by viewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
         return _binding?.root
@@ -36,21 +36,21 @@ class NoteListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.itemsNotes.apply {
-            adapter = notesAdapter
-            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+        binding.apply {
+            itemsNotes.adapter = notesAdapter
+            itemsNotes.layoutManager = GridLayoutManager(context, 2,
+                GridLayoutManager.VERTICAL, false)
+            fabAdd.setOnClickListener {
+                val action = NoteListFragmentDirections.actionListEdit()
+                Navigation.findNavController(it).navigate(action)
+            }
         }
-
         observeNoteList()
-        binding.fabAdd.setOnClickListener {
-            val action = NoteListFragmentDirections.actionListEdit()
-            Navigation.findNavController(it).navigate(action)
-        }
     }
 
     private fun observeNoteList() {
         noteListViewModel.getAllNotes().observe(viewLifecycleOwner, { notesList ->
-            notesAdapter.updateList(notesList)
+            notesAdapter.submitList(notesList)
         })
     }
 
