@@ -9,9 +9,9 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
+import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.view.extensions.queryTextListener
 import com.koc.touchnotes.viewModel.NoteListViewModel
-import com.koc.touchnotes.viewModel.NoteSort
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject

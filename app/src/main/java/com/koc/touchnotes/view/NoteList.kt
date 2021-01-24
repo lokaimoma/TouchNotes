@@ -1,4 +1,4 @@
-package com.koc.touchnotes
+package com.koc.touchnotes.view
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.RemoteViews
-import com.koc.touchnotes.view.NotesService
+import com.koc.touchnotes.R
 
 /**
  * Implementation of App Widget functionality.

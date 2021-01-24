@@ -3,6 +3,7 @@ package com.koc.touchnotes.viewModel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.model.NoteDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -30,10 +31,4 @@ class NoteListViewModel @ViewModelInject constructor(private val notesDb : NoteD
 
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun getAllNotes() = noteListFlow.asLiveData()
-}
-
-enum class NoteSort{
-    BY_TITLE,
-    BY_CREATED_TIME,
-    BY_MODIFIED_TIME
 }
