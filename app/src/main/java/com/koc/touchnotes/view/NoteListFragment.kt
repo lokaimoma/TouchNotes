@@ -51,7 +51,6 @@ class NoteListFragment : Fragment() {
     private fun observeNoteList() {
         noteListViewModel.getAllNotes().observe(viewLifecycleOwner, { notesList ->
             notesAdapter.updateList(notesList)
-
         })
     }
 
