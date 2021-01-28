@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.koc.touchnotes.databinding.NoteListLayoutBinding
+import com.koc.touchnotes.interfaces.ClickListener
 import com.koc.touchnotes.model.Note
 import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 12/5/2020
  */
-class NotesRecyclerAdapter @Inject constructor()
+class NotesRecyclerAdapter (val listener: ClickListener)
     : ListAdapter<Note, NotesRecyclerAdapter.NotesViewHolder>(DiffUtilCallback()) {
 
     private var _binding : NoteListLayoutBinding? = null
@@ -31,17 +32,24 @@ class NotesRecyclerAdapter @Inject constructor()
         _binding = null
     }
 
-    class NotesViewHolder(private val binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NotesViewHolder(private val binding: NoteListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION){
+                        val note = getItem(position)
+                        listener.onClickListener(note)
+                    }
+                }
+            }
+        }
 
         fun populateViews(note :Note) {
             binding.apply {
                 textTitle.text = note.title
                 textBody.text = note.body
-
-            }
-            binding.root.setOnClickListener {
-                val action = NoteListFragmentDirections.actionListEdit(note)
-                it.findNavController().navigate(action)
             }
         }
     }
