@@ -10,11 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
-import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
@@ -25,7 +23,6 @@ class NoteEditFragment : Fragment() {
     private var _binding: FragmentNoteEditBinding? = null
     private val binding get() = _binding!!
 
-    private val args: NoteEditFragmentArgs by navArgs()
     private var noteId: Int? = null
     private var createdTime: Long? = null
     private var modifiedTime: Long? = null
