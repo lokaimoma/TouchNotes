@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -49,15 +50,9 @@ class NoteEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val note: Note? = args.note
 
-        if (note != null) {
-            binding.noteTitle.setText(note.title)
-            binding.noteBody.setText(note.body)
-            noteId = note.id
-            createdTime = note._createdTime
-            modifiedTime = note._modifiedTime
-        }
+        populateViews()
+        saveNoteState()
 
         binding.noteTitle.doAfterTextChanged {
             isModified = true
@@ -65,6 +60,25 @@ class NoteEditFragment : Fragment() {
 
         binding.noteBody.doAfterTextChanged {
             isModified = true
+        }
+    }
+
+    private fun saveNoteState() {
+        binding.apply {
+            noteTitle.addTextChangedListener {
+                noteEditViewModel.title = it.toString()
+                noteEditViewModel.body = it.toString()
+            }
+        }
+    }
+
+    private fun populateViews()= viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        binding.apply {
+            noteTitle.setText(noteEditViewModel.title)
+            noteBody.setText(noteEditViewModel.body)
+            noteId = noteEditViewModel.note?.id
+            createdTime = noteEditViewModel.note?._createdTime
+            modifiedTime = noteEditViewModel.note?._modifiedTime
         }
     }
 
