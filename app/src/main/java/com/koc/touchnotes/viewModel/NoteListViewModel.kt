@@ -56,6 +56,16 @@ class NoteListViewModel @ViewModelInject constructor(
         noteEventChannel.send(NoteEvent.AddNoteEvent)
     }
 
+    fun noteSwiped(note: Note) = viewModelScope.launch {
+        notesDb.getNotesDao().removeNote(note.id)
+        noteEventChannel.send(NoteEvent.NoteSwipedEvent(note))
+    }
+
+    fun restoreNote(note: Note) = viewModelScope.launch {
+        notesDb.getNotesDao().insertNote(note.copy(id = 0,_createdTime = System.currentTimeMillis(),
+        _modifiedTime = System.currentTimeMillis()))
+    }
+
     companion object{
         private const val SEARCH_QUERY = "search_query"
     }
