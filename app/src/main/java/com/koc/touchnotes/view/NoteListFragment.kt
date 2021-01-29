@@ -41,9 +41,7 @@ class NoteListFragment : Fragment(), ClickListener {
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setHasOptionsMenu(true)
-
         setUpViews()
         observeNoteList()
         collectFlows()
