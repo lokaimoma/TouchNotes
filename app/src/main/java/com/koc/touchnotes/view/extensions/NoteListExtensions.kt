@@ -4,6 +4,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.util.NoteEvent
 import com.koc.touchnotes.util.exhaustive
@@ -41,6 +44,12 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
             is NoteEvent.AddNoteEvent -> {
                 findNavController().navigate(R.id.action_list_edit)
             }
+            is NoteEvent.NoteSwipedEvent -> {
+                Snackbar.make(requireView(), "Note deleted", Snackbar.LENGTH_SHORT)
+                    .setAction("Undo") {
+                        noteListViewModel.restoreNote(event.note)
+                    }.show()
+            }
         }.exhaustive
     }
 }
@@ -59,6 +68,24 @@ fun NoteListFragment.setUpViews() {
             context, 2,
             GridLayoutManager.VERTICAL, false
         )
+
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val note = notesAdapter.currentList[viewHolder.adapterPosition]
+                noteListViewModel.noteSwiped(note)
+            }
+
+        }).attachToRecyclerView(itemsNotes)
+
         fabAdd.setOnClickListener {
             noteListViewModel.addNoteClicked()
         }
