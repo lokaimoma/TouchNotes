@@ -5,21 +5,18 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.interfaces.ClickListener
 import com.koc.touchnotes.model.Note
-import com.koc.touchnotes.util.NoteEvent
-import com.koc.touchnotes.util.exhaustive
+import com.koc.touchnotes.view.extensions.collectFlows
+import com.koc.touchnotes.view.extensions.observeNoteList
 import com.koc.touchnotes.view.extensions.queryTextListener
+import com.koc.touchnotes.view.extensions.setUpViews
 import com.koc.touchnotes.viewModel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 
 /**
  * Created by kelvin_clark on 5/12/20
@@ -27,11 +24,11 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class NoteListFragment : Fragment(), ClickListener {
     private var _binding: FragmentNoteListBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     var notesAdapter = NotesRecyclerAdapter(this)
 
-    private val noteListViewModel: NoteListViewModel by viewModels()
+    val noteListViewModel: NoteListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,38 +44,9 @@ class NoteListFragment : Fragment(), ClickListener {
 
         setHasOptionsMenu(true)
 
-        binding.apply {
-            itemsNotes.adapter = notesAdapter
-            itemsNotes.layoutManager = GridLayoutManager(context, 2,
-                GridLayoutManager.VERTICAL, false)
-            fabAdd.setOnClickListener {
-                noteListViewModel.addNoteClicked()
-            }
-        }
-
+        setUpViews()
         observeNoteList()
         collectFlows()
-    }
-
-    private fun collectFlows() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-        noteListViewModel.noteEvent.collect {event ->
-            when(event){
-                is NoteEvent.NoteClickedEvent -> {
-                    val action = NoteListFragmentDirections.actionListEdit(event.note)
-                    findNavController().navigate(action)
-                }
-                is NoteEvent.AddNoteEvent -> {
-                    findNavController().navigate(R.id.action_list_edit)
-                }
-            }.exhaustive
-        }
-    }
-
-    @ExperimentalCoroutinesApi
-    private fun observeNoteList() {
-        noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
-            notesAdapter.submitList(notesList)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -72,7 +72,7 @@ class NoteEditFragment : Fragment() {
         }
     }
 
-    private fun populateViews()= viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+    private fun populateViews() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
         binding.apply {
             noteTitle.setText(noteEditViewModel.title)
             noteBody.setText(noteEditViewModel.body)
