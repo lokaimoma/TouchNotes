@@ -67,6 +67,9 @@ class NoteEditFragment : Fragment() {
         binding.apply {
             noteTitle.addTextChangedListener {
                 noteEditViewModel.title = it.toString()
+            }
+
+            noteBody.addTextChangedListener {
                 noteEditViewModel.body = it.toString()
             }
         }
