@@ -78,9 +78,16 @@ fun NoteListFragment.observeNoteList() {
 fun NoteListFragment.setUpViews() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
         val noteLayout:NoteLayout = noteListViewModel.noteLayoutStyle.first()
-        binding.itemsNotes.layoutManager = if (noteLayout == NoteLayout.GRID_VIEW)
-            GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-        else LinearLayoutManager(context)
+        if (noteLayout == NoteLayout.GRID_VIEW){
+            binding.itemsNotes.layoutManager = GridLayoutManager(
+                context,
+                2,
+                GridLayoutManager.VERTICAL,
+                false)
+        }else {
+            binding.itemsNotes.layoutManager = LinearLayoutManager(context)
+        }
+
     }
     binding.apply {
         itemsNotes.adapter = notesAdapter

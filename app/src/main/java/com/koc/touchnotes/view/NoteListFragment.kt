@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
 import com.koc.touchnotes.enums.NoteLayout
@@ -19,6 +20,7 @@ import com.koc.touchnotes.view.extensions.setUpViews
 import com.koc.touchnotes.viewModel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 
 /**
  * Created by kelvin_clark on 5/12/20
@@ -57,6 +59,21 @@ class NoteListFragment : Fragment(), ClickListener {
 
         searchView.queryTextListener {
             noteListViewModel.searchQuery.value = it
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val layoutToggle = menu.findItem(R.id.actionChangeLayout)
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            val noteLayout = noteListViewModel.noteLayoutStyle.first()
+            if (noteLayout == NoteLayout.GRID_VIEW){
+                layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
+                layoutToggle.title = resources.getString(R.string.list_style)
+            }else {
+                layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
+                layoutToggle.title = resources.getString(R.string.grid_style)
+            }
         }
     }
 
