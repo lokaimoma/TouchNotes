@@ -39,6 +39,7 @@ class NoteListFragment : Fragment(), ClickListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
+        noteListViewModel.collectNoteLayoutStyle()
         return _binding?.root
     }
 
@@ -65,20 +66,17 @@ class NoteListFragment : Fragment(), ClickListener {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val layoutToggle = menu.findItem(R.id.actionChangeLayout)
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            val noteLayout = noteListViewModel.noteLayoutStyle.first()
-            if (noteLayout == NoteLayout.GRID_VIEW){
-                layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
-                layoutToggle.title = resources.getString(R.string.list_style)
-            }else {
-                layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
-                layoutToggle.title = resources.getString(R.string.grid_style)
-            }
+        if (noteListViewModel.layoutStyle == NoteLayout.GRID_VIEW) {
+            layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
+            layoutToggle.title = resources.getString(R.string.list_style)
+        } else {
+            layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
+            layoutToggle.title = resources.getString(R.string.grid_style)
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             R.id.actionSortByCreatedTime -> {
                 noteListViewModel.updateSortOrder(NoteSort.BY_CREATED_TIME)
                 true
@@ -103,11 +101,11 @@ class NoteListFragment : Fragment(), ClickListener {
     private fun changeLayout(item: MenuItem) {
         if (item.title.toString() == resources.getString(R.string.list_style)) {
             item.title = resources.getString(R.string.grid_style)
-            item.icon =  ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
             noteListViewModel.updateNoteLayoutStyle(NoteLayout.LINEAR_VIEW)
-        }else {
+        } else {
             item.title = resources.getString(R.string.list_style)
-            item.icon =  ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
             noteListViewModel.updateNoteLayoutStyle(NoteLayout.GRID_VIEW)
         }
     }

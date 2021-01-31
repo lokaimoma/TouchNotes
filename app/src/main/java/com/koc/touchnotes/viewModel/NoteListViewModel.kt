@@ -24,6 +24,8 @@ class NoteListViewModel @ViewModelInject constructor(
     @Assisted val state: SavedStateHandle
 ) : ViewModel() {
 
+    var layoutStyle : NoteLayout? = null
+
     val searchQuery = state.getLiveData(SEARCH_QUERY,"")
     private val noteEventChannel = Channel<NoteEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
@@ -70,6 +72,10 @@ class NoteListViewModel @ViewModelInject constructor(
     fun updateNoteLayoutStyle(layoutStyle: NoteLayout) = viewModelScope.launch {
         preferenceManager.updateLayoutStyle(layoutStyle)
         noteEventChannel.send(NoteEvent.UpdateNoteLayoutStyleEvent(layoutStyle))
+    }
+
+    fun collectNoteLayoutStyle() = viewModelScope.launch(IO) {
+        layoutStyle = noteLayoutStyle.first()
     }
 
     companion object{
