@@ -3,10 +3,12 @@ package com.koc.touchnotes.view
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
+import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.interfaces.ClickListener
 import com.koc.touchnotes.model.Note
@@ -73,7 +75,23 @@ class NoteListFragment : Fragment(), ClickListener {
                 noteListViewModel.updateSortOrder(NoteSort.BY_TITLE)
                 true
             }
+            R.id.actionChangeLayout -> {
+                changeLayout(item)
+                true
+            }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun changeLayout(item: MenuItem) {
+        if (item.title.toString() == resources.getString(R.string.list_style)) {
+            item.title = resources.getString(R.string.grid_style)
+            item.icon =  ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
+            noteListViewModel.updateNoteLayoutStyle(NoteLayout.LINEAR_VIEW)
+        }else {
+            item.title = resources.getString(R.string.list_style)
+            item.icon =  ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
+            noteListViewModel.updateNoteLayoutStyle(NoteLayout.GRID_VIEW)
         }
     }
 

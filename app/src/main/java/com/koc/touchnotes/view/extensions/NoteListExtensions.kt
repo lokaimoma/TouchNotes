@@ -5,9 +5,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
+import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.util.NoteEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.NoteListFragment
@@ -20,8 +22,9 @@ Created by kelvin_clark on 1/24/2021 6:33 PM
  */
 
 inline fun SearchView.queryTextListener(
-    crossinline func: (String) -> Unit) {
-    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+    crossinline func: (String) -> Unit
+) {
+    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
         override fun onQueryTextSubmit(query: String?): Boolean {
             return true //
@@ -35,8 +38,8 @@ inline fun SearchView.queryTextListener(
 }
 
 fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-    noteListViewModel.noteEvent.collect {event ->
-        when(event){
+    noteListViewModel.noteEvent.collect { event ->
+        when (event) {
             is NoteEvent.NoteClickedEvent -> {
                 val action = NoteListFragmentDirections.actionListEdit(event.note)
                 findNavController().navigate(action)
@@ -49,6 +52,16 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
                     .setAction("Undo") {
                         noteListViewModel.restoreNote(event.note)
                     }.show()
+            }
+            is NoteEvent.UpdateNoteLayoutStyleEvent -> {
+                if (event.layoutStyle == NoteLayout.GRID_VIEW) {
+                    binding.itemsNotes.layoutManager = GridLayoutManager(
+                        context, 2,
+                        GridLayoutManager.VERTICAL, false
+                    )
+                } else {
+                    binding.itemsNotes.layoutManager = LinearLayoutManager(context)
+                }
             }
         }.exhaustive
     }
@@ -64,13 +77,14 @@ fun NoteListFragment.observeNoteList() {
 fun NoteListFragment.setUpViews() {
     binding.apply {
         itemsNotes.adapter = notesAdapter
-        itemsNotes.layoutManager = GridLayoutManager(
-            context, 2,
-            GridLayoutManager.VERTICAL, false
-        )
+        itemsNotes.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.GRID_VIEW)
+            GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+        else LinearLayoutManager(context)
 
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,
-        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,

@@ -24,7 +24,7 @@ class NoteListViewModel @ViewModelInject constructor(
     @Assisted val state: SavedStateHandle
 ) : ViewModel() {
 
-    private lateinit var layoutStyle: NoteLayout
+    lateinit var layoutStyle: NoteLayout
 
     val searchQuery = state.getLiveData(SEARCH_QUERY,"")
     private val noteEventChannel = Channel<NoteEvent>()
