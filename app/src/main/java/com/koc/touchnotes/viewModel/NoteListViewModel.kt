@@ -77,7 +77,7 @@ class NoteListViewModel @ViewModelInject constructor(
 
     fun updateNoteLayoutStyle(layoutStyle: NoteLayout) = viewModelScope.launch {
         preferenceManager.updateLayoutStyle(layoutStyle)
-
+        noteEventChannel.send(NoteEvent.UpdateNoteLayoutStyleEvent(layoutStyle))
     }
 
     companion object{
