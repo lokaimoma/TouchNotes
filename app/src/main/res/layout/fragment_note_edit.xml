@@ -15,7 +15,6 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/note_body"
         android:gravity="center|fill_horizontal"
         android:hint="@string/note_title"
         android:padding="5dp"
