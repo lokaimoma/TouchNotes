@@ -45,7 +45,7 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         }
         .map { preference ->
             NoteLayout.valueOf(
-                preference[PreferencesKeys.NOTE_LAYOUT_STYLE] ?: NoteLayout.GRID_VIEW.name)
+                preference[PreferencesKeys.NOTE_LAYOUT_STYLE] ?: NoteLayout.LINEAR_VIEW.name)
         }
 
     suspend fun updateSortOrder(sortOrder: NoteSort) {

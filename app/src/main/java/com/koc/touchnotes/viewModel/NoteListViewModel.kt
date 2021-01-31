@@ -24,21 +24,13 @@ class NoteListViewModel @ViewModelInject constructor(
     @Assisted val state: SavedStateHandle
 ) : ViewModel() {
 
-    lateinit var layoutStyle: NoteLayout
-
     val searchQuery = state.getLiveData(SEARCH_QUERY,"")
     private val noteEventChannel = Channel<NoteEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
 
     private val noteSort = preferenceManager.sortPreferencesFlow
 
-    private val noteLayoutStyle = viewModelScope.launch { preferenceManager
-        .layoutPreferenceFlow
-        .first {
-            layoutStyle = it
-            true
-        }
-    }
+    val noteLayoutStyle = preferenceManager.layoutPreferenceFlow
 
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     private val noteListFlow = combine(

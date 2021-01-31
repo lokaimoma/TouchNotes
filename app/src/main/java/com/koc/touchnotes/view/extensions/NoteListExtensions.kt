@@ -16,6 +16,7 @@ import com.koc.touchnotes.view.NoteListFragment
 import com.koc.touchnotes.view.NoteListFragmentDirections
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 
 /**
 Created by kelvin_clark on 1/24/2021 6:33 PM
@@ -75,11 +76,14 @@ fun NoteListFragment.observeNoteList() {
 }
 
 fun NoteListFragment.setUpViews() {
-    binding.apply {
-        itemsNotes.adapter = notesAdapter
-        itemsNotes.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.GRID_VIEW)
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+        val noteLayout:NoteLayout = noteListViewModel.noteLayoutStyle.first()
+        binding.itemsNotes.layoutManager = if (noteLayout == NoteLayout.GRID_VIEW)
             GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         else LinearLayoutManager(context)
+    }
+    binding.apply {
+        itemsNotes.adapter = notesAdapter
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
