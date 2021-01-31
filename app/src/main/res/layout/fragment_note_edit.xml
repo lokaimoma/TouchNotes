@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.NoteEditFragment">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/noteTitle"
         style="@style/Theme.TouchNotes.EditTitle"
         android:layout_width="0dp"
