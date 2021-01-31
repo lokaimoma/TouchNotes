@@ -3,6 +3,7 @@ package com.koc.touchnotes.viewModel
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteDatabase
@@ -10,9 +11,7 @@ import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.NoteEvent
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
@@ -25,11 +24,21 @@ class NoteListViewModel @ViewModelInject constructor(
     @Assisted val state: SavedStateHandle
 ) : ViewModel() {
 
+    private lateinit var layoutStyle: NoteLayout
+
     val searchQuery = state.getLiveData(SEARCH_QUERY,"")
     private val noteEventChannel = Channel<NoteEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
 
     private val noteSort = preferenceManager.sortPreferencesFlow
+
+    private val noteLayoutStyle = viewModelScope.launch { preferenceManager
+        .layoutPreferenceFlow
+        .first {
+            layoutStyle = it
+            true
+        }
+    }
 
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     private val noteListFlow = combine(
@@ -64,6 +73,11 @@ class NoteListViewModel @ViewModelInject constructor(
     fun restoreNote(note: Note) = viewModelScope.launch {
         notesDb.getNotesDao().insertNote(note.copy(id = 0,_createdTime = System.currentTimeMillis(),
         _modifiedTime = System.currentTimeMillis()))
+    }
+
+    fun updateNoteLayoutStyle(layoutStyle: NoteLayout) = viewModelScope.launch {
+        preferenceManager.updateLayoutStyle(layoutStyle)
+
     }
 
     companion object{
