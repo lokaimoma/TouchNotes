@@ -20,6 +20,7 @@
         android:padding="5dp"
         android:inputType="textMultiLine"
         android:importantForAutofill="no"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
