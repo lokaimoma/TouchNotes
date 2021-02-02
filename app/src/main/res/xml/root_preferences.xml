@@ -8,4 +8,8 @@
             app:title="Theme"
             app:useSimpleSummaryProvider="true" />
 
+        <Preference
+                app:title="Buid version"
+                app:summary="v1.0"/>
+
 </PreferenceScreen>
