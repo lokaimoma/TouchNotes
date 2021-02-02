@@ -2,14 +2,12 @@ package com.koc.touchnotes.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.koc.touchnotes.databinding.NoteListLayoutBinding
 import com.koc.touchnotes.interfaces.ClickListener
 import com.koc.touchnotes.model.Note
-import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 12/5/2020

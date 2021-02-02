@@ -89,4 +89,9 @@ class NoteEditFragment : Fragment() {
         val deleteButton = menu.findItem(R.id.actionDelete)
         deleteButton.isVisible = noteId != null
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

@@ -16,7 +16,6 @@ import com.koc.touchnotes.view.NoteListFragment
 import com.koc.touchnotes.view.NoteListFragmentDirections
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 
 /**
 Created by kelvin_clark on 1/24/2021 6:33 PM
