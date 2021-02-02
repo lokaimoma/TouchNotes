@@ -89,6 +89,10 @@ class NoteListFragment : Fragment(), ClickListener {
                 changeLayout(item)
                 true
             }
+            R.id.actionSettings -> {
+                noteListViewModel.requestSettingsScreen()
+                true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

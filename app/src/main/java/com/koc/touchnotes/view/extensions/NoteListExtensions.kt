@@ -65,6 +65,9 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
                     binding.itemsNotes.layoutManager = LinearLayoutManager(context)
                 }
             }
+            NoteEvent.GotoSettingsScreen -> {
+                findNavController().navigate(R.id.action_list_settings)
+            }
         }.exhaustive
     }
 }
