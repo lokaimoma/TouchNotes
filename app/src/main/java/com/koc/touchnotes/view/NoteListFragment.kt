@@ -12,10 +12,7 @@ import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.interfaces.ClickListener
 import com.koc.touchnotes.model.Note
-import com.koc.touchnotes.view.extensions.collectFlows
-import com.koc.touchnotes.view.extensions.observeNoteList
-import com.koc.touchnotes.view.extensions.queryTextListener
-import com.koc.touchnotes.view.extensions.setUpViews
+import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -93,18 +90,6 @@ class NoteListFragment : Fragment(), ClickListener {
                 true
             }
             else -> return super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun changeLayout(item: MenuItem) {
-        if (item.title.toString() == resources.getString(R.string.list_style)) {
-            item.title = resources.getString(R.string.grid_style)
-            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
-            noteListViewModel.updateNoteLayoutStyle(NoteLayout.LINEAR_VIEW)
-        } else {
-            item.title = resources.getString(R.string.list_style)
-            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
-            noteListViewModel.updateNoteLayoutStyle(NoteLayout.GRID_VIEW)
         }
     }
 
