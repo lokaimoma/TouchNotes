@@ -50,6 +50,10 @@ android {
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    // preference
+    def preference_version = "1.1.1"
+    implementation "androidx.preference:preference-ktx:$preference_version"
+
     // DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
 

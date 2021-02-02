@@ -32,7 +32,7 @@ class NoteListViewModel @ViewModelInject constructor(
 
     private val noteSort = preferenceManager.sortPreferencesFlow
 
-    val noteLayoutStyle = preferenceManager.layoutPreferenceFlow
+    private val noteLayoutStyle = preferenceManager.layoutPreferenceFlow
 
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     private val noteListFlow = combine(
