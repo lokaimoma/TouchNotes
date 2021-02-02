@@ -18,7 +18,7 @@
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
         <action
-            android:id="@+id/action_noteListFragment_to_settingsFragment"
+            android:id="@+id/action_list_settings"
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
@@ -40,7 +40,7 @@
         android:name="com.koc.touchnotes.view.SettingsFragment"
         android:label="SettingsFragment" >
         <action
-            android:id="@+id/action_settingsFragment_to_noteListFragment"
+            android:id="@+id/action_settings_list"
             app:destination="@id/noteListFragment" />
     </fragment>
 </navigation>
