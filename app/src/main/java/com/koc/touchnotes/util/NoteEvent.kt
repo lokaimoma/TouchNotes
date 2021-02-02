@@ -11,6 +11,7 @@ sealed class NoteEvent {
     object AddNoteEvent : NoteEvent()
     data class NoteSwipedEvent(var note: Note) : NoteEvent()
     data class UpdateNoteLayoutStyleEvent(var layoutStyle: NoteLayout) : NoteEvent()
+    object GotoSettingsScreen : NoteEvent()
 }
 
 val <T> T.exhaustive: T

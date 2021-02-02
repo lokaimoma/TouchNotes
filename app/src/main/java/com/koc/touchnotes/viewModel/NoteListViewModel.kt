@@ -78,6 +78,10 @@ class NoteListViewModel @ViewModelInject constructor(
         layoutStyle = noteLayoutStyle.first()
     }
 
+    fun requestSettingsScreen() = viewModelScope.launch {
+        noteEventChannel.send(NoteEvent.GotoSettingsScreen)
+    }
+
     companion object{
         private const val SEARCH_QUERY = "search_query"
     }
