@@ -1,6 +1,8 @@
 package com.koc.touchnotes.view.extensions
 
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,7 +18,6 @@ import com.koc.touchnotes.view.NoteListFragment
 import com.koc.touchnotes.view.NoteListFragmentDirections
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 
 /**
 Created by kelvin_clark on 1/24/2021 6:33 PM
@@ -112,5 +113,17 @@ fun NoteListFragment.setUpViews() {
         fabAdd.setOnClickListener {
             noteListViewModel.addNoteClicked()
         }
+    }
+}
+
+fun NoteListFragment.changeLayout(item: MenuItem) {
+    if (item.title.toString() == resources.getString(R.string.list_style)) {
+        item.title = resources.getString(R.string.grid_style)
+        item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
+        noteListViewModel.updateNoteLayoutStyle(NoteLayout.LINEAR_VIEW)
+    } else {
+        item.title = resources.getString(R.string.list_style)
+        item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
+        noteListViewModel.updateNoteLayoutStyle(NoteLayout.GRID_VIEW)
     }
 }
