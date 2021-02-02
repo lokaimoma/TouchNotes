@@ -4,12 +4,12 @@
             app:defaultValue="system_default"
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_values"
-            app:key="theme"
+            app:key="@string/theme_key"
             app:title="Theme"
             app:useSimpleSummaryProvider="true" />
 
         <Preference
-                app:title="Buid version"
+                app:title="Build version"
                 app:summary="v1.0"/>
 
 </PreferenceScreen>
