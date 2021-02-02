@@ -18,4 +18,9 @@
     <string name="sort_by_modified_time">Sort by modified time</string>
     <string name="list_style">List style</string>
     <string name="grid_style">Grid style</string>
+    <string name="delete_note">Delete note</string>
+    <string name="delete_confirmation">Are you sure you want to delete the note?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="note_delete_success">Note successfully deleted</string>
 </resources>

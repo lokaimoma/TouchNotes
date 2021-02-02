@@ -4,6 +4,8 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.koc.touchnotes.R
 import com.koc.touchnotes.view.NoteEditFragment
 import kotlinx.coroutines.Dispatchers
@@ -69,4 +71,26 @@ fun NoteEditFragment.shareNote() {
 
     startActivity(Intent.createChooser(sendIntent, resources.getString(R.string.share)))
     Toast.makeText(context, "Sharing", Toast.LENGTH_SHORT).show()
+}
+
+fun NoteEditFragment.showDeleteDialogue() {
+    val deleteAlert = MaterialAlertDialogBuilder(requireContext())
+
+    deleteAlert.apply {
+        setTitle(getString(R.string.delete_note))
+        setMessage(getString(R.string.delete_confirmation))
+        setIcon(R.drawable.ic_delete_dialogue)
+        setPositiveButton(getString(R.string.yes)){ dialogue, _ ->
+            noteEditViewModel.deleteNote(noteId)
+            dialogue.dismiss()
+            Toast.makeText(requireContext(), getString(R.string.note_delete_success), Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_edit_list)
+        }
+        setNegativeButton(getString(R.string.no)){ dialogue, _ ->
+            dialogue.dismiss()
+        }
+        setCancelable(false)
+    }
+
+    deleteAlert.create().show()
 }

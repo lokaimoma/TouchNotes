@@ -5,14 +5,10 @@ import android.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
-import com.koc.touchnotes.view.extensions.populateViews
-import com.koc.touchnotes.view.extensions.saveNote
-import com.koc.touchnotes.view.extensions.saveNoteState
-import com.koc.touchnotes.view.extensions.shareNote
+import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -72,8 +68,7 @@ class NoteEditFragment : Fragment() {
                 true
             }
             R.id.actionDelete -> {
-                noteEditViewModel.deleteNote(noteId)
-                this.findNavController().navigate(R.id.action_edit_list)
+                showDeleteDialogue()
                 true
             }
             R.id.actionShare -> {
