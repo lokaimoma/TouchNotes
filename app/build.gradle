@@ -59,7 +59,7 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
 
     // Fragment
-    def fragment_version = "1.2.5"
+    def fragment_version = "1.3.0"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
     // Navigation Components
