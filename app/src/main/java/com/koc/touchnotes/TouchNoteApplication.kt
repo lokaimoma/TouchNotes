@@ -2,6 +2,8 @@ package com.koc.touchnotes
 
 import android.app.Application
 import android.os.StrictMode
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.PreferenceManager
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -17,6 +19,22 @@ class TouchNoteApplication : Application() {
                 .detectAll()
                 .penaltyLog()
                 .build())
+        }
+        applySelectedTheme()
+    }
+
+    private fun applySelectedTheme() {
+        val sharedPreference = PreferenceManager.getDefaultSharedPreferences(this)
+
+        when (sharedPreference.getString(getString(R.string.theme_key), "")) {
+            getString(R.string.system_default_theme) -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+            getString(R.string.light_theme) -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO)
+
+            getString(R.string.dark_theme) -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES)
         }
     }
 }
