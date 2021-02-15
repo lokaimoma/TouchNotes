@@ -1,5 +1,6 @@
 package com.koc.touchnotes.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.core.widget.doAfterTextChanged
@@ -61,9 +62,15 @@ class NoteEditFragment : Fragment() {
             R.id.actionSave -> {
                 saveNote()
                 if (noteId != null) {
-                    Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT)
+                        .setBackgroundTint(Color.BLACK)
+                        .setTextColor(Color.WHITE)
+                        .show()
                 } else {
-                    Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT)
+                        .setBackgroundTint(Color.BLACK)
+                        .setTextColor(Color.WHITE)
+                        .show()
                 }
                 true
             }
