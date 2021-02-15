@@ -42,4 +42,6 @@
     <string name="system_default_theme">system_default</string>
     <string name="light_theme">light_theme</string>
     <string name="dark_theme">dark_theme</string>
+    <string name="modified_time">Modified time:</string>
+    <string name="created_time">Created time:</string>
 </resources>
