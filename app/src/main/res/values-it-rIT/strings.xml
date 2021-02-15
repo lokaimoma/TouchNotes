@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TouchNotes</string>
+    <string name="add_note">Aggiungi nota</string>
+    <string name="note_title">Titolo della nota</string>
+    <string name="note_content">Nota contenuto</string>
+    <string name="save">Salva</string>
+    <string name="delete">Elimina</string>
+    <string name="share">Condividere</string>
+    <string name="note_edit">Modifica nota</string>
+    <string name="notes">Appunti</string>
+    <string name="empty_add_notes">Vuoto, aggiungi note</string>
+    <string name="search">Ricerca</string>
+    <string name="sort">Ordinare</string>
+    <string name="sort_by_title">Ordina per titolo</string>
+    <string name="sort_by_created_time">Ordina per ora di creazione</string>
+    <string name="sort_by_modified_time">Ordina per ora modificata</string>
+    <string name="list_style">Stile elenco</string>
+    <string name="grid_style">Stile griglia</string>
+    <string name="delete_note">Elimina nota</string>
+    <string name="delete_confirmation">Sei sicuro di voler eliminare la nota?</string>
+    <string name="yes">sì</string>
+    <string name="no">No</string>
+    <string name="note_delete_success">Nota eliminata con successo</string>
+    <string name="settings">impostazioni</string>
+    <string name="modified_time">Ora modificata:</string>
+    <string name="created_time">Ora di creazione:</string>
+    <string name="added_notes_appear_here">Le note aggiunte vengono visualizzate qui</string>
+    <string name="no_note_saved_note">Nessuna nota salvata</string>
+    <string name="use_system_default_text">Usa predefinito di sistema</string>
+    <string name="light_theme_text">Luce</string>
+    <string name="dark_theme_text">Buio</string>
+    <string name="theme_text">Tema</string>
+</resources>

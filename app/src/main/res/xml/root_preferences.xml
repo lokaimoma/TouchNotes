@@ -5,7 +5,7 @@
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_values"
             app:key="@string/theme_key"
-            app:title="Theme"
+            app:title="@string/theme_text"
             app:useSimpleSummaryProvider="true" />
 
         <Preference

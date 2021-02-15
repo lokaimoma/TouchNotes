@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TouchNotes</string>
+    <string name="dark_theme_text">黑暗主题</string>
+    <string name="theme_text">主题</string>
+    <string name="light_theme_text">轻主题</string>
+    <string name="use_system_default_text">使用系统默认值</string>
+    <string name="no_note_saved_note">没有保存笔记</string>
+    <string name="added_notes_appear_here">添加的注释出现在这里</string>
+    <string name="created_time">创建时间：</string>
+    <string name="modified_time">修改时间：</string>
+    <string name="settings">设定值</string>
+    <string name="note_delete_success">注意已成功删除</string>
+    <string name="no">不</string>
+    <string name="yes">是的</string>
+    <string name="delete_confirmation">您确定要删除注释吗？</string>
+    <string name="delete_note">删除记事</string>
+    <string name="grid_style">网格样式</string>
+    <string name="list_style">清单样式</string>
+    <string name="sort_by_modified_time">按修改时间排序</string>
+    <string name="sort_by_created_time">按创建时间排序</string>
+    <string name="sort_by_title">按标题排序</string>
+    <string name="sort">种类</string>
+    <string name="search">搜索</string>
+    <string name="empty_add_notes">空，添加笔记</string>
+    <string name="notes">笔记</string>
+    <string name="note_edit">注释编辑</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
+    <string name="save">救</string>
+    <string name="note_content">备注内容</string>
+    <string name="note_title">笔记标题</string>
+    <string name="add_note">加注</string>
+</resources>
