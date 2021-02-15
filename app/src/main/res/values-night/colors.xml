@@ -7,8 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="textColors">#707070</color>
-    <color name="textHintColor">#C6C6C6</color>
+    <color name="textColors">#FFFFFF</color>
     <color name="cardStroke">#9403DAC5</color>
     <color name="light_blue_50">#FFE1F5FE</color>
     <color name="light_blue_200">#FF81D4FA</color>
