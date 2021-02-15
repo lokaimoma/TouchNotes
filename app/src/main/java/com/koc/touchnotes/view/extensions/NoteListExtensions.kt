@@ -84,6 +84,9 @@ fun NoteListFragment.observeNoteList() {
         if (notesList.isEmpty()) {
             binding.ivEmpty.isVisible = true
             binding.tvEmpty.isVisible = true
+        }else {
+            binding.ivEmpty.isVisible = false
+            binding.tvEmpty.isVisible = false
         }
     }
 }
