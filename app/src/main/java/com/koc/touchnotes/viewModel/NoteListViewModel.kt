@@ -1,7 +1,5 @@
 package com.koc.touchnotes.viewModel
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
@@ -9,19 +7,25 @@ import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteDatabase
 import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.NoteEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 /**
 Created by kelvin_clark on 12/7/2020
  */
-class NoteListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class NoteListViewModel @Inject constructor(
     private val notesDb: NoteDatabase,
     private val preferenceManager: PreferenceManager,
-    @Assisted val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
 
     var layoutStyle : NoteLayout? = null

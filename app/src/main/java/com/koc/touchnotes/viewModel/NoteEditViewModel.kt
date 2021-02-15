@@ -1,21 +1,22 @@
 package com.koc.touchnotes.viewModel
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 12/20/2020
  */
-class NoteEditViewModel @ViewModelInject constructor(
+@HiltViewModel
+class NoteEditViewModel @Inject constructor(
     private val notesDb: NoteDatabase,
-    @Assisted private val noteState: SavedStateHandle
+    private val noteState: SavedStateHandle
 ) : ViewModel() {
 
     val note = noteState.get<Note>(NOTE)
