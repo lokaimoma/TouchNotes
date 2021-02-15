@@ -16,4 +16,6 @@
     <string name="settings">Settings</string>
     <string name="modified_time">Modified time:</string>
     <string name="created_time">Created time:</string>
+    <string name="added_notes_appear_here">Added notes appear here</string>
+    <string name="no_note_saved_note">No note saved note</string>
 </resources>
