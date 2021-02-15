@@ -29,15 +29,56 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/noteBody"
         style="@style/Theme.TouchNotes.EditBody"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:hint="@string/note_content"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
         android:padding="5dp"
-        android:background="@null"
         app:layout_constraintEnd_toEndOf="@+id/noteTitle"
         app:layout_constraintStart_toStartOf="@+id/noteTitle"
         app:layout_constraintTop_toBottomOf="@+id/noteTitle" />
+
+    <TextView
+        android:id="@+id/createdTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/textColors"
+        android:textStyle="bold"
+        android:text="@string/created_time"
+        app:layout_constraintStart_toStartOf="@+id/noteBody"
+        app:layout_constraintTop_toBottomOf="@+id/noteBody" />
+
+    <TextView
+        android:id="@+id/modifiedTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/modified_time"
+        android:textColor="@color/textColors"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/createdTimeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/createdTimeTitle" />
+
+    <TextView
+        android:id="@+id/timeCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="Mon,11 oct 1990 18:45"
+        app:layout_constraintBaseline_toBaselineOf="@+id/createdTimeTitle"
+        app:layout_constraintStart_toEndOf="@+id/createdTimeTitle" />
+
+    <TextView
+        android:id="@+id/timeModified"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="Mon,11 oct 1990 18:45"
+        app:layout_constraintBaseline_toBaselineOf="@+id/modifiedTimeTitle"
+        app:layout_constraintStart_toEndOf="@+id/modifiedTimeTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

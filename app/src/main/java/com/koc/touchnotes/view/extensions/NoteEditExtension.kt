@@ -1,7 +1,9 @@
 package com.koc.touchnotes.view.extensions
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -10,6 +12,7 @@ import com.koc.touchnotes.R
 import com.koc.touchnotes.view.NoteEditFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 /**
 Created by kelvin_clark on 1/29/2021 3:04 AM
@@ -34,6 +37,19 @@ fun NoteEditFragment.populateViews() = viewLifecycleOwner.lifecycleScope.launchW
         noteId = noteEditViewModel.note?.id
         createdTime = noteEditViewModel.note?._createdTime
         modifiedTime = noteEditViewModel.note?._modifiedTime
+
+        if (noteTitle.text?.isNotEmpty() == true) {
+            val dateCreated = Date(createdTime ?: System.currentTimeMillis())
+            val dateModified = Date(modifiedTime ?: System.currentTimeMillis())
+            val dayTimeFormatter = SimpleDateFormat("EEEE, dd-MM-yyyy hh:mm", Locale.getDefault())
+            timeCreated.text = dayTimeFormatter.format(dateCreated)
+            timeModified.text = dayTimeFormatter.format(dateModified)
+        }else {
+            timeCreated.isVisible = false
+            timeModified.isVisible = false
+            createdTimeTitle.isVisible = false
+            modifiedTimeTitle.isVisible = false
+        }
     }
 }
 
