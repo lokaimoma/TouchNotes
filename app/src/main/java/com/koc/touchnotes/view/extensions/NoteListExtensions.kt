@@ -1,5 +1,6 @@
 package com.koc.touchnotes.view.extensions
 
+import android.graphics.Color
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
@@ -53,7 +54,10 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
                 Snackbar.make(requireView(), "Note deleted", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") {
                         noteListViewModel.restoreNote(event.note)
-                    }.show()
+                    }
+                    .setBackgroundTint(Color.BLACK)
+                    .setTextColor(Color.WHITE)
+                    .show()
             }
             is NoteEvent.UpdateNoteLayoutStyleEvent -> {
                 if (event.layoutStyle == NoteLayout.GRID_VIEW) {
