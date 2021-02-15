@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -80,6 +81,10 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
 fun NoteListFragment.observeNoteList() {
     noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
         notesAdapter.submitList(notesList)
+        if (notesList.isEmpty()) {
+            binding.ivEmpty.isVisible = true
+            binding.tvEmpty.isVisible = true
+        }
     }
 }
 
