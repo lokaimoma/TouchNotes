@@ -7,8 +7,8 @@
     <string name="delete">Delete</string>
     <string name="share">Share</string>
     <string name="note_edit">Note Edit</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="appwidget_text" translatable="false">EXAMPLE</string>
+    <string name="add_widget" translatable="false">Add widget</string>
     <string name="notes">Notes</string>
     <string name="empty_add_notes">Empty, Add notes</string>
     <string name="search">Search</string>
@@ -24,26 +24,30 @@
     <string name="no">No</string>
     <string name="note_delete_success">Note successfully deleted</string>
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="messages_header" translatable="false">Messages</string>
+    <string name="sync_header" translatable="false">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="signature_title" translatable="false">Your signature</string>
+    <string name="reply_title" translatable="false">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    <string name="sync_title" translatable="false">Sync email periodically</string>
+    <string name="attachment_title" translatable="false">Download incoming attachments</string>
+    <string name="attachment_summary_on" translatable="false">Automatically download attachments for incoming emails
     </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested</string>
     <string name="settings">Settings</string>
-    <string name="theme_key">theme</string>
-    <string name="system_default_theme">system_default</string>
-    <string name="light_theme">light_theme</string>
-    <string name="dark_theme">dark_theme</string>
+    <string name="theme_key" translatable="false">theme</string>
+    <string name="system_default_theme" translatable="false">system_default</string>
+    <string name="light_theme" translatable="false">light_theme</string>
+    <string name="dark_theme" translatable="false">dark_theme</string>
     <string name="modified_time">Modified time:</string>
     <string name="created_time">Created time:</string>
     <string name="added_notes_appear_here">Added notes appear here</string>
     <string name="no_note_saved_note">No note saved note</string>
+    <string name="use_system_default_text">Use system default</string>
+    <string name="light_theme_text">Light</string>
+    <string name="dark_theme_text">Dark</string>
+    <string name="theme_text">Theme</string>
 </resources>
