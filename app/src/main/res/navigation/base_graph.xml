@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.koc.touchnotes.view.SettingsFragment"
-        android:label="SettingsFragment" >
+        android:label="Settings" >
         <action
             android:id="@+id/action_settings_list"
             app:destination="@id/noteListFragment" />
