@@ -3,6 +3,7 @@ package com.koc.touchnotes
 import android.app.Application
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.HiltAndroidApp
 
