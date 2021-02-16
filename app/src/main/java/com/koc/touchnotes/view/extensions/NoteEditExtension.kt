@@ -65,6 +65,7 @@ fun NoteEditFragment.saveNote() {
                 )
             }
         } else {
+            createdTime = time
             noteEditViewModel.saveNote(
                 binding.noteTitle.text.toString(),
                 binding.noteBody.text.toString(), time, time

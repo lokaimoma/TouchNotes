@@ -6,12 +6,18 @@ import android.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
+import com.koc.touchnotes.util.NoteEditEvent
+import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class NoteEditFragment : Fragment() {
@@ -49,6 +55,18 @@ class NoteEditFragment : Fragment() {
         }
         binding.noteBody.doAfterTextChanged {
             isModified = true
+        }
+        collectFlows()
+    }
+
+    private fun collectFlows(): Job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        noteEditViewModel.noteEditEvent.first { event ->
+            return@first when (event) {
+                is NoteEditEvent.NoteSavedEvent -> {
+                    noteId = event.id
+                    true
+                }
+            }.exhaustive
         }
     }
 

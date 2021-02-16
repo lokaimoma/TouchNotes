@@ -14,5 +14,9 @@ sealed class NoteEvent {
     object GotoSettingsScreen : NoteEvent()
 }
 
+sealed class NoteEditEvent {
+    data class NoteSavedEvent(var id: Int) : NoteEditEvent()
+}
+
 val <T> T.exhaustive: T
     get() = this

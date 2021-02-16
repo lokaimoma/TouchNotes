@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteDatabase
+import com.koc.touchnotes.util.NoteEditEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +21,9 @@ class NoteEditViewModel @Inject constructor(
     private val notesDb: NoteDatabase,
     private val noteState: SavedStateHandle
 ) : ViewModel() {
+
+    private val _noteEditChannel = Channel<NoteEditEvent>()
+    val noteEditEvent = _noteEditChannel.receiveAsFlow()
 
     val note = noteState.get<Note>(NOTE)
 
@@ -35,19 +41,20 @@ class NoteEditViewModel @Inject constructor(
 
     fun saveNote(noteTitle: String, noteBody: String, createdTime: Long, modifiedTime: Long) {
         viewModelScope.launch(IO) {
+            var noteId: Long?
             if ((noteTitle != "") && (noteBody != "")) {
-                notesDb.getNotesDao()
+                noteId = notesDb.getNotesDao()
                     .insertNote(Note(noteTitle, noteBody, createdTime, modifiedTime))
             } else if (noteTitle == "") {
                 if (noteBody != "") {
-                    notesDb.getNotesDao().insertNote(
+                    noteId = notesDb.getNotesDao().insertNote(
                         Note(
                             body = noteBody, _createdTime = createdTime,
                             _modifiedTime = modifiedTime
                         )
                     )
                 } else {
-                    notesDb.getNotesDao().insertNote(
+                    noteId = notesDb.getNotesDao().insertNote(
                         Note(
                             _createdTime = createdTime,
                             _modifiedTime = modifiedTime
@@ -56,14 +63,14 @@ class NoteEditViewModel @Inject constructor(
                 }
             } else if (noteBody == "") {
                 if (noteTitle != "") {
-                    notesDb.getNotesDao().insertNote(
+                    noteId = notesDb.getNotesDao().insertNote(
                         Note(
                             title = noteTitle, _createdTime = createdTime,
                             _modifiedTime = modifiedTime
                         )
                     )
                 } else {
-                    notesDb.getNotesDao().insertNote(
+                    noteId = notesDb.getNotesDao().insertNote(
                         Note(
                             _createdTime = createdTime,
                             _modifiedTime = modifiedTime
@@ -71,13 +78,14 @@ class NoteEditViewModel @Inject constructor(
                     )
                 }
             } else {
-                notesDb.getNotesDao().insertNote(
+                noteId = notesDb.getNotesDao().insertNote(
                     Note(
                         _createdTime = createdTime,
                         _modifiedTime = modifiedTime
                     )
                 )
             }
+            _noteEditChannel.send(NoteEditEvent.NoteSavedEvent(noteId.toInt()))
         }
     }
 

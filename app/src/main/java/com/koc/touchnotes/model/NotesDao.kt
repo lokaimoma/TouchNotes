@@ -10,7 +10,7 @@ Created by kelvin_clark on 12/5/2020
 @Dao
 interface NotesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNote(note: Note)
+    suspend fun insertNote(note: Note): Long
 
     @Update
     fun updateNote(note: Note)
