@@ -3,6 +3,7 @@ package com.koc.touchnotes.model
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
@@ -23,11 +24,11 @@ class NoteDatabaseTest {
 
     @Before
     fun setup() {
-        noteDatabase = Room.databaseBuilder(
+        noteDatabase = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
-            NoteDatabase::class.java,
-            "NotesDb"
-        ).build()
+            NoteDatabase::class.java
+        ).allowMainThreadQueries()
+            .build()
         noteDao = noteDatabase.getNotesDao()
     }
 
@@ -38,9 +39,14 @@ class NoteDatabaseTest {
 
     @Test
     fun insertItemIntoDatabase() = runBlockingTest {
-        val note = Note("New note", "Note content",
-        System.currentTimeMillis(), System.currentTimeMillis(), 1)
+        val note = Note(
+            "New note", "Note content",
+            System.currentTimeMillis(), System.currentTimeMillis(), 1
+        )
 
         noteDao.insertNote(note)
+
+        val retrievedNote = noteDao.getNote(note.id)
+        assertThat(retrievedNote).isEqualTo(note)
     }
 }

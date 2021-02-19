@@ -35,6 +35,11 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
+
     buildFeatures {
         viewBinding true
     }
@@ -110,6 +115,9 @@ dependencies {
     // Google truth dep
     testImplementation "com.google.truth:truth:1.1.2"
     androidTestImplementation "com.google.truth:truth:1.1.2"
+
+    // androidx core testing dep
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 
 }
 
