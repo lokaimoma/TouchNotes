@@ -19,12 +19,14 @@
             app:popExitAnim="@anim/to_left" />
         <action
             android:id="@+id/action_list_settings"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/noteEditFragment"
         android:name="com.koc.touchnotes.view.NoteEditFragment"
-        android:label="@string/note_edit"
+        android:label=""
         tools:layout="@layout/fragment_note_edit" >
         <action
             android:id="@+id/action_edit_list"

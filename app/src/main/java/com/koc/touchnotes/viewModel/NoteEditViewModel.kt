@@ -41,7 +41,7 @@ class NoteEditViewModel @Inject constructor(
 
     fun saveNote(noteTitle: String, noteBody: String, createdTime: Long, modifiedTime: Long) {
         viewModelScope.launch(IO) {
-            var noteId: Long?
+            val noteId: Long?
             if ((noteTitle != "") && (noteBody != "")) {
                 noteId = notesDb.getNotesDao()
                     .insertNote(Note(noteTitle, noteBody, createdTime, modifiedTime))
@@ -62,15 +62,15 @@ class NoteEditViewModel @Inject constructor(
                     )
                 }
             } else if (noteBody == "") {
-                if (noteTitle != "") {
-                    noteId = notesDb.getNotesDao().insertNote(
+                noteId = if (noteTitle != "") {
+                    notesDb.getNotesDao().insertNote(
                         Note(
                             title = noteTitle, _createdTime = createdTime,
                             _modifiedTime = modifiedTime
                         )
                     )
                 } else {
-                    noteId = notesDb.getNotesDao().insertNote(
+                    notesDb.getNotesDao().insertNote(
                         Note(
                             _createdTime = createdTime,
                             _modifiedTime = modifiedTime

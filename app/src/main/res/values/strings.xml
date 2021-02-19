@@ -6,7 +6,6 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="share">Share</string>
-    <string name="note_edit">Note Edit</string>
     <string name="appwidget_text" translatable="false">EXAMPLE</string>
     <string name="add_widget" translatable="false">Add widget</string>
     <string name="notes">Notes</string>
