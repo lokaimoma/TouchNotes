@@ -28,4 +28,8 @@ object DatabaseDI {
             )
             .addMigrations(migrateFrom1To2)
             .build()
+
+    @Provides
+    @Singleton
+    fun getDao(database: NoteDatabase) = database.getNotesDao()
 }
