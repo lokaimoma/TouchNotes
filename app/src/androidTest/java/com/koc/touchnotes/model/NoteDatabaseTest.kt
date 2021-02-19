@@ -59,7 +59,7 @@ class NoteDatabaseTest {
     }
 
     @Test
-    fun deleteIteFromDatabase() = runBlockingTest {
+    fun deleteFromDatabase() = runBlockingTest {
         val note = Note(
             "New note", "Note content",
             System.currentTimeMillis(), System.currentTimeMillis(), 1
