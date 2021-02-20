@@ -59,7 +59,7 @@ fun NoteEditFragment.populateViews() = viewLifecycleOwner.lifecycleScope.launchW
     }
 }
 
-fun NoteEditFragment.saveNote(onComplete: (()->Unit)? = null) {
+fun NoteEditFragment.saveNote(forceSave: Boolean=false, onComplete: (()->Unit)? = null) {
     val time = System.currentTimeMillis()
     lifecycleScope.launch {
         if (noteId != null) {
@@ -73,7 +73,7 @@ fun NoteEditFragment.saveNote(onComplete: (()->Unit)? = null) {
                 findNavController().navigateUp()
             }
         } else {
-            if (binding.noteTitle.text.toString() != "" || binding.noteBody.text.toString() != "") {
+            if (binding.noteTitle.text.toString() != "" || binding.noteBody.text.toString() != "" || forceSave) {
                 createdTime = time
                 noteEditViewModel.saveNote(
                     binding.noteTitle.text.toString(),
