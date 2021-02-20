@@ -1,20 +1,20 @@
-name: Gradle Build
+name: Gradle test
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - !main
+      - !production
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-        
-      - name: Build
-        run: ./gradlew build
+
+      - name: Run Unit tests
+        run: ./gradlew test --stacktrace
