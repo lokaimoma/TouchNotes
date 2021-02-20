@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -40,53 +41,12 @@ class NoteEditViewModel @Inject constructor(
             noteState.set(NOTE_BODY, value)
         }
 
-    fun saveNote(noteTitle: String, noteBody: String, createdTime: Long, modifiedTime: Long) {
+    fun saveNote(noteTitle: String, noteBody: String, createdTime: Long, modifiedTime: Long, onComplete: (()->Unit)? = null) {
         viewModelScope.launch(IO) {
+            val note = createNote(noteTitle, noteBody, createdTime, modifiedTime)
             val noteId: Long?
-            if ((noteTitle != "") && (noteBody != "")) {
-                noteId = repository
-                    .insertNote(Note(noteTitle, noteBody, createdTime, modifiedTime))
-            } else if (noteTitle == "") {
-                noteId = if (noteBody != "") {
-                    repository.insertNote(
-                        Note(
-                            body = noteBody, _createdTime = createdTime,
-                            _modifiedTime = modifiedTime
-                        )
-                    )
-                } else {
-                    repository.insertNote(
-                        Note(
-                            _createdTime = createdTime,
-                            _modifiedTime = modifiedTime
-                        )
-                    )
-                }
-            } else if (noteBody == "") {
-                noteId = if (noteTitle != "") {
-                    repository.insertNote(
-                        Note(
-                            title = noteTitle, _createdTime = createdTime,
-                            _modifiedTime = modifiedTime
-                        )
-                    )
-                } else {
-                    repository.insertNote(
-                        Note(
-                            _createdTime = createdTime,
-                            _modifiedTime = modifiedTime
-                        )
-                    )
-                }
-            } else {
-                noteId = repository.insertNote(
-                    Note(
-                        _createdTime = createdTime,
-                        _modifiedTime = modifiedTime
-                    )
-                )
-            }
-            _noteEditChannel.send(NoteEditEvent.NoteSavedEvent(noteId.toInt()))
+            noteId = repository.insertNote(note)
+            onComplete?.invoke() ?: _noteEditChannel.send(NoteEditEvent.NoteSavedEvent(noteId.toInt()))
         }
     }
 
@@ -95,15 +55,16 @@ class NoteEditViewModel @Inject constructor(
         noteTitle: String,
         noteBody: String,
         createdTime: Long,
-        modifiedTime: Long
+        modifiedTime: Long,
+        onComplete: (()->Unit)? = null
     ) {
-        viewModelScope.launch(IO) {
-            repository.updateNote(
-                Note(
+        viewModelScope.launch {
+            withContext(IO){
+                repository.updateNote(Note(
                     noteTitle, noteBody, id = noteId, _createdTime = createdTime,
-                    _modifiedTime = modifiedTime
-                )
-            )
+                    _modifiedTime = modifiedTime))
+            }
+            onComplete?.invoke()
         }
     }
 
