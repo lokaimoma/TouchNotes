@@ -31,6 +31,8 @@ class NoteListViewModel @Inject constructor(
 
     var layoutStyle : NoteLayout? = null
 
+    var recyclerPosition:Int = state.get(RECYCLER_POSITION) ?: 0
+
     val searchQuery = state.getLiveData(SEARCH_QUERY,"")
     private val noteEventChannel = Channel<NoteEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
@@ -89,5 +91,6 @@ class NoteListViewModel @Inject constructor(
 
     companion object{
         const val SEARCH_QUERY = "search_query"
+        const val RECYCLER_POSITION = "recycler_position"
     }
 }

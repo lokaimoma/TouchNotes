@@ -31,7 +31,7 @@ inline fun SearchView.queryTextListener(
     this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
         override fun onQueryTextSubmit(query: String?): Boolean {
-            return true //
+            return true
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
@@ -124,6 +124,8 @@ fun NoteListFragment.setUpViews() {
             }
 
         }).attachToRecyclerView(itemsNotes)
+
+        itemsNotes.scrollToPosition(noteListViewModel.recyclerPosition)
 
         fabAdd.setOnClickListener {
             noteListViewModel.addNoteClicked()
