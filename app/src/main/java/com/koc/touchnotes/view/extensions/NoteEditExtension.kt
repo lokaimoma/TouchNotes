@@ -21,11 +21,18 @@ Created by kelvin_clark on 1/29/2021 3:04 AM
 fun NoteEditFragment.saveNoteState() {
     binding.apply {
         noteTitle.addTextChangedListener {
-            noteEditViewModel.title = it.toString()
+            if (noteEditViewModel.note?.title != it.toString()){
+                noteEditViewModel.title = it.toString()
+                isModified = true
+            }
+
         }
 
         noteBody.addTextChangedListener {
-            noteEditViewModel.body = it.toString()
+            if (noteEditViewModel.note?.body != it.toString()){
+                noteEditViewModel.body = it.toString()
+                isModified = true
+            }
         }
     }
 }
@@ -55,7 +62,7 @@ fun NoteEditFragment.populateViews() = viewLifecycleOwner.lifecycleScope.launchW
 
 fun NoteEditFragment.saveNote(onComplete: (()->Unit)? = null) {
     val time = System.currentTimeMillis()
-    lifecycleScope.launch(Dispatchers.IO) {
+    lifecycleScope.launch {
         if (noteId != null) {
             if (isModified) {
                 noteEditViewModel.updateNote(
@@ -63,6 +70,8 @@ fun NoteEditFragment.saveNote(onComplete: (()->Unit)? = null) {
                     noteBody = binding.noteBody.text.toString(),
                     createdTime = createdTime!!, time, onComplete
                 )
+            }else {
+                findNavController().navigateUp()
             }
         } else {
             createdTime = time
@@ -101,7 +110,7 @@ fun NoteEditFragment.showDeleteDialogue() {
             noteEditViewModel.deleteNote(noteId)
             dialogue.dismiss()
             Toast.makeText(requireContext(), getString(R.string.note_delete_success), Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_edit_list)
+            findNavController().navigateUp()
         }
         setNegativeButton(getString(R.string.no)){ dialogue, _ ->
             dialogue.dismiss()
