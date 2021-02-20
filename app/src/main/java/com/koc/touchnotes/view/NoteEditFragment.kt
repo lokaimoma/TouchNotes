@@ -3,10 +3,11 @@ package com.koc.touchnotes.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import androidx.core.widget.doAfterTextChanged
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
@@ -16,7 +17,6 @@ import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
@@ -50,13 +50,24 @@ class NoteEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         populateViews()
         saveNoteState()
-        binding.noteTitle.doAfterTextChanged {
-            isModified = true
-        }
-        binding.noteBody.doAfterTextChanged {
-            isModified = true
-        }
         collectFlows()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if (!isModified){
+                    findNavController().navigateUp()
+                }else{
+                    saveNote {
+                        findNavController().popBackStack()
+                    }
+                }
+            }
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveNote()
     }
 
     private fun collectFlows(): Job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -64,6 +75,7 @@ class NoteEditFragment : Fragment() {
             return@first when (event) {
                 is NoteEditEvent.NoteSavedEvent -> {
                     noteId = event.id
+                    requireActivity().invalidateOptionsMenu()
                     true
                 }
             }.exhaustive

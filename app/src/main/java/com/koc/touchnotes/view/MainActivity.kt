@@ -2,10 +2,8 @@ package com.koc.touchnotes.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.preference.PreferenceManager
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
