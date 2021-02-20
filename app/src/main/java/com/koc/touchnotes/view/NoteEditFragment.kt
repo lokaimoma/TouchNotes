@@ -72,6 +72,7 @@ class NoteEditFragment : Fragment() {
             return@first when (event) {
                 is NoteEditEvent.NoteSavedEvent -> {
                     noteId = event.id
+                    requireActivity().invalidateOptionsMenu()
                     true
                 }
             }.exhaustive
