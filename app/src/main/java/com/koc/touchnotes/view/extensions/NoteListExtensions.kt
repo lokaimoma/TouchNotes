@@ -96,7 +96,7 @@ fun NoteListFragment.setUpViews() {
         itemsNotes.adapter = notesAdapter
 
         itemsNotes.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.LINEAR_VIEW)
-            LinearLayoutManager(context)
+            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         else
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
