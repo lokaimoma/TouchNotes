@@ -4,8 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -65,6 +63,11 @@ class NoteEditFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveNote()
     }
 
     private fun collectFlows(): Job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
