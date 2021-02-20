@@ -63,6 +63,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
+    // wasabeef recycleranimator
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
+
     // preference
     def preference_version = "1.1.1"
     implementation "androidx.preference:preference-ktx:$preference_version"
