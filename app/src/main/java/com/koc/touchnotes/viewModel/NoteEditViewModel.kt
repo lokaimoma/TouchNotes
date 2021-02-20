@@ -4,7 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.Note
-import com.koc.touchnotes.model.NoteDatabase
+import com.koc.touchnotes.model.NoteRepository
+import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.util.NoteEditEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -18,7 +19,7 @@ Created by kelvin_clark on 12/20/2020
  */
 @HiltViewModel
 class NoteEditViewModel @Inject constructor(
-    private val notesDb: NoteDatabase,
+    private val repository: NoteRepository,
     private val noteState: SavedStateHandle
 ) : ViewModel() {
 
@@ -43,18 +44,18 @@ class NoteEditViewModel @Inject constructor(
         viewModelScope.launch(IO) {
             val noteId: Long?
             if ((noteTitle != "") && (noteBody != "")) {
-                noteId = notesDb.getNotesDao()
+                noteId = repository
                     .insertNote(Note(noteTitle, noteBody, createdTime, modifiedTime))
             } else if (noteTitle == "") {
-                if (noteBody != "") {
-                    noteId = notesDb.getNotesDao().insertNote(
+                noteId = if (noteBody != "") {
+                    repository.insertNote(
                         Note(
                             body = noteBody, _createdTime = createdTime,
                             _modifiedTime = modifiedTime
                         )
                     )
                 } else {
-                    noteId = notesDb.getNotesDao().insertNote(
+                    repository.insertNote(
                         Note(
                             _createdTime = createdTime,
                             _modifiedTime = modifiedTime
@@ -63,14 +64,14 @@ class NoteEditViewModel @Inject constructor(
                 }
             } else if (noteBody == "") {
                 noteId = if (noteTitle != "") {
-                    notesDb.getNotesDao().insertNote(
+                    repository.insertNote(
                         Note(
                             title = noteTitle, _createdTime = createdTime,
                             _modifiedTime = modifiedTime
                         )
                     )
                 } else {
-                    notesDb.getNotesDao().insertNote(
+                    repository.insertNote(
                         Note(
                             _createdTime = createdTime,
                             _modifiedTime = modifiedTime
@@ -78,7 +79,7 @@ class NoteEditViewModel @Inject constructor(
                     )
                 }
             } else {
-                noteId = notesDb.getNotesDao().insertNote(
+                noteId = repository.insertNote(
                     Note(
                         _createdTime = createdTime,
                         _modifiedTime = modifiedTime
@@ -97,7 +98,7 @@ class NoteEditViewModel @Inject constructor(
         modifiedTime: Long
     ) {
         viewModelScope.launch(IO) {
-            notesDb.getNotesDao().updateNote(
+            repository.updateNote(
                 Note(
                     noteTitle, noteBody, id = noteId, _createdTime = createdTime,
                     _modifiedTime = modifiedTime
@@ -108,7 +109,7 @@ class NoteEditViewModel @Inject constructor(
 
     fun deleteNote(noteId: Int?) {
         viewModelScope.launch(IO) {
-            notesDb.getNotesDao().removeNote(noteId!!)
+            repository.removeNote(noteId!!)
         }
     }
 
