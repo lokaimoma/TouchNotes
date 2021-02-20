@@ -12,10 +12,7 @@ import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.MainCoroutineRule
 import com.koc.touchnotes.viewModel.NoteListViewModel.Companion.SEARCH_QUERY
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
@@ -98,7 +95,7 @@ class NoteListViewModelTest {
 
         viewModel.updateSortOrder(NoteSort.BY_MODIFIED_TIME)
 
-        verify(preferenceManager)
+        verify(preferenceManager, times(1))
             .updateSortOrder(NoteSort.BY_MODIFIED_TIME)
     }
 
