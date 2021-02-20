@@ -3,10 +3,12 @@ package com.koc.touchnotes.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
@@ -57,6 +59,15 @@ class NoteEditFragment : Fragment() {
             isModified = true
         }
         collectFlows()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                saveNote {
+                    findNavController().popBackStack()
+                }
+            }
+
+        })
     }
 
     private fun collectFlows(): Job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {

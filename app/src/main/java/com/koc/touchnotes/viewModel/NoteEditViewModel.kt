@@ -41,11 +41,12 @@ class NoteEditViewModel @Inject constructor(
             noteState.set(NOTE_BODY, value)
         }
 
-    fun saveNote(noteTitle: String, noteBody: String, createdTime: Long, modifiedTime: Long, onComplete: (()->Unit)? = null) {
-        viewModelScope.launch(IO) {
+    fun saveNote(noteTitle: String, noteBody: String, createdTime: Long, modifiedTime: Long,
+                 onComplete: (()->Unit)?) {
+        viewModelScope.launch {
             val note = createNote(noteTitle, noteBody, createdTime, modifiedTime)
             val noteId: Long?
-            noteId = repository.insertNote(note)
+            noteId = withContext(IO) { repository.insertNote(note) }
             onComplete?.invoke() ?: _noteEditChannel.send(NoteEditEvent.NoteSavedEvent(noteId.toInt()))
         }
     }
