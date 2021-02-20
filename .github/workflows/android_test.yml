@@ -3,6 +3,7 @@ name: Gradle test
 on:
   push:
     branches:
+      - '*'
       - !main
       - !production
 
