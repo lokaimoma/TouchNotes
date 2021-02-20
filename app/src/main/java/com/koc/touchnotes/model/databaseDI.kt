@@ -32,4 +32,9 @@ object DatabaseDI {
     @Provides
     @Singleton
     fun getDao(database: NoteDatabase) = database.getNotesDao()
+
+    @Provides
+    fun getRepository(dao: NotesDao) : NoteRepository {
+        return Repository(dao)
+    }
 }
