@@ -42,6 +42,7 @@ class NoteListFragment : Fragment(), ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        setUpViews()
         observeNoteList()
         collectFlows()
     }
@@ -67,7 +68,6 @@ class NoteListFragment : Fragment(), ClickListener {
             layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
             layoutToggle.title = resources.getString(R.string.grid_style)
         }
-        setUpViews()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

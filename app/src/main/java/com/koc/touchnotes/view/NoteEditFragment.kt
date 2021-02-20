@@ -51,18 +51,6 @@ class NoteEditFragment : Fragment() {
         populateViews()
         saveNoteState()
         collectFlows()
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                if (!isModified){
-                    findNavController().navigateUp()
-                }else{
-                    saveNote {
-                        findNavController().popBackStack()
-                    }
-                }
-            }
-        })
     }
 
     override fun onPause() {
@@ -90,7 +78,7 @@ class NoteEditFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.actionSave -> {
-                saveNote()
+                saveNote(true)
                 if (noteId != null) {
                     Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT)
                         .setBackgroundTint(Color.BLACK)

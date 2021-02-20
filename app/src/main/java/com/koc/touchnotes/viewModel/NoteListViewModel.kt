@@ -5,7 +5,6 @@ import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteRepository
-import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.NoteEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

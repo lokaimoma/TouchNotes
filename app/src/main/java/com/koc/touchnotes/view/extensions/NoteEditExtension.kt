@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.koc.touchnotes.R
 import com.koc.touchnotes.view.NoteEditFragment
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -60,7 +59,7 @@ fun NoteEditFragment.populateViews() = viewLifecycleOwner.lifecycleScope.launchW
     }
 }
 
-fun NoteEditFragment.saveNote(onComplete: (()->Unit)? = null) {
+fun NoteEditFragment.saveNote(forceSave: Boolean=false, onComplete: (()->Unit)? = null) {
     val time = System.currentTimeMillis()
     lifecycleScope.launch {
         if (noteId != null) {
@@ -74,11 +73,14 @@ fun NoteEditFragment.saveNote(onComplete: (()->Unit)? = null) {
                 findNavController().navigateUp()
             }
         } else {
-            createdTime = time
-            noteEditViewModel.saveNote(
-                binding.noteTitle.text.toString(),
-                binding.noteBody.text.toString(), time, time,
-            onComplete)
+            if (binding.noteTitle.text.toString() != "" || binding.noteBody.text.toString() != "" || forceSave) {
+                createdTime = time
+                noteEditViewModel.saveNote(
+                    binding.noteTitle.text.toString(),
+                    binding.noteBody.text.toString(), time, time,
+                    onComplete
+                )
+            }
         }
     }
 }

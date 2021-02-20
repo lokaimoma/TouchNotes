@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteRepository
-import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.util.NoteEditEvent
+import com.koc.touchnotes.viewModel.ext.createNote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
@@ -60,10 +60,15 @@ class NoteEditViewModel @Inject constructor(
         onComplete: (()->Unit)? = null
     ) {
         viewModelScope.launch {
-            withContext(IO){
-                repository.updateNote(Note(
-                    noteTitle, noteBody, id = noteId, _createdTime = createdTime,
-                    _modifiedTime = modifiedTime))
+            if (noteTitle != "" && noteBody != "") {
+                withContext(IO) {
+                    repository.updateNote(
+                        Note(
+                            noteTitle, noteBody, id = noteId, _createdTime = createdTime,
+                            _modifiedTime = modifiedTime
+                        )
+                    )
+                }
             }
             onComplete?.invoke()
         }
