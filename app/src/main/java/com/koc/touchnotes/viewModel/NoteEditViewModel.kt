@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.Note
-import com.koc.touchnotes.model.NoteDatabase
+import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.util.NoteEditEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ Created by kelvin_clark on 12/20/2020
  */
 @HiltViewModel
 class NoteEditViewModel @Inject constructor(
-    private val repository: Repository,
+    private val repository: NoteRepository,
     private val noteState: SavedStateHandle
 ) : ViewModel() {
 
@@ -47,15 +47,15 @@ class NoteEditViewModel @Inject constructor(
                 noteId = repository
                     .insertNote(Note(noteTitle, noteBody, createdTime, modifiedTime))
             } else if (noteTitle == "") {
-                if (noteBody != "") {
-                    noteId = repository.insertNote(
+                noteId = if (noteBody != "") {
+                    repository.insertNote(
                         Note(
                             body = noteBody, _createdTime = createdTime,
                             _modifiedTime = modifiedTime
                         )
                     )
                 } else {
-                    noteId = repository.insertNote(
+                    repository.insertNote(
                         Note(
                             _createdTime = createdTime,
                             _modifiedTime = modifiedTime

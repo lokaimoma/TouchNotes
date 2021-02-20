@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.model.Note
-import com.koc.touchnotes.model.NoteDatabase
+import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.NoteEvent
@@ -24,7 +24,7 @@ Created by kelvin_clark on 12/7/2020
  */
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
-    private val repository: Repository,
+    private val repository: NoteRepository,
     private val preferenceManager: PreferenceManager,
     state: SavedStateHandle
 ) : ViewModel() {
@@ -88,6 +88,6 @@ class NoteListViewModel @Inject constructor(
     }
 
     companion object{
-        private const val SEARCH_QUERY = "search_query"
+        const val SEARCH_QUERY = "search_query"
     }
 }
