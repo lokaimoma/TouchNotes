@@ -94,13 +94,12 @@ fun NoteListFragment.setUpViews() {
 
     binding.apply {
         itemsNotes.adapter = notesAdapter
+        itemsNotes.itemAnimator = SlideInLeftAnimator(AnticipateInterpolator(1f))
 
         itemsNotes.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.LINEAR_VIEW)
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         else
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-
-        itemsNotes.itemAnimator = SlideInLeftAnimator(AnticipateInterpolator(1f))
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
