@@ -2,6 +2,7 @@ package com.koc.touchnotes.view.extensions
 
 import android.graphics.Color
 import android.view.MenuItem
+import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -18,6 +19,7 @@ import com.koc.touchnotes.util.NoteEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.NoteListFragment
 import com.koc.touchnotes.view.NoteListFragmentDirections
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
@@ -105,6 +107,8 @@ fun NoteListFragment.setUpViews() {
                 GridLayoutManager.VERTICAL,
                 false
             )
+
+        itemsNotes.itemAnimator = SlideInLeftAnimator(AnticipateInterpolator(1f))
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
