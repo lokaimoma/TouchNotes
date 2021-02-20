@@ -3,8 +3,9 @@ name: Gradle test
 on:
   push:
     branches:
-      - !main
-      - !production
+      - '*'
+      - '!main'
+      - '!production'
 
 jobs:
   test:
@@ -18,3 +19,7 @@ jobs:
 
       - name: Run Unit tests
         run: ./gradlew testDebugUnitTest
+
+      - name: Android Test Report
+        uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() }}

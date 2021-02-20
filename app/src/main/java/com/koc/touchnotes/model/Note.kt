@@ -23,10 +23,4 @@ data class Note(
     @ColumnInfo(name = "modifiedTime")
     val _modifiedTime : Long?,
     @PrimaryKey(autoGenerate = true) val id :Int = 0
-) : Parcelable {
-    val createdTime :String
-        get() = DateFormat.getDateTimeInstance().format(_createdTime)
-
-    val modifiedTime : String
-        get() = DateFormat.getDateTimeInstance().format(_modifiedTime)
-}
+) : Parcelable
