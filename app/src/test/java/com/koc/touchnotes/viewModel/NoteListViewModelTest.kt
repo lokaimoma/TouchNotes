@@ -21,8 +21,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Rule
 import org.junit.Test
-import org.junit.internal.runners.statements.ExpectException
-import org.mockito.exceptions.verification.WantedButNotInvoked
 
 
 /**
@@ -40,7 +38,7 @@ class NoteListViewModelTest {
 
     @Test
     fun test_getAllNotesEmpty() {
-        val listViewModel : NoteListViewModel = mock()
+        val listViewModel: NoteListViewModel = mock()
         whenever(listViewModel.getAllNotes())
             .thenReturn(MutableLiveData(listOf()))
         val expected = 0
@@ -53,10 +51,12 @@ class NoteListViewModelTest {
 
     @Test
     fun test_getAllNotesSingle() {
-        val note = Note("New note", "Note content", null,
-            null, 1)
+        val note = Note(
+            "New note", "Note content", null,
+            null, 1
+        )
 
-        val listViewModel : NoteListViewModel = mock()
+        val listViewModel: NoteListViewModel = mock()
         whenever(listViewModel.getAllNotes())
             .thenReturn(MutableLiveData(listOf(note)))
         val expected = 1
@@ -69,14 +69,20 @@ class NoteListViewModelTest {
 
     @Test
     fun test_getAllNotesMultiple() {
-        val note = Note("New note", "Note content", null,
-            null, 1)
-        val note2 = Note("New note", "Note content", null,
-            null, 2)
-        val note3 = Note("New note", "Note content", null,
-            null, 3)
+        val note = Note(
+            "New note", "Note content", null,
+            null, 1
+        )
+        val note2 = Note(
+            "New note", "Note content", null,
+            null, 2
+        )
+        val note3 = Note(
+            "New note", "Note content", null,
+            null, 3
+        )
 
-        val listViewModel : NoteListViewModel = mock()
+        val listViewModel: NoteListViewModel = mock()
         whenever(listViewModel.getAllNotes())
             .thenReturn(MutableLiveData(listOf(note, note2, note3)))
         val expected = 3
@@ -100,12 +106,8 @@ class NoteListViewModelTest {
 
         viewModel.updateSortOrder(NoteSort.BY_MODIFIED_TIME)
 
-        try {
-            verify(preferenceManager)
-                .updateSortOrder(NoteSort.BY_MODIFIED_TIME)
-        }catch (e: WantedButNotInvoked){
-            throw e
-        }
+        verify(preferenceManager)
+            .updateSortOrder(NoteSort.BY_MODIFIED_TIME)
     }
 
     @Test
@@ -156,8 +158,10 @@ class NoteListViewModelTest {
         val preferenceManager: PreferenceManager = mock()
         val viewModel = NoteListViewModel(repository, preferenceManager, stateHandle)
 
-        val note = Note("New note", "Note content", null,
-            null, 1)
+        val note = Note(
+            "New note", "Note content", null,
+            null, 1
+        )
 
         viewModel.noteSwiped(note)
 
@@ -176,8 +180,10 @@ class NoteListViewModelTest {
         val preferenceManager: PreferenceManager = mock()
         val viewModel = NoteListViewModel(repository, preferenceManager, stateHandle)
 
-        val note = Note("New note", "Note content", null,
-            null, 1)
+        val note = Note(
+            "New note", "Note content", null,
+            null, 1
+        )
 
         viewModel.restoreNote(note)
 
