@@ -125,8 +125,6 @@ fun NoteListFragment.setUpViews() {
 
         }).attachToRecyclerView(itemsNotes)
 
-        itemsNotes.scrollToPosition(noteListViewModel.recyclerPosition)
-
         fabAdd.setOnClickListener {
             noteListViewModel.addNoteClicked()
         }

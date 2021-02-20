@@ -5,7 +5,6 @@ import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.model.Note
 import com.koc.touchnotes.model.NoteRepository
-import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.NoteEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,8 +29,6 @@ class NoteListViewModel @Inject constructor(
 ) : ViewModel() {
 
     var layoutStyle : NoteLayout? = null
-
-    var recyclerPosition:Int = state.get(RECYCLER_POSITION) ?: 0
 
     val searchQuery = state.getLiveData(SEARCH_QUERY,"")
     private val noteEventChannel = Channel<NoteEvent>()
@@ -91,6 +88,5 @@ class NoteListViewModel @Inject constructor(
 
     companion object{
         const val SEARCH_QUERY = "search_query"
-        const val RECYCLER_POSITION = "recycler_position"
     }
 }
