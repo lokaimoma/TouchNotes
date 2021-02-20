@@ -74,11 +74,14 @@ fun NoteEditFragment.saveNote(onComplete: (()->Unit)? = null) {
                 findNavController().navigateUp()
             }
         } else {
-            createdTime = time
-            noteEditViewModel.saveNote(
-                binding.noteTitle.text.toString(),
-                binding.noteBody.text.toString(), time, time,
-            onComplete)
+            if (binding.noteTitle.text.toString() != "" || binding.noteBody.text.toString() != "") {
+                createdTime = time
+                noteEditViewModel.saveNote(
+                    binding.noteTitle.text.toString(),
+                    binding.noteBody.text.toString(), time, time,
+                    onComplete
+                )
+            }
         }
     }
 }
