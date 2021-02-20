@@ -8,10 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.enums.NoteLayout
@@ -101,12 +98,7 @@ fun NoteListFragment.setUpViews() {
         itemsNotes.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.LINEAR_VIEW)
             LinearLayoutManager(context)
         else
-            GridLayoutManager(
-                context,
-                2,
-                GridLayoutManager.VERTICAL,
-                false
-            )
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         itemsNotes.itemAnimator = SlideInLeftAnimator(AnticipateInterpolator(1f))
 
