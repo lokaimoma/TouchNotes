@@ -131,7 +131,7 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.4'
 
     // Mockito
-    testImplementation 'org.mockito:mockito-inline:2.21.0'
+    testImplementation 'org.mockito:mockito-inline:2.23.0'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 }
 
