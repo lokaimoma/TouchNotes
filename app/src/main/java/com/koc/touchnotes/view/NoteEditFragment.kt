@@ -50,8 +50,8 @@ class NoteEditFragment : Fragment() {
     }
 
     override fun onPause() {
-        super.onPause()
         saveNote()
+        super.onPause()
     }
 
     private fun collectFlows(): Job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
