@@ -38,7 +38,7 @@ class NotesRecyclerAdapter (val listener: ClickListener)
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION){
                         val note = getItem(position)
-                        listener.onClickListener(note)
+                        listener.onClickListener(note, position)
                     }
                 }
             }

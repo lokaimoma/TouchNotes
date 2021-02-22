@@ -103,7 +103,8 @@ class NoteListFragment : Fragment(), ClickListener {
         notesAdapter.clearUp()
     }
 
-    override fun onClickListener(note: Note) {
+    override fun onClickListener(note: Note, position: Int) {
         noteListViewModel.noteClicked(note)
+        noteListViewModel.lastRecyclerViewPosition = position
     }
 }

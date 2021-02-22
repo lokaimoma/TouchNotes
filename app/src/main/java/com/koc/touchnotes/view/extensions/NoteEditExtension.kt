@@ -1,17 +1,15 @@
 package com.koc.touchnotes.view.extensions
 
 import android.content.Intent
-import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenCreated
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
+import com.koc.touchnotes.view.MainActivity
 import com.koc.touchnotes.view.NoteEditFragment
 import kotlinx.coroutines.launch
 import java.util.*
@@ -67,21 +65,26 @@ fun NoteEditFragment.saveNote(forceSave: Boolean=false, onComplete: (()->Unit)? 
     lifecycleScope.launch {
         if (noteId != null) {
             if (isModified) {
+                (requireActivity() as MainActivity).isNoteSavedOrUpdated = true
                 noteEditViewModel.updateNote(
                     noteId!!, binding.noteTitle.text.toString(),
                     noteBody = binding.noteBody.text.toString(),
                     createdTime = createdTime!!, time, onComplete
                 )
+            }else {
+                (requireActivity() as MainActivity).isNoteSavedOrUpdated = false
             }
         } else {
             if (binding.noteTitle.text.toString() != "" || binding.noteBody.text.toString() != "" || forceSave) {
-
+                (requireActivity() as MainActivity).isNoteSavedOrUpdated = true
                 createdTime = time
                 noteEditViewModel.saveNote(
                     binding.noteTitle.text.toString(),
                     binding.noteBody.text.toString(), time, time,
                     onComplete
                 )
+            }else {
+                (requireActivity() as MainActivity).isNoteSavedOrUpdated = false
             }
         }
     }
