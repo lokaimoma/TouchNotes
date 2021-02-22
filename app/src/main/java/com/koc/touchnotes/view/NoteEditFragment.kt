@@ -76,12 +76,12 @@ class NoteEditFragment : Fragment() {
             R.id.actionSave -> {
                 saveNote(true)
                 if (noteId != null) {
-                    Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, getString(R.string.note_updated_msg), Snackbar.LENGTH_SHORT)
                         .setBackgroundTint(Color.BLACK)
                         .setTextColor(Color.WHITE)
                         .show()
                 } else {
-                    Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, getString(R.string.note_saved_msg), Snackbar.LENGTH_SHORT)
                         .setBackgroundTint(Color.BLACK)
                         .setTextColor(Color.WHITE)
                         .show()
