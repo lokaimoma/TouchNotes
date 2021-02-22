@@ -124,6 +124,7 @@ fun NoteListFragment.setUpViews() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val note = notesAdapter.currentList[viewHolder.adapterPosition]
+                (requireActivity() as MainActivity).isNoteSavedOrUpdated = true
                 noteListViewModel.noteSwiped(note)
             }
 
