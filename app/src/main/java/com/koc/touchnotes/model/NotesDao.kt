@@ -25,13 +25,13 @@ interface NotesDao {
             NoteSort.BY_CREATED_TIME -> sortByCreatedTime(searchQuery)
         }
 
-    @Query("SELECT * FROM Note WHERE title LIKE '%' || :searchQuery || '%' ORDER BY title")
+    @Query("SELECT * FROM Note WHERE title LIKE '%' || :searchQuery || '%' ORDER BY title DESC")
     fun sortByTitle(searchQuery: String) : Flow<List<Note>>
 
-    @Query("SELECT * FROM Note WHERE title LIKE '%' || :searchQuery || '%' ORDER BY createdTime")
+    @Query("SELECT * FROM Note WHERE title LIKE '%' || :searchQuery || '%' ORDER BY createdTime DESC")
     fun sortByCreatedTime(searchQuery: String) : Flow<List<Note>>
 
-    @Query("SELECT * FROM Note WHERE title LIKE '%' || :searchQuery || '%' ORDER BY modifiedTime")
+    @Query("SELECT * FROM Note WHERE title LIKE '%' || :searchQuery || '%' ORDER BY modifiedTime DESC")
     fun sortByModifiedTime(searchQuery: String) : Flow<List<Note>>
 
     @Query("SELECT title FROM Note")
