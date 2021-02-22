@@ -69,8 +69,6 @@ fun NoteEditFragment.saveNote(forceSave: Boolean=false, onComplete: (()->Unit)? 
                     noteBody = binding.noteBody.text.toString(),
                     createdTime = createdTime!!, time, onComplete
                 )
-            }else {
-                findNavController().navigateUp()
             }
         } else {
             if (binding.noteTitle.text.toString() != "" || binding.noteBody.text.toString() != "" || forceSave) {
