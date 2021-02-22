@@ -79,7 +79,9 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
 @ExperimentalCoroutinesApi
 fun NoteListFragment.observeNoteList() {
     noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
-        notesAdapter.submitList(notesList)
+        notesAdapter.submitList(notesList){
+            binding.itemsNotes.smoothScrollToPosition(0)
+        }
         if (notesList.isEmpty()) {
             binding.ivEmpty.isVisible = true
             binding.tvEmpty.isVisible = true
@@ -119,10 +121,10 @@ fun NoteListFragment.setUpViews() {
             }
 
         }).attachToRecyclerView(itemsNotes)
-
         fabAdd.setOnClickListener {
             noteListViewModel.addNoteClicked()
         }
+
     }
 }
 
