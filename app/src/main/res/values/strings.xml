@@ -49,4 +49,6 @@
     <string name="light_theme_text">Light</string>
     <string name="dark_theme_text">Dark</string>
     <string name="theme_text">Theme</string>
+    <string name="note_updated_msg">Note updated</string>
+    <string name="note_saved_msg">Note saved</string>
 </resources>

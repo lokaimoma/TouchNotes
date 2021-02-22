@@ -30,4 +30,6 @@
     <string name="note_content">Inhalt beachten</string>
     <string name="note_title">Titel notieren</string>
     <string name="add_note">Notiz hinzufügen</string>
+    <string name="note_updated_msg">Hinweis aktualisiert</string>
+    <string name="note_saved_msg">Notiz gespeichert</string>
 </resources>

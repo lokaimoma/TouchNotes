@@ -14,6 +14,7 @@ import com.koc.touchnotes.R
 import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.util.NoteEvent
 import com.koc.touchnotes.util.exhaustive
+import com.koc.touchnotes.view.MainActivity
 import com.koc.touchnotes.view.NoteListFragment
 import com.koc.touchnotes.view.NoteListFragmentDirections
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
@@ -79,7 +80,15 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
 @ExperimentalCoroutinesApi
 fun NoteListFragment.observeNoteList() {
     noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
-        notesAdapter.submitList(notesList)
+        notesAdapter.submitList(notesList){
+            if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
+                binding.itemsNotes.smoothScrollToPosition(0)
+                binding.itemsNotes.requestFocus()
+            }else {
+                binding.itemsNotes.smoothScrollToPosition(noteListViewModel.lastRecyclerViewPosition)
+                binding.itemsNotes.requestFocus()
+            }
+        }
         if (notesList.isEmpty()) {
             binding.ivEmpty.isVisible = true
             binding.tvEmpty.isVisible = true
@@ -119,10 +128,10 @@ fun NoteListFragment.setUpViews() {
             }
 
         }).attachToRecyclerView(itemsNotes)
-
         fabAdd.setOnClickListener {
             noteListViewModel.addNoteClicked()
         }
+
     }
 }
 

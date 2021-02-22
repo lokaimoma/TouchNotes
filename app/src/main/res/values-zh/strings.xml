@@ -30,4 +30,6 @@
     <string name="note_content">备注内容</string>
     <string name="note_title">笔记标题</string>
     <string name="add_note">加注</string>
+    <string name="note_updated_msg">笔记已更新</string>
+    <string name="note_saved_msg">笔记已保存</string>
 </resources>

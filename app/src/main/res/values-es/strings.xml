@@ -30,4 +30,6 @@
     <string name="light_theme_text">claro</string>
     <string name="dark_theme_text">oscuro</string>
     <string name="theme_text">Tema</string>
+    <string name="note_updated_msg">Nota actualizada</string>
+    <string name="note_saved_msg">Nota guardada</string>
 </resources>

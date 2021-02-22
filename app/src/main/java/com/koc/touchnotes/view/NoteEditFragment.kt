@@ -3,11 +3,9 @@ package com.koc.touchnotes.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
@@ -34,14 +32,12 @@ class NoteEditFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentNoteEditBinding.inflate(inflater, container, false)
         return _binding?.root
     }
@@ -54,8 +50,8 @@ class NoteEditFragment : Fragment() {
     }
 
     override fun onPause() {
-        super.onPause()
         saveNote()
+        super.onPause()
     }
 
     private fun collectFlows(): Job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -80,12 +76,12 @@ class NoteEditFragment : Fragment() {
             R.id.actionSave -> {
                 saveNote(true)
                 if (noteId != null) {
-                    Snackbar.make(binding.root, "Note updated", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, getString(R.string.note_updated_msg), Snackbar.LENGTH_SHORT)
                         .setBackgroundTint(Color.BLACK)
                         .setTextColor(Color.WHITE)
                         .show()
                 } else {
-                    Snackbar.make(binding.root, "Note saved", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, getString(R.string.note_saved_msg), Snackbar.LENGTH_SHORT)
                         .setBackgroundTint(Color.BLACK)
                         .setTextColor(Color.WHITE)
                         .show()

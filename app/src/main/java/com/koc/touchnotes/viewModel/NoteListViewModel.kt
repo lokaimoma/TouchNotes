@@ -28,6 +28,8 @@ class NoteListViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
+    var lastRecyclerViewPosition = state.get(RECYCLER_VIEW_POSITION) ?: 0
+
     var layoutStyle : NoteLayout? = null
 
     val searchQuery = state.getLiveData(SEARCH_QUERY,"")
@@ -88,5 +90,6 @@ class NoteListViewModel @Inject constructor(
 
     companion object{
         const val SEARCH_QUERY = "search_query"
+        const val RECYCLER_VIEW_POSITION = "recycler_position"
     }
 }

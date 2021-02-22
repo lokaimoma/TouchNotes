@@ -30,4 +30,6 @@
     <string name="light_theme_text">Léger</string>
     <string name="dark_theme_text">Dak</string>
     <string name="theme_text">Thème</string>
+    <string name="note_updated_msg">Note mise à jour</string>
+    <string name="note_saved_msg">Note enregistrée</string>
 </resources>
