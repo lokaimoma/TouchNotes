@@ -83,10 +83,8 @@ fun NoteListFragment.observeNoteList() {
         notesAdapter.submitList(notesList){
             if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
                 binding.itemsNotes.smoothScrollToPosition(0)
-                binding.itemsNotes.requestFocus()
             }else {
                 binding.itemsNotes.smoothScrollToPosition(noteListViewModel.lastRecyclerViewPosition)
-                binding.itemsNotes.requestFocus()
             }
         }
         if (notesList.isEmpty()) {
