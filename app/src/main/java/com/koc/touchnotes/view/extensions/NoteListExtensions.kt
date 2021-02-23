@@ -83,10 +83,8 @@ fun NoteListFragment.observeNoteList() {
         notesAdapter.submitList(notesList){
             if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
                 binding.itemsNotes.smoothScrollToPosition(0)
-                binding.itemsNotes.requestFocus()
             }else {
                 binding.itemsNotes.smoothScrollToPosition(noteListViewModel.lastRecyclerViewPosition)
-                binding.itemsNotes.requestFocus()
             }
         }
         if (notesList.isEmpty()) {
@@ -124,6 +122,7 @@ fun NoteListFragment.setUpViews() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val note = notesAdapter.currentList[viewHolder.adapterPosition]
+                (requireActivity() as MainActivity).isNoteSavedOrUpdated = true
                 noteListViewModel.noteSwiped(note)
             }
 
