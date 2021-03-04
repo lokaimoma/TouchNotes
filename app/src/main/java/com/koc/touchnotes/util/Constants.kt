@@ -14,5 +14,5 @@ object Constants {
     const val TEXT_START = "textStart"
     const val TEXT_END = "textEnd"
     const val NOTE_ID = "noteId"
-    const val TEXT_SPAN_TABLE = "Text Span Table"
+    const val TEXT_SPAN_TABLE = "Text_Span_Table"
 }

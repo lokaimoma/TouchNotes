@@ -1,9 +1,6 @@
 package com.koc.touchnotes.model.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.koc.touchnotes.util.Constants.IS_BOLD
 import com.koc.touchnotes.util.Constants.IS_ITALIC
 import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
@@ -22,7 +19,8 @@ Created by kelvin_clark on 3/4/2021 6:46 AM
         entity = Note::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf(NOTE_ID),
-        onDelete = ForeignKey.CASCADE)]
+        onDelete = ForeignKey.CASCADE
+    )]
 )
 data class TextSpan(
     @ColumnInfo(name = IS_BOLD)
@@ -37,7 +35,7 @@ data class TextSpan(
     val textStart: Int,
     @ColumnInfo(name = TEXT_END)
     val textEnd: Int,
-    @ColumnInfo(name = NOTE_ID)
+    @ColumnInfo(name = NOTE_ID, index = true)
     val noteId: Int,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0

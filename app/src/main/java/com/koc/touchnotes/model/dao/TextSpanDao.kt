@@ -20,8 +20,8 @@ Created by kelvin_clark on 3/4/2021 6:59 AM
 @Dao
 interface TextSpanDao {
 
-    @Query("SELECT $IS_BOLD, $IS_ITALIC, $IS_STRIKE_THROUGH, $IS_UNDERLINED, $TEXT_START, $TEXT_END, $NOTE_ID, 'id' " +
-            "FROM $TEXT_SPAN_TABLE WHERE $NOTE_ID = :noteId")
+    @Query("SELECT $IS_BOLD, $IS_ITALIC, $IS_STRIKE_THROUGH, $IS_UNDERLINED, $TEXT_START, $TEXT_END, $NOTE_ID, id " +
+            "FROM $TEXT_SPAN_TABLE WHERE $NOTE_ID = :noteId ;")
     fun getTextSpans(noteId: Int): Flow<List<TextSpan>>
 
     @Insert
