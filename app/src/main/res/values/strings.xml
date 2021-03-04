@@ -51,4 +51,8 @@
     <string name="theme_text">Theme</string>
     <string name="note_updated_msg">Note updated</string>
     <string name="note_saved_msg">Note saved</string>
+    <string name="bold">Bold</string>
+    <string name="italic">Italic</string>
+    <string name="underline">Underline</string>
+    <string name="strike_through">Strike through</string>
 </resources>

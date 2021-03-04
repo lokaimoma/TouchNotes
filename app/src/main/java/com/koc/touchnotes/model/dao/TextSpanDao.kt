@@ -1,7 +1,6 @@
 package com.koc.touchnotes.model.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.koc.touchnotes.model.entities.TextSpan
