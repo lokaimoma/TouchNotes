@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "ec3f07e7915ea621dedda25cc8298dc3",
+    "identityHash": "3091f8827f53133a5be5faca7cfa8572",
     "entities": [
       {
         "tableName": "Note",
@@ -21,13 +21,13 @@
             "notNull": false
           },
           {
-            "fieldPath": "createdTime",
+            "fieldPath": "_createdTime",
             "columnName": "createdTime",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "modifiedTime",
+            "fieldPath": "_modifiedTime",
             "columnName": "modifiedTime",
             "affinity": "INTEGER",
             "notNull": false
@@ -47,12 +47,86 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Text Span Table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`isBold` INTEGER NOT NULL, `isItalic` INTEGER NOT NULL, `isStrikeThrough` INTEGER NOT NULL, `isUnderlined` INTEGER NOT NULL, `textStart` INTEGER NOT NULL, `textEnd` INTEGER NOT NULL, `noteId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`noteId`) REFERENCES `Note`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "isBold",
+            "columnName": "isBold",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isItalic",
+            "columnName": "isItalic",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isStrikeThrough",
+            "columnName": "isStrikeThrough",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isUnderlined",
+            "columnName": "isUnderlined",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "textStart",
+            "columnName": "textStart",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "textEnd",
+            "columnName": "textEnd",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "noteId",
+            "columnName": "noteId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Note",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "noteId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ec3f07e7915ea621dedda25cc8298dc3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3091f8827f53133a5be5faca7cfa8572')"
     ]
   }
 }

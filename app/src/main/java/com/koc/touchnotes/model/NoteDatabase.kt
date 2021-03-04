@@ -6,11 +6,12 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.koc.touchnotes.model.dao.NotesDao
 import com.koc.touchnotes.model.entities.Note
+import com.koc.touchnotes.model.entities.TextSpan
 
 /**
 Created by kelvin_clark on 12/6/2020
  */
-@Database(entities = [Note::class], version = 2, exportSchema = true)
+@Database(entities = [Note::class, TextSpan::class], version = 2, exportSchema = true)
 abstract class NoteDatabase : RoomDatabase() {
     abstract fun getNotesDao() : NotesDao
 
