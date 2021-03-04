@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.koc.touchnotes.databinding.NoteListLayoutBinding
 import com.koc.touchnotes.interfaces.ClickListener
-import com.koc.touchnotes.model.Note
+import com.koc.touchnotes.model.entities.Note
 
 /**
 Created by kelvin_clark on 12/5/2020
@@ -44,7 +44,7 @@ class NotesRecyclerAdapter (val listener: ClickListener)
             }
         }
 
-        fun populateViews(note :Note) {
+        fun populateViews(note : Note) {
             binding.apply {
                 textTitle.text = note.title
                 textBody.text = note.body

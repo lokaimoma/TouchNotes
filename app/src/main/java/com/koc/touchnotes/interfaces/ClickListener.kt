@@ -1,6 +1,6 @@
 package com.koc.touchnotes.interfaces
 
-import com.koc.touchnotes.model.Note
+import com.koc.touchnotes.model.entities.Note
 
 /**
 Created by kelvin_clark on 1/28/2021 10:34 PM

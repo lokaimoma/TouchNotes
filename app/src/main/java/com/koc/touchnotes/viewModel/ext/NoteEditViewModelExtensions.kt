@@ -1,6 +1,6 @@
 package com.koc.touchnotes.viewModel.ext
 
-import com.koc.touchnotes.model.Note
+import com.koc.touchnotes.model.entities.Note
 
 /**
 Created by kelvin_clark on 2/20/2021 12:59 PM

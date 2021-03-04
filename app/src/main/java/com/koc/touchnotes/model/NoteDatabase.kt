@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.koc.touchnotes.model.entities.Note
 
 /**
 Created by kelvin_clark on 12/6/2020

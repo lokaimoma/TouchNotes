@@ -1,7 +1,7 @@
 package com.koc.touchnotes.util
 
 import com.koc.touchnotes.enums.NoteLayout
-import com.koc.touchnotes.model.Note
+import com.koc.touchnotes.model.entities.Note
 
 /**
 Created by kelvin_clark on 1/28/2021 10:48 PM

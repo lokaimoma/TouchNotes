@@ -11,7 +11,7 @@ import com.koc.touchnotes.databinding.FragmentNoteListBinding
 import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.interfaces.ClickListener
-import com.koc.touchnotes.model.Note
+import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
