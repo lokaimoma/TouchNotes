@@ -3,6 +3,7 @@ package com.koc.touchnotes.model
 import android.app.Application
 import androidx.room.Room
 import com.koc.touchnotes.model.NoteDatabase.Companion.migrateFrom1To2
+import com.koc.touchnotes.model.dao.NotesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

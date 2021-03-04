@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.getOrAwaitValue
+import com.koc.touchnotes.model.dao.NotesDao
 import com.koc.touchnotes.model.entities.Note
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
