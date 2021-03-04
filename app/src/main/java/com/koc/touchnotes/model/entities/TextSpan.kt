@@ -1,8 +1,17 @@
 package com.koc.touchnotes.model.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.koc.touchnotes.util.Constants
+import com.koc.touchnotes.util.Constants.IS_BOLD
+import com.koc.touchnotes.util.Constants.IS_ITALIC
+import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
+import com.koc.touchnotes.util.Constants.IS_UNDERLINED
+import com.koc.touchnotes.util.Constants.NOTE_ID
+import com.koc.touchnotes.util.Constants.TEXT_END
+import com.koc.touchnotes.util.Constants.TEXT_START
 
 /**
 Created by kelvin_clark on 3/4/2021 6:46 AM
@@ -11,17 +20,26 @@ Created by kelvin_clark on 3/4/2021 6:46 AM
     foreignKeys = [ForeignKey(
         entity = Note::class,
         parentColumns = arrayOf("id"),
-        childColumns = arrayOf("noteId"),
+        childColumns = arrayOf(NOTE_ID),
         onDelete = ForeignKey.CASCADE)]
 )
 data class TextSpan(
+    @ColumnInfo(name = IS_BOLD)
     val isBold: Boolean,
+    @ColumnInfo(name = IS_ITALIC)
     val isItalic: Boolean,
+    @ColumnInfo(name = IS_STRIKE_THROUGH)
     val isStrikeThrough: Boolean,
+    @ColumnInfo(name = IS_UNDERLINED)
     val isUnderlined: Boolean,
+    @ColumnInfo(name = TEXT_START)
     val textStart: Int,
+    @ColumnInfo(name = TEXT_END)
     val textEnd: Int,
+    @ColumnInfo(name = NOTE_ID)
     val noteId: Int,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
+
+
