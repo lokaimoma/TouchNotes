@@ -32,4 +32,8 @@
     <string name="theme_text">Tema</string>
     <string name="note_updated_msg">Nota aggiornata</string>
     <string name="note_saved_msg">Nota salvata</string>
+    <string name="bold">Grassetto</string>
+    <string name="italic">Corsivo</string>
+    <string name="underline">Sottolineare</string>
+    <string name="strike_through">Barrato</string>
 </resources>

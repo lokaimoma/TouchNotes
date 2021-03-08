@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "3091f8827f53133a5be5faca7cfa8572",
+    "version": 3,
+    "identityHash": "e3b4e7e240c0fc0b83cf016216ba85ea",
     "entities": [
       {
         "tableName": "Note",
@@ -49,8 +49,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Text Span Table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`isBold` INTEGER NOT NULL, `isItalic` INTEGER NOT NULL, `isStrikeThrough` INTEGER NOT NULL, `isUnderlined` INTEGER NOT NULL, `textStart` INTEGER NOT NULL, `textEnd` INTEGER NOT NULL, `noteId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`noteId`) REFERENCES `Note`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "tableName": "Text_Span_Table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`isBold` INTEGER NOT NULL, `isItalic` INTEGER NOT NULL, `isStrikeThrough` INTEGER NOT NULL, `isUnderlined` INTEGER NOT NULL, `textStart` INTEGER NOT NULL, `textEnd` INTEGER NOT NULL, `noteId` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`noteId`) REFERENCES `Note`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "isBold",
@@ -92,7 +92,7 @@
             "fieldPath": "noteId",
             "columnName": "noteId",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -107,7 +107,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Text_Span_Table_noteId",
+            "unique": false,
+            "columnNames": [
+              "noteId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Text_Span_Table_noteId` ON `${TABLE_NAME}` (`noteId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "Note",
@@ -126,7 +135,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3091f8827f53133a5be5faca7cfa8572')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e3b4e7e240c0fc0b83cf016216ba85ea')"
     ]
   }
 }

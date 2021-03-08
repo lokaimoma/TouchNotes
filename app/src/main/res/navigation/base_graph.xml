@@ -35,9 +35,8 @@
             app:destination="@id/noteListFragment" />
         <argument
             android:name="note"
-            app:argType="com.koc.touchnotes.model.Note"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.koc.touchnotes.model.entities.Note"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

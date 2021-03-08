@@ -1,6 +1,8 @@
 package com.koc.touchnotes.model
 
 import com.koc.touchnotes.enums.NoteSort
+import com.koc.touchnotes.model.dao.NotesDao
+import com.koc.touchnotes.model.entities.Note
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

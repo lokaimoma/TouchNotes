@@ -1,7 +1,8 @@
-package com.koc.touchnotes.model
+package com.koc.touchnotes.model.dao
 
 import androidx.room.*
 import com.koc.touchnotes.enums.NoteSort
+import com.koc.touchnotes.model.entities.Note
 import kotlinx.coroutines.flow.Flow
 
 /**

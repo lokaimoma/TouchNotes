@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.google.common.truth.Truth.assertThat
 import com.koc.touchnotes.enums.NoteLayout
-import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.getOrAwaitValueTest
-import com.koc.touchnotes.model.Note
+import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.Repository
 import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.MainCoroutineRule

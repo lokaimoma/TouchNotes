@@ -3,7 +3,7 @@ package com.koc.touchnotes.viewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koc.touchnotes.model.Note
+import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.viewModel.ext.createNote

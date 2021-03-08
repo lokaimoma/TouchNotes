@@ -1,4 +1,4 @@
-package com.koc.touchnotes.model
+package com.koc.touchnotes.model.entities
 
 
 import android.os.Parcelable

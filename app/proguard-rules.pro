@@ -19,7 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep class com.koc.touchnotes.model.Note
+-keep class com.koc.touchnotes.model.entities.Note
 -keepnames @dagger.hilt.android.lifecycle.HiltViewModel class * extends androidx.lifecycle.ViewModel
 -dontwarn android.arch.persistence.room.paging.**
 -keep class androidx.datastore.*.** {*;}
