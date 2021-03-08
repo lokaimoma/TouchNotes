@@ -3,6 +3,7 @@ package com.koc.touchnotes.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,8 +15,10 @@ import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NoteEditFragment : Fragment() {
@@ -47,6 +50,47 @@ class NoteEditFragment : Fragment() {
         populateViews()
         saveNoteState()
         collectFlows()
+
+        viewLifecycleOwner.lifecycleScope.launch(IO) {
+            binding.noteBody.customSelectionActionModeCallback = object : ActionMode.Callback {
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    mode?.menuInflater?.inflate(R.menu.text_span_menu, menu)
+                    return true
+                }
+
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
+
+                override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                    when(item?.itemId){
+                        R.id.actionBold -> {
+                            Toast.makeText(context, "Bold clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        R.id.actionItalic -> {
+                            Toast.makeText(context, "Italic clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        R.id.actionUnderline -> {
+                            Toast.makeText(context, "Underline clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        R.id.actionStrikeThrough -> {
+                            Toast.makeText(context, "Strike through clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        else -> return false
+                    }
+                }
+
+                override fun onDestroyActionMode(mode: ActionMode?) {
+                    mode?.hide(10)
+                }
+            }
+        }
     }
 
     override fun onPause() {
@@ -76,12 +120,20 @@ class NoteEditFragment : Fragment() {
             R.id.actionSave -> {
                 saveNote(true)
                 if (noteId != null) {
-                    Snackbar.make(binding.root, getString(R.string.note_updated_msg), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.note_updated_msg),
+                        Snackbar.LENGTH_SHORT
+                    )
                         .setBackgroundTint(Color.BLACK)
                         .setTextColor(Color.WHITE)
                         .show()
                 } else {
-                    Snackbar.make(binding.root, getString(R.string.note_saved_msg), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.note_saved_msg),
+                        Snackbar.LENGTH_SHORT
+                    )
                         .setBackgroundTint(Color.BLACK)
                         .setTextColor(Color.WHITE)
                         .show()
