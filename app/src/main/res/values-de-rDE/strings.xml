@@ -32,4 +32,8 @@
     <string name="add_note">Notiz hinzufügen</string>
     <string name="note_updated_msg">Hinweis aktualisiert</string>
     <string name="note_saved_msg">Notiz gespeichert</string>
+    <string name="bold">Fett gedruckt</string>
+    <string name="italic">Kursiv</string>
+    <string name="underline">Unterstreichen</string>
+    <string name="strike_through">Durchgestrichen</string>
 </resources>

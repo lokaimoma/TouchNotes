@@ -32,4 +32,8 @@
     <string name="theme_text">Tema</string>
     <string name="note_updated_msg">Nota actualizada</string>
     <string name="note_saved_msg">Nota guardada</string>
+    <string name="bold">Negrito</string>
+    <string name="italic">Itálico</string>
+    <string name="underline">Subrayar</string>
+    <string name="strike_through">Tachado</string>
 </resources>

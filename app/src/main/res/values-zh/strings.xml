@@ -32,4 +32,8 @@
     <string name="add_note">加注</string>
     <string name="note_updated_msg">笔记已更新</string>
     <string name="note_saved_msg">笔记已保存</string>
+    <string name="bold">大胆的</string>
+    <string name="italic">斜体</string>
+    <string name="underline">强调</string>
+    <string name="strike_through">删除线</string>
 </resources>
