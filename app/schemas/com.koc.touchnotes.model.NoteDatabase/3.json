@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "7d795d1205785b30bbe826af5ff38d32",
+    "identityHash": "e3b4e7e240c0fc0b83cf016216ba85ea",
     "entities": [
       {
         "tableName": "Note",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "Text_Span_Table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`isBold` INTEGER NOT NULL, `isItalic` INTEGER NOT NULL, `isStrikeThrough` INTEGER NOT NULL, `isUnderlined` INTEGER NOT NULL, `textStart` INTEGER NOT NULL, `textEnd` INTEGER NOT NULL, `noteId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`noteId`) REFERENCES `Note`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`isBold` INTEGER NOT NULL, `isItalic` INTEGER NOT NULL, `isStrikeThrough` INTEGER NOT NULL, `isUnderlined` INTEGER NOT NULL, `textStart` INTEGER NOT NULL, `textEnd` INTEGER NOT NULL, `noteId` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`noteId`) REFERENCES `Note`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "isBold",
@@ -92,7 +92,7 @@
             "fieldPath": "noteId",
             "columnName": "noteId",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -135,7 +135,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d795d1205785b30bbe826af5ff38d32')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e3b4e7e240c0fc0b83cf016216ba85ea')"
     ]
   }
 }

@@ -37,11 +37,18 @@ abstract class NoteDatabase : RoomDatabase() {
         var migrateFrom2To3 = object : Migration(2,3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE $TEXT_SPAN_TABLE" +
-                        "($IS_BOLD INTEGER NOT NULL, $IS_ITALIC INTEGER NOT NULL, " +
+                        "(id INTEGER PRIMARY KEY NOT NULL, " +
+                        "$IS_BOLD INTEGER NOT NULL, $IS_ITALIC INTEGER NOT NULL, " +
                         "$IS_STRIKE_THROUGH INTEGER NOT NULL, $IS_UNDERLINED INTEGER NOT NULL, " +
                         "$TEXT_START INTEGER NOT NULL, " +
-                        "$TEXT_END INTEGER NOT NULL, FOREIGN KEY ($NOTE_ID) REFERENCES Note(Note.id) ON DELETE CASCADE ON UPDATE NO ACTION, " +
-                        "$TEXT_SPAN_TABLE.id INTEGER PRIMARY KEY)")
+                        "$TEXT_END INTEGER NOT NULL, " +
+                        "$NOTE_ID INTEGER," +
+                        "FOREIGN KEY ($NOTE_ID) REFERENCES Note(id) ON DELETE CASCADE ON UPDATE NO ACTION)"
+                        )
+
+                database.execSQL(
+                    "CREATE INDEX index_Text_Span_Table_noteId ON $TEXT_SPAN_TABLE($NOTE_ID)"
+                )
             }
 
         }

@@ -23,6 +23,8 @@ Created by kelvin_clark on 3/4/2021 6:46 AM
     )]
 )
 data class TextSpan(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     @ColumnInfo(name = IS_BOLD)
     val isBold: Boolean = false,
     @ColumnInfo(name = IS_ITALIC)
@@ -36,9 +38,7 @@ data class TextSpan(
     @ColumnInfo(name = TEXT_END)
     val textEnd: Int,
     @ColumnInfo(name = NOTE_ID, index = true)
-    val noteId: Int,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
+    val noteId: Int?
 )
 
 
