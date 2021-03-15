@@ -2,16 +2,22 @@ package com.koc.touchnotes.model
 
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.model.dao.NotesDao
+import com.koc.touchnotes.model.dao.TextSpanDao
 import com.koc.touchnotes.model.entities.Note
+import com.koc.touchnotes.model.entities.TextSpan
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
 Created by kelvin_clark on 2/19/2021 9:51 PM
  */
-class Repository @Inject constructor(private val noteDao: NotesDao) : NoteRepository {
+class Repository @Inject constructor(private val noteDao: NotesDao, private val textSpanDao: TextSpanDao) : NoteRepository {
     override suspend fun insertNote(note: Note): Long {
         return noteDao.insertNote(note)
+    }
+
+    override suspend fun insertTextSpan(textSpan: TextSpan) {
+        textSpanDao.insertTextSpan(textSpan)
     }
 
     override suspend fun updateNote(note: Note) {
@@ -28,5 +34,9 @@ class Repository @Inject constructor(private val noteDao: NotesDao) : NoteReposi
 
     override suspend fun getNotes(searchQuery: String, sortMethod: NoteSort): Flow<List<Note>> {
         return noteDao.getNotes(searchQuery, sortMethod)
+    }
+
+    override fun getTextSpans(noteID: Int): Flow<List<TextSpan>> {
+        return textSpanDao.getTextSpans(noteID)
     }
 }

@@ -16,6 +16,7 @@ sealed class NoteEvent {
 
 sealed class NoteEditEvent {
     data class NoteSavedEvent(var id: Int) : NoteEditEvent()
+    data class TextSpannedEvent(var textStart: Int, var textEnd: Int): NoteEditEvent()
 }
 
 val <T> T.exhaustive: T

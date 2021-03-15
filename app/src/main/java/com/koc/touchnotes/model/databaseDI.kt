@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.koc.touchnotes.model.NoteDatabase.Companion.migrateFrom1To2
 import com.koc.touchnotes.model.NoteDatabase.Companion.migrateFrom2To3
 import com.koc.touchnotes.model.dao.NotesDao
+import com.koc.touchnotes.model.dao.TextSpanDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +41,7 @@ object DatabaseDI {
     fun getTextSpanDao(database: NoteDatabase) = database.getTextSpanDao()
 
     @Provides
-    fun getRepository(dao: NotesDao) : NoteRepository {
-        return Repository(dao)
+    fun getRepository(notesDao: NotesDao, textSpanDao: TextSpanDao) : NoteRepository {
+        return Repository(notesDao, textSpanDao)
     }
 }
