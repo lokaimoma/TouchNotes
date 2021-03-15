@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.entities.TextSpan
-import com.koc.touchnotes.util.Constants
 import com.koc.touchnotes.util.Constants.IS_BOLD
 import com.koc.touchnotes.util.Constants.IS_ITALIC
 import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
