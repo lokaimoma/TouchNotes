@@ -19,7 +19,6 @@ import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
