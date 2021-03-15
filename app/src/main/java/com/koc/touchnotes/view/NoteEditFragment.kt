@@ -1,26 +1,24 @@
 package com.koc.touchnotes.view
 
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.style.StrikethroughSpan
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
-import com.koc.touchnotes.model.entities.TextSpan
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.extensions.*
 import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NoteEditFragment : Fragment() {
@@ -49,68 +47,48 @@ class NoteEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        noteEditViewModel.getSpans()
         populateViews()
         saveNoteState()
         collectFlows()
 
-        binding.noteBody.customSelectionActionModeCallback = object : ActionMode.Callback {
-            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                saveNote()
-                mode?.menuInflater?.inflate(R.menu.text_span_menu, menu)
-                return true
-            }
-
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
-
-            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                when (item?.itemId) {
-                    R.id.actionBold -> {
-                        noteEditViewModel.applySpan(binding.noteBody.selectionStart,
-                            binding.noteBody.selectionEnd,StyleSpan(Typeface.BOLD))
-
-                        noteEditViewModel.saveSpan(TextSpan(isBold = true,
-                            textStart = binding.noteBody.selectionStart,
-                        textEnd = binding.noteBody.selectionEnd, noteId = noteId))
-                        mode?.finish()
-                        return true
-                    }
-                    R.id.actionItalic -> {
-                        noteEditViewModel.applySpan(binding.noteBody.selectionStart,
-                            binding.noteBody.selectionEnd,StyleSpan(Typeface.ITALIC))
-
-                        noteEditViewModel.saveSpan(TextSpan(isItalic = true,
-                            textStart = binding.noteBody.selectionStart,
-                            textEnd = binding.noteBody.selectionEnd, noteId = noteId))
-                        mode?.finish()
-                        return true
-                    }
-                    R.id.actionUnderline -> {
-                        noteEditViewModel.applySpan(binding.noteBody.selectionStart,
-                            binding.noteBody.selectionEnd, UnderlineSpan())
-
-                        noteEditViewModel.saveSpan(TextSpan(isUnderlined = true,
-                            textStart = binding.noteBody.selectionStart,
-                            textEnd = binding.noteBody.selectionEnd, noteId = noteId))
-                        mode?.finish()
-                        return true
-                    }
-                    R.id.actionStrikeThrough -> {
-                        noteEditViewModel.applySpan(binding.noteBody.selectionStart,
-                            binding.noteBody.selectionEnd, StrikethroughSpan())
-
-                        noteEditViewModel.saveSpan(TextSpan(isStrikeThrough = true,
-                            textStart = binding.noteBody.selectionStart,
-                            textEnd = binding.noteBody.selectionEnd, noteId = noteId))
-                        mode?.finish()
-                        return true
-                    }
-                    else -> return false
+        viewLifecycleOwner.lifecycleScope.launch(IO) {
+            binding.noteBody.customSelectionActionModeCallback = object : ActionMode.Callback {
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    mode?.menuInflater?.inflate(R.menu.text_span_menu, menu)
+                    return true
                 }
-            }
 
-            override fun onDestroyActionMode(mode: ActionMode?) {
-                mode?.hide(10)
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
+
+                override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                    when(item?.itemId){
+                        R.id.actionBold -> {
+                            Toast.makeText(context, "Bold clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        R.id.actionItalic -> {
+                            Toast.makeText(context, "Italic clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        R.id.actionUnderline -> {
+                            Toast.makeText(context, "Underline clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        R.id.actionStrikeThrough -> {
+                            Toast.makeText(context, "Strike through clicked", Toast.LENGTH_SHORT).show()
+                            mode?.finish()
+                            return true
+                        }
+                        else -> return false
+                    }
+                }
+
+                override fun onDestroyActionMode(mode: ActionMode?) {
+                    mode?.hide(10)
+                }
             }
         }
     }
