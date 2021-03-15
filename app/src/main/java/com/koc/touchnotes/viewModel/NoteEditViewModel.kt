@@ -1,7 +1,11 @@
 package com.koc.touchnotes.viewModel
 
+import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +21,8 @@ import com.koc.touchnotes.viewModel.ext.createNote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -90,6 +96,30 @@ class NoteEditViewModel @Inject constructor(
         }
     }
 
+    fun processNoteSpans() = viewModelScope.launch {
+        if (note?.id != null) {
+            repository.getTextSpans(note.id).first { textSpans ->
+                textSpans.forEach { textSpan ->
+                    if (textSpan.isBold){
+                        applySpan(StyleSpan(Typeface.BOLD), textSpan.textStart, textSpan.textEnd)
+                    }else if (textSpan.isItalic) {
+                        applySpan(StyleSpan(Typeface.ITALIC), textSpan.textStart, textSpan.textEnd)
+                    }else if (textSpan.isUnderlined) {
+                        applySpan(UnderlineSpan(), textSpan.textStart, textSpan.textEnd)
+                    }else if (textSpan.isStrikeThrough) {
+                        applySpan(StrikethroughSpan(), textSpan.textStart, textSpan.textEnd)
+                    }
+                }
+                return@first true
+            }
+            _noteEditChannel.send(NoteEditEvent.TextSpannedEvent(0,0))
+        }
+    }
+
+    private fun applySpan(styleSpan: Any, textStart: Int, textEnd: Int) {
+        body.setSpan(styleSpan, textStart, textEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
     fun applySpan(noteId: Int, spanName: String, span: Any, textStart: Int, textEnd: Int) =
         viewModelScope.launch {
             if ((textStart != -1) && (textEnd != -1)) {
@@ -99,21 +129,38 @@ class NoteEditViewModel @Inject constructor(
             }
         }
 
-    private suspend fun saveSpan(noteId: Int, spanName: String, textStart: Int, textEnd: Int)= withContext(IO) {
-        when (spanName) {
-            IS_BOLD -> repository.insertTextSpan(TextSpan(noteId = noteId,
-                isBold = true, textStart = textStart, textEnd = textEnd))
+    private suspend fun saveSpan(noteId: Int, spanName: String, textStart: Int, textEnd: Int) =
+        withContext(IO) {
+            when (spanName) {
+                IS_BOLD -> repository.insertTextSpan(
+                    TextSpan(
+                        noteId = noteId,
+                        isBold = true, textStart = textStart, textEnd = textEnd
+                    )
+                )
 
-            IS_ITALIC -> repository.insertTextSpan(TextSpan(noteId = noteId,
-                isItalic = true, textStart = textStart, textEnd = textEnd))
+                IS_ITALIC -> repository.insertTextSpan(
+                    TextSpan(
+                        noteId = noteId,
+                        isItalic = true, textStart = textStart, textEnd = textEnd
+                    )
+                )
 
-            IS_UNDERLINED -> repository.insertTextSpan(TextSpan(noteId = noteId,
-                isUnderlined = true, textStart = textStart, textEnd = textEnd))
+                IS_UNDERLINED -> repository.insertTextSpan(
+                    TextSpan(
+                        noteId = noteId,
+                        isUnderlined = true, textStart = textStart, textEnd = textEnd
+                    )
+                )
 
-            IS_STRIKE_THROUGH -> repository.insertTextSpan(TextSpan(noteId = noteId,
-                isStrikeThrough = true, textStart = textStart, textEnd = textEnd))
+                IS_STRIKE_THROUGH -> repository.insertTextSpan(
+                    TextSpan(
+                        noteId = noteId,
+                        isStrikeThrough = true, textStart = textStart, textEnd = textEnd
+                    )
+                )
+            }
         }
-    }
 
     companion object {
         private const val NOTE_TITLE = "noteTitle"
