@@ -2,6 +2,7 @@ package com.koc.touchnotes.view.extensions
 
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
+import android.text.SpannableStringBuilder
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -29,8 +30,8 @@ fun NoteEditFragment.saveNoteState() {
         }
 
         noteBody.addTextChangedListener {
-            if (noteEditViewModel.note?.body != it.toString()){
-                noteEditViewModel.body = it.toString()
+            if (noteEditViewModel.note?.body.toString() != it.toString()){
+                noteEditViewModel.body = SpannableStringBuilder(it)
                 isModified = true
             }
         }
@@ -40,7 +41,7 @@ fun NoteEditFragment.saveNoteState() {
 fun NoteEditFragment.populateViews() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
     binding.apply {
         noteTitle.setText(noteEditViewModel.title)
-        noteBody.setText(noteEditViewModel.body)
+        noteBody.text = noteEditViewModel.body
         noteId = noteEditViewModel.note?.id
         createdTime = noteEditViewModel.note?._createdTime
         modifiedTime = noteEditViewModel.note?._modifiedTime

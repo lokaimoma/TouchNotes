@@ -1,10 +1,12 @@
 package com.koc.touchnotes.viewModel
 
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.NoteRepository
+import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.viewModel.ext.createNote
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,10 +37,10 @@ class NoteEditViewModel @Inject constructor(
             noteState.set(NOTE_TITLE, value)
         }
 
-    var body = noteState.get<String>(NOTE_BODY) ?: note?.body ?: ""
+    var body = SpannableStringBuilder(noteState.get<String>(NOTE_BODY) ?: note?.body ?: "")
         set(value) {
             field = value
-            noteState.set(NOTE_BODY, value)
+            noteState.set(NOTE_BODY, value.toString())
         }
 
     fun saveNote(noteTitle: String, noteBody: String, createdTime: Long, modifiedTime: Long,
@@ -77,6 +79,12 @@ class NoteEditViewModel @Inject constructor(
     fun deleteNote(noteId: Int?) {
         viewModelScope.launch(IO) {
             repository.removeNote(noteId!!)
+        }
+    }
+
+    fun applySpan(span: Any, textStart: Int, textEnd: Int) {
+        if ((textStart != -1) && (textEnd != -1)) {
+            body.setSpan(span, textStart, textEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
 

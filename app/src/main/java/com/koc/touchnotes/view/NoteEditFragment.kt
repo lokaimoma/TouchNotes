@@ -1,9 +1,12 @@
 package com.koc.touchnotes.view
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -63,22 +66,38 @@ class NoteEditFragment : Fragment() {
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     when(item?.itemId){
                         R.id.actionBold -> {
-                            Toast.makeText(context, "Bold clicked", Toast.LENGTH_SHORT).show()
+                            noteEditViewModel.applySpan(
+                                StyleSpan(Typeface.BOLD),
+                                binding.noteBody.selectionStart,
+                                binding.noteBody.selectionEnd
+                            )
                             mode?.finish()
                             return true
                         }
                         R.id.actionItalic -> {
-                            Toast.makeText(context, "Italic clicked", Toast.LENGTH_SHORT).show()
+                            noteEditViewModel.applySpan(
+                                StyleSpan(Typeface.ITALIC),
+                                binding.noteBody.selectionStart,
+                                binding.noteBody.selectionEnd
+                            )
                             mode?.finish()
                             return true
                         }
                         R.id.actionUnderline -> {
-                            Toast.makeText(context, "Underline clicked", Toast.LENGTH_SHORT).show()
+                            noteEditViewModel.applySpan(
+                                UnderlineSpan(),
+                                binding.noteBody.selectionStart,
+                                binding.noteBody.selectionEnd
+                            )
                             mode?.finish()
                             return true
                         }
                         R.id.actionStrikeThrough -> {
-                            Toast.makeText(context, "Strike through clicked", Toast.LENGTH_SHORT).show()
+                            noteEditViewModel.applySpan(
+                                StrikethroughSpan(),
+                                binding.noteBody.selectionStart,
+                                binding.noteBody.selectionEnd
+                            )
                             mode?.finish()
                             return true
                         }
