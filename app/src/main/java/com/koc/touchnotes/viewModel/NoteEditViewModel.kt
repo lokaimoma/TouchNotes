@@ -82,9 +82,10 @@ class NoteEditViewModel @Inject constructor(
         }
     }
 
-    fun applySpan(span: Any, textStart: Int, textEnd: Int) {
+    fun applySpan(span: Any, textStart: Int, textEnd: Int) = viewModelScope.launch {
         if ((textStart != -1) && (textEnd != -1)) {
             body.setSpan(span, textStart, textEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            _noteEditChannel.send(NoteEditEvent.TextSpannedEvent(textStart, textEnd))
         }
     }
 

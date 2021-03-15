@@ -20,7 +20,7 @@ import com.koc.touchnotes.viewModel.NoteEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -117,13 +117,16 @@ class NoteEditFragment : Fragment() {
         super.onPause()
     }
 
-    private fun collectFlows(): Job = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-        noteEditViewModel.noteEditEvent.first { event ->
-            return@first when (event) {
+    private fun collectFlows() = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        noteEditViewModel.noteEditEvent.collect { event ->
+            when (event) {
                 is NoteEditEvent.NoteSavedEvent -> {
                     noteId = event.id
                     requireActivity().invalidateOptionsMenu()
-                    true
+                }
+                is NoteEditEvent.TextSpannedEvent -> {
+                    binding.noteBody.text = noteEditViewModel.body
+                    binding.noteBody.setSelection(event.textStart, event.textEnd)
                 }
             }.exhaustive
         }
