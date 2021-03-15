@@ -13,6 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
+import com.koc.touchnotes.util.Constants.IS_BOLD
+import com.koc.touchnotes.util.Constants.IS_ITALIC
+import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
+import com.koc.touchnotes.util.Constants.IS_UNDERLINED
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.extensions.*
@@ -57,6 +61,9 @@ class NoteEditFragment : Fragment() {
             binding.noteBody.customSelectionActionModeCallback = object : ActionMode.Callback {
                 override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                     mode?.menuInflater?.inflate(R.menu.text_span_menu, menu)
+                    if (noteId == null) {
+                        saveNote()
+                    }
                     return true
                 }
 
@@ -66,6 +73,8 @@ class NoteEditFragment : Fragment() {
                     when(item?.itemId){
                         R.id.actionBold -> {
                             noteEditViewModel.applySpan(
+                                noteId!!,
+                                IS_BOLD,
                                 StyleSpan(Typeface.BOLD),
                                 binding.noteBody.selectionStart,
                                 binding.noteBody.selectionEnd
@@ -75,6 +84,8 @@ class NoteEditFragment : Fragment() {
                         }
                         R.id.actionItalic -> {
                             noteEditViewModel.applySpan(
+                                noteId!!,
+                                IS_ITALIC,
                                 StyleSpan(Typeface.ITALIC),
                                 binding.noteBody.selectionStart,
                                 binding.noteBody.selectionEnd
@@ -84,6 +95,8 @@ class NoteEditFragment : Fragment() {
                         }
                         R.id.actionUnderline -> {
                             noteEditViewModel.applySpan(
+                                noteId!!,
+                                IS_UNDERLINED,
                                 UnderlineSpan(),
                                 binding.noteBody.selectionStart,
                                 binding.noteBody.selectionEnd
@@ -93,6 +106,8 @@ class NoteEditFragment : Fragment() {
                         }
                         R.id.actionStrikeThrough -> {
                             noteEditViewModel.applySpan(
+                                noteId!!,
+                                IS_STRIKE_THROUGH,
                                 StrikethroughSpan(),
                                 binding.noteBody.selectionStart,
                                 binding.noteBody.selectionEnd
