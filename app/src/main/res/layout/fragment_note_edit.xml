@@ -5,85 +5,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    tools:context=".view.NoteEditFragment">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/noteTitle"
-        style="@style/Theme.TouchNotes.EditTitle"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="4dp"
-        android:gravity="center|fill_horizontal"
-        android:hint="@string/note_title"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:minHeight="50dp"
-        app:backgroundTint="@color/teal_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Note Title" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/noteBody"
-        style="@style/Theme.TouchNotes.EditBody"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:hint="@string/note_content"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
         android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/noteTitle"
-        app:layout_constraintStart_toStartOf="@+id/noteTitle"
-        app:layout_constraintTop_toBottomOf="@+id/noteTitle" />
+        tools:context=".view.NoteEditFragment">
 
-    <TextView
-        android:id="@+id/createdTimeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/textColors"
-        android:textStyle="bold"
-        android:text="@string/created_time"
-        app:layout_constraintStart_toStartOf="@+id/noteBody"
-        app:layout_constraintTop_toBottomOf="@+id/noteBody" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/note_title"
+            app:boxStrokeColor="@color/teal_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <TextView
-        android:id="@+id/modifiedTimeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/modified_time"
-        android:textColor="@color/textColors"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/createdTimeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/createdTimeTitle" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/noteTitle"
+                style="@style/Theme.TouchNotes.EditTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/timeCreated"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        tools:text="Mon,11 oct 1990 18:45"
-        app:layout_constraintBaseline_toBaselineOf="@+id/createdTimeTitle"
-        app:layout_constraintStart_toEndOf="@+id/createdTimeTitle" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/timeModified"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        tools:text="Mon,11 oct 1990 18:45"
-        app:layout_constraintBaseline_toBaselineOf="@+id/modifiedTimeTitle"
-        app:layout_constraintStart_toEndOf="@+id/modifiedTimeTitle" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:importantForAutofill="no"
+            app:boxStrokeColor="@color/teal_200"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/noteBody"
+                style="@style/Theme.TouchNotes.EditBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/note_content"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/createdTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/created_time"
+            android:textColor="@color/textColors"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
+        <TextView
+            android:id="@+id/modifiedTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/modified_time"
+            android:textColor="@color/textColors"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/createdTimeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/createdTimeTitle" />
+
+        <TextView
+            android:id="@+id/timeCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            tools:text="Mon,11 oct 1990 18:45"
+            app:layout_constraintBaseline_toBaselineOf="@+id/createdTimeTitle"
+            app:layout_constraintStart_toEndOf="@+id/createdTimeTitle" />
+
+        <TextView
+            android:id="@+id/timeModified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            tools:text="Mon,11 oct 1990 18:45"
+            app:layout_constraintBaseline_toBaselineOf="@+id/modifiedTimeTitle"
+            app:layout_constraintStart_toEndOf="@+id/modifiedTimeTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
