@@ -10,6 +10,6 @@
 
         <Preference
                 app:title="Build version"
-                app:summary="v1.0.3"/>
+                app:summary="v2.0.0"/>
 
 </PreferenceScreen>
