@@ -2,11 +2,13 @@ package com.koc.touchnotes.view
 
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.*
+import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +19,7 @@ import com.koc.touchnotes.util.Constants.IS_BOLD
 import com.koc.touchnotes.util.Constants.IS_ITALIC
 import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
 import com.koc.touchnotes.util.Constants.IS_UNDERLINED
+import com.koc.touchnotes.util.CreateFileContract
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.extensions.*
@@ -38,6 +41,9 @@ class NoteEditFragment : Fragment() {
 
     val noteEditViewModel: NoteEditViewModel by viewModels()
 
+    private var pdfUri : Uri? = null
+    lateinit var createPDFFIle : ActivityResultLauncher<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -53,6 +59,9 @@ class NoteEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        createPDFFIle = registerForActivityResult(CreateFileContract("pdf")) {uri->
+            pdfUri = uri
+        }
         noteEditViewModel.processNoteSpans()
         populateViews()
         saveNoteState()
@@ -194,7 +203,7 @@ class NoteEditFragment : Fragment() {
     }
 
     private fun generatePDF() {
-        TODO("Not yet implemented")
+        createPDFFIle.launch(binding.noteTitle.text.toString())
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
