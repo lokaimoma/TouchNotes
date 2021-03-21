@@ -15,4 +15,12 @@ object Constants {
     const val TEXT_END = "textEnd"
     const val NOTE_ID = "noteId"
     const val TEXT_SPAN_TABLE = "Text_Span_Table"
+    const val NOTE_TITLE = "noteTitle"
+    const val NOTE_BODY = "noteBody"
+    const val NOTE = "note"
+    const val SEARCH_QUERY = "search_query"
+    const val RECYCLER_VIEW_POSITION = "recycler_position"
+    const val PREFERENCE_NAME = "user_preference"
+    const val SORT_ORDER = "sort_order"
+    const val NOTE_LAYOUT = "note_layout"
 }
