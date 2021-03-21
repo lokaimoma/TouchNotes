@@ -6,11 +6,11 @@ import androidx.lifecycle.SavedStateHandle
 import com.google.common.truth.Truth.assertThat
 import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.getOrAwaitValueTest
-import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.Repository
+import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.preferenceManager.PreferenceManager
+import com.koc.touchnotes.util.Constants.SEARCH_QUERY
 import com.koc.touchnotes.util.MainCoroutineRule
-import com.koc.touchnotes.viewModel.NoteListViewModel.Companion.SEARCH_QUERY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
