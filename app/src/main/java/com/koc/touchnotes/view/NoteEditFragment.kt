@@ -2,7 +2,6 @@ package com.koc.touchnotes.view
 
 import android.graphics.Color
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
@@ -41,8 +40,7 @@ class NoteEditFragment : Fragment() {
 
     val noteEditViewModel: NoteEditViewModel by viewModels()
 
-    private var pdfUri : Uri? = null
-    lateinit var createPDFFIle : ActivityResultLauncher<String>
+    lateinit var createPDFFIle: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +57,8 @@ class NoteEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        createPDFFIle = registerForActivityResult(CreateFileContract("pdf")) {uri->
-            pdfUri = uri
+        createPDFFIle = registerForActivityResult(CreateFileContract("pdf")) { uri ->
+            noteEditViewModel.generatePDF(uri, requireContext())
         }
         noteEditViewModel.processNoteSpans()
         populateViews()
@@ -80,7 +78,7 @@ class NoteEditFragment : Fragment() {
                 override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
 
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                    when(item?.itemId){
+                    when (item?.itemId) {
                         R.id.actionBold -> {
                             noteEditViewModel.applySpan(
                                 noteId!!,
@@ -195,7 +193,7 @@ class NoteEditFragment : Fragment() {
                 true
             }
             R.id.actionGeneratePDF -> {
-                createEmptyPDFFile()
+                viewLifecycleOwner.lifecycleScope.launch { createEmptyPDFFile() }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -204,7 +202,6 @@ class NoteEditFragment : Fragment() {
 
     private fun createEmptyPDFFile() {
         createPDFFIle.launch(binding.noteTitle.text.toString())
-        noteEditViewModel.generatePDF(pdfUri)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

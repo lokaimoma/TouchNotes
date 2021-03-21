@@ -1,14 +1,18 @@
 package com.koc.touchnotes.viewModel
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
 import android.print.PDFPrint
+import android.provider.MediaStore
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
+import androidx.core.net.toFile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,7 +38,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.lang.Exception
 import java.net.URI
 import javax.inject.Inject
 
@@ -173,7 +176,8 @@ class NoteEditViewModel @Inject constructor(
         }
 
     fun generatePDF(pdfUri: Uri?, context: Context) {
-        val pdfFile = File(URI(pdfUri.toString()))
+
+        val pdfFile = File(pdfUri?.path!!)
         PDFUtil.generatePDFFromHTML(context, pdfFile, generateHTML(), object : PDFPrint.OnPDFPrintListener {
             override fun onSuccess(file: File?) {
                 NotificationUtil.createNotification(context, Uri.fromFile(file))
