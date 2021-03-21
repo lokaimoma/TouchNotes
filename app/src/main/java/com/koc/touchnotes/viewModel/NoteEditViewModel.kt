@@ -23,6 +23,7 @@ import com.koc.touchnotes.util.Constants.NOTE
 import com.koc.touchnotes.util.Constants.NOTE_BODY
 import com.koc.touchnotes.util.Constants.NOTE_TITLE
 import com.koc.touchnotes.util.NoteEditEvent
+import com.koc.touchnotes.util.NotificationUtil
 import com.koc.touchnotes.viewModel.ext.createNote
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -175,16 +176,24 @@ class NoteEditViewModel @Inject constructor(
         val pdfFile = File(URI(pdfUri.toString()))
         PDFUtil.generatePDFFromHTML(context, pdfFile, generateHTML(), object : PDFPrint.OnPDFPrintListener {
             override fun onSuccess(file: File?) {
-                TODO("Not yet implemented")
+                NotificationUtil.createNotification(context, Uri.fromFile(file))
             }
 
             override fun onError(exception: Exception?) {
-                TODO("Not yet implemented")
+                exception?.printStackTrace()
             }
         })
         }
 
-    private fun generateHTML(): String? {
-        TODO("Not yet implemented")
+    private fun generateHTML(): String {
+        return " <!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<body>\n" +
+                "\n" +
+                "<h1>$title\n" +
+                "<p>$body\n" +
+                "\n" +
+                "</body>\n" +
+                "</html> "
     }
 }
