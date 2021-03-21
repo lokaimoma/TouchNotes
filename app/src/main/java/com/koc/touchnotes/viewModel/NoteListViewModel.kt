@@ -6,6 +6,8 @@ import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.preferenceManager.PreferenceManager
+import com.koc.touchnotes.util.Constants.RECYCLER_VIEW_POSITION
+import com.koc.touchnotes.util.Constants.SEARCH_QUERY
 import com.koc.touchnotes.util.NoteEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -86,10 +88,5 @@ class NoteListViewModel @Inject constructor(
 
     fun requestSettingsScreen() = viewModelScope.launch {
         noteEventChannel.send(NoteEvent.GotoSettingsScreen)
-    }
-
-    companion object{
-        const val SEARCH_QUERY = "search_query"
-        const val RECYCLER_VIEW_POSITION = "recycler_position"
     }
 }

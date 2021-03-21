@@ -16,12 +16,14 @@ import com.koc.touchnotes.util.Constants.IS_BOLD
 import com.koc.touchnotes.util.Constants.IS_ITALIC
 import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
 import com.koc.touchnotes.util.Constants.IS_UNDERLINED
+import com.koc.touchnotes.util.Constants.NOTE
+import com.koc.touchnotes.util.Constants.NOTE_BODY
+import com.koc.touchnotes.util.Constants.NOTE_TITLE
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.viewModel.ext.createNote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -161,10 +163,4 @@ class NoteEditViewModel @Inject constructor(
                 )
             }
         }
-
-    companion object {
-        private const val NOTE_TITLE = "noteTitle"
-        private const val NOTE_BODY = "noteBody"
-        private const val NOTE = "note"
-    }
 }

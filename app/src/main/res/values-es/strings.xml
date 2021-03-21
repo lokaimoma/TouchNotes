@@ -36,4 +36,5 @@
     <string name="italic">Itálico</string>
     <string name="underline">Subrayar</string>
     <string name="strike_through">Tachado</string>
+    <string name="generate_pdf">Generar PDF</string>
 </resources>

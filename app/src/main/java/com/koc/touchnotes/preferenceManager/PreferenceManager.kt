@@ -7,6 +7,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.createDataStore
 import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
+import com.koc.touchnotes.util.Constants.NOTE_LAYOUT
+import com.koc.touchnotes.util.Constants.PREFERENCE_NAME
+import com.koc.touchnotes.util.Constants.SORT_ORDER
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -63,11 +66,5 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     private object PreferencesKeys {
         val NOTE_SORT_ORDER = stringPreferencesKey(SORT_ORDER)
         val NOTE_LAYOUT_STYLE = stringPreferencesKey(NOTE_LAYOUT)
-    }
-
-    companion object {
-        private const val PREFERENCE_NAME = "user_preference"
-        private const val SORT_ORDER = "sort_order"
-        private const val NOTE_LAYOUT = "note_layout"
     }
 }
