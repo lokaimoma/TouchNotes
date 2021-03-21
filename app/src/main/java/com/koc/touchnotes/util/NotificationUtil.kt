@@ -33,8 +33,8 @@ object NotificationUtil {
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
         notification.apply {
-            setContentTitle("PDF Generated")
-            setContentText("PDF successfully created, click to view file.")
+            setContentTitle(context.getString(R.string.pdf_generated))
+            setContentText(context.getString(R.string.pdf_successfull))
             setSmallIcon(R.drawable.ic_pdf)
             priority = NotificationCompat.PRIORITY_DEFAULT
             setContentIntent(pendingIntent)

@@ -37,4 +37,6 @@
     <string name="underline">Subrayar</string>
     <string name="strike_through">Tachado</string>
     <string name="generate_pdf">Generar PDF</string>
+    <string name="pdf_generated">PDF generado</string>
+    <string name="pdf_successfull">PDF creado correctamente, haga clic para ver el archivo.</string>
 </resources>

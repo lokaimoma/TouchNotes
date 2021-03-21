@@ -37,4 +37,6 @@
     <string name="underline">Souligner</string>
     <string name="strike_through">Barré</string>
     <string name="generate_pdf">Générer un PDF</string>
+    <string name="pdf_generated">PDF généré</string>
+    <string name="pdf_successfull">PDF créé avec succès, cliquez pour afficher le fichier.</string>
 </resources>

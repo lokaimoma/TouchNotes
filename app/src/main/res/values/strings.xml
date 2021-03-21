@@ -56,4 +56,6 @@
     <string name="underline">Underline</string>
     <string name="strike_through">Strike through</string>
     <string name="generate_pdf">Generate PDF</string>
+    <string name="pdf_generated">PDF Generated</string>
+    <string name="pdf_successfull">PDF successfully created, click to view file.</string>
 </resources>
