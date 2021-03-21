@@ -1,6 +1,7 @@
 package com.koc.touchnotes.viewModel
 
 import android.graphics.Typeface
+import android.net.Uri
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
@@ -163,4 +164,8 @@ class NoteEditViewModel @Inject constructor(
                 )
             }
         }
+
+    fun generatePDF(pdfUri: Uri?) {
+//        TODO
+    }
 }

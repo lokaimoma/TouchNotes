@@ -195,15 +195,16 @@ class NoteEditFragment : Fragment() {
                 true
             }
             R.id.actionGeneratePDF -> {
-                generatePDF()
+                createEmptyPDFFile()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun generatePDF() {
+    private fun createEmptyPDFFile() {
         createPDFFIle.launch(binding.noteTitle.text.toString())
+        noteEditViewModel.generatePDF(pdfUri)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
