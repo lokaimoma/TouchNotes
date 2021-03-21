@@ -185,8 +185,16 @@ class NoteEditFragment : Fragment() {
                 shareNote()
                 true
             }
+            R.id.actionGeneratePDF -> {
+                generatePDF()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun generatePDF() {
+        TODO("Not yet implemented")
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
