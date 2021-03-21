@@ -36,4 +36,5 @@
     <string name="italic">Corsivo</string>
     <string name="underline">Sottolineare</string>
     <string name="strike_through">Barrato</string>
+    <string name="generate_pdf">Genera PDF</string>
 </resources>

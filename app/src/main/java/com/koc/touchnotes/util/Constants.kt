@@ -1,8 +1,5 @@
 package com.koc.touchnotes.util
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-
 /**
 Created by kelvin_clark on 3/4/2021 10:24 AM
  */
