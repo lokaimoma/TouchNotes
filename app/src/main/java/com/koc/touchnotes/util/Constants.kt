@@ -20,4 +20,7 @@ object Constants {
     const val PREFERENCE_NAME = "user_preference"
     const val SORT_ORDER = "sort_order"
     const val NOTE_LAYOUT = "note_layout"
+    const val CHANNEL_ID = "touchNotes@androi3030"
+    const val CHANNEL_NAME = "TouchNotes Channel"
+    const val NOTIFICATION_ID = 303009
 }

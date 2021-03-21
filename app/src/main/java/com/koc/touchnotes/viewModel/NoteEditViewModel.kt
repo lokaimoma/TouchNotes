@@ -1,7 +1,9 @@
 package com.koc.touchnotes.viewModel
 
+import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
+import android.print.PDFPrint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
@@ -22,6 +24,7 @@ import com.koc.touchnotes.util.Constants.NOTE_BODY
 import com.koc.touchnotes.util.Constants.NOTE_TITLE
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.viewModel.ext.createNote
+import com.tejpratapsingh.pdfcreator.utils.PDFUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
@@ -29,6 +32,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.lang.Exception
+import java.net.URI
 import javax.inject.Inject
 
 /**
@@ -165,7 +171,20 @@ class NoteEditViewModel @Inject constructor(
             }
         }
 
-    fun generatePDF(pdfUri: Uri?) {
-//        TODO
+    fun generatePDF(pdfUri: Uri?, context: Context) {
+        val pdfFile = File(URI(pdfUri.toString()))
+        PDFUtil.generatePDFFromHTML(context, pdfFile, generateHTML(), object : PDFPrint.OnPDFPrintListener {
+            override fun onSuccess(file: File?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onError(exception: Exception?) {
+                TODO("Not yet implemented")
+            }
+        })
+        }
+
+    private fun generateHTML(): String? {
+        TODO("Not yet implemented")
     }
 }
