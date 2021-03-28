@@ -9,6 +9,7 @@ import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -190,7 +191,7 @@ class NoteEditViewModel @Inject constructor(
                             inputStream.close()
                         }
                     }
-                    NotificationUtil.createNotification(context, Uri.fromFile(file))
+                    Toast.makeText(context, )
                     FileManager.getInstance().cleanTempFolder(context)
                 }
 

@@ -37,6 +37,5 @@
     <string name="underline">Sottolineare</string>
     <string name="strike_through">Barrato</string>
     <string name="generate_pdf">Genera PDF</string>
-    <string name="pdf_generated">PDF generato</string>
-    <string name="pdf_successfull">PDF creato con successo, fare clic per visualizzare il file.</string>
+    <string name="pdf_successfull">PDF creato con successo</string>
 </resources>
