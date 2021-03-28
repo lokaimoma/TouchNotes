@@ -1,18 +1,14 @@
 package com.koc.touchnotes.viewModel
 
-import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
 import android.print.PDFPrint
-import android.provider.MediaStore
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
-import androidx.core.net.toFile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,7 +23,6 @@ import com.koc.touchnotes.util.Constants.NOTE
 import com.koc.touchnotes.util.Constants.NOTE_BODY
 import com.koc.touchnotes.util.Constants.NOTE_TITLE
 import com.koc.touchnotes.util.NoteEditEvent
-import com.koc.touchnotes.util.NotificationUtil
 import com.koc.touchnotes.viewModel.ext.createNote
 import com.tejpratapsingh.pdfcreator.utils.FileManager
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil
@@ -41,7 +36,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.net.URI
 import javax.inject.Inject
 
 /**
