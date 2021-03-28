@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.koc.touchnotes.R
 import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.entities.TextSpan
@@ -191,7 +192,7 @@ class NoteEditViewModel @Inject constructor(
                             inputStream.close()
                         }
                     }
-                    Toast.makeText(context, )
+                    Toast.makeText(context, context.getString(R.string.pdf_successfull), Toast.LENGTH_SHORT).show()
                     FileManager.getInstance().cleanTempFolder(context)
                 }
 

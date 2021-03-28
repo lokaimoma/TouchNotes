@@ -1,16 +1,22 @@
 package com.koc.touchnotes.view
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteEditBinding
@@ -41,6 +47,7 @@ class NoteEditFragment : Fragment() {
     val noteEditViewModel: NoteEditViewModel by viewModels()
 
     lateinit var createPDFFIle: ActivityResultLauncher<String>
+    lateinit var writePermission: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +67,12 @@ class NoteEditFragment : Fragment() {
         createPDFFIle = registerForActivityResult(CreateFileContract("pdf")) { uri ->
             noteEditViewModel.generatePDF(uri, requireContext())
         }
+
+        writePermission =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                if (isGranted) createPDFFIle.launch(binding.noteTitle.text.toString())
+            }
+
         noteEditViewModel.processNoteSpans()
         populateViews()
         saveNoteState()
@@ -201,7 +214,36 @@ class NoteEditFragment : Fragment() {
     }
 
     private fun createEmptyPDFFile() {
-        createPDFFIle.launch(binding.noteTitle.text.toString())
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q){
+            checkWritePermission()
+        }else {
+            createPDFFIle.launch(binding.noteTitle.text.toString())
+        }
+    }
+
+    private fun checkWritePermission() {
+        when {
+            ContextCompat.checkSelfPermission(requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
+                createPDFFIle.launch(binding.noteTitle.text.toString())
+            }
+
+            shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Requesting Write Permission")
+                    .setMessage("Without write permission granted, we can't generate PDF.")
+                    .setPositiveButton("Ok, request again"){ _, _->
+                        writePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    }
+                    .setNegativeButton("No, I don't need it") {dialogue,_ ->
+                        dialogue.dismiss()
+                    }.show()
+            }
+
+            else -> {
+                writePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
