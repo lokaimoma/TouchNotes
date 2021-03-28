@@ -230,12 +230,12 @@ class NoteEditFragment : Fragment() {
 
             shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
                 MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Requesting Write Permission")
-                    .setMessage("Without write permission granted, we can't generate PDF.")
-                    .setPositiveButton("Ok, request again"){ _, _->
+                    .setTitle(getString(R.string.permission_title))
+                    .setMessage(getString(R.string.write_perm_message))
+                    .setPositiveButton(getString(R.string.write_perm_positive)){ _, _->
                         writePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     }
-                    .setNegativeButton("No, I don't need it") {dialogue,_ ->
+                    .setNegativeButton(getString(R.string.write_perm_negative)) { dialogue, _ ->
                         dialogue.dismiss()
                     }.show()
             }

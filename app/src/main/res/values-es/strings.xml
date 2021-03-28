@@ -38,4 +38,8 @@
     <string name="strike_through">Tachado</string>
     <string name="generate_pdf">Generar PDF</string>
     <string name="pdf_successfull">PDF creado con éxito</string>
+    <string name="permission_title">Solicitud de permiso de escritura</string>
+    <string name="write_perm_message">Sin el permiso de escritura otorgado, no podemos generar PDF.</string>
+    <string name="write_perm_positive">Ok, vuelve a solicitar</string>
+    <string name="write_perm_negative">No, no lo necesito</string>
 </resources>

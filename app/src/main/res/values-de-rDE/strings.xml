@@ -38,4 +38,8 @@
     <string name="strike_through">Durchgestrichen</string>
     <string name="generate_pdf">PDF generieren</string>
     <string name="pdf_successfull">PDF erfolgreich erstellt</string>
+    <string name="permission_title">Schreibberechtigung anfordern</string>
+    <string name="write_perm_message">Ohne erteilte Schreibgenehmigung können wir keine PDF-Dateien erstellen.</string>
+    <string name="write_perm_positive">Ok, nochmal anfordern</string>
+    <string name="write_perm_negative">Nein, ich brauche es nicht</string>
 </resources>
