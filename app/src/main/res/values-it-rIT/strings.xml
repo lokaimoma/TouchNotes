@@ -37,4 +37,9 @@
     <string name="underline">Sottolineare</string>
     <string name="strike_through">Barrato</string>
     <string name="generate_pdf">Genera PDF</string>
+    <string name="pdf_successfull">PDF creato con successo</string>
+    <string name="permission_title">Richiesta di autorizzazione di scrittura</string>
+    <string name="write_perm_message">Senza il permesso di scrittura concesso, non possiamo generare PDF.</string>
+    <string name="write_perm_positive">Ok, richiedi di nuovo</string>
+    <string name="write_perm_negative">No, non ne ho bisogno</string>
 </resources>

@@ -37,4 +37,9 @@
     <string name="underline">Souligner</string>
     <string name="strike_through">Barré</string>
     <string name="generate_pdf">Générer un PDF</string>
+    <string name="pdf_successfull">PDF créé avec succès</string>
+    <string name="permission_title">Demande d\'autorisation d\'écriture</string>
+    <string name="write_perm_message">Sans autorisation d\'écriture accordée, nous ne pouvons pas générer de PDF.</string>
+    <string name="write_perm_positive">Ok, redemande</string>
+    <string name="write_perm_negative">Non, je n\'en ai pas besoin</string>
 </resources>

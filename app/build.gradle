@@ -63,6 +63,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
+    // PDFCreator
+    implementation 'com.github.tejpratap46:PDFCreatorAndroid:2.1'
+
     // wasabeef recycleranimator
     implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
 

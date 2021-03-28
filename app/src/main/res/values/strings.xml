@@ -56,4 +56,9 @@
     <string name="underline">Underline</string>
     <string name="strike_through">Strike through</string>
     <string name="generate_pdf">Generate PDF</string>
+    <string name="pdf_successfull">PDF successfully created</string>
+    <string name="permission_title">Requesting Write Permission</string>
+    <string name="write_perm_message">Without write permission granted, we can\'t generate PDF.</string>
+    <string name="write_perm_positive">OK, request again</string>
+    <string name="write_perm_negative">No, I don\'t need it</string>
 </resources>

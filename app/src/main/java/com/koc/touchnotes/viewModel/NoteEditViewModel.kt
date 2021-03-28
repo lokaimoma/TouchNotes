@@ -1,14 +1,19 @@
 package com.koc.touchnotes.viewModel
 
+import android.content.Context
 import android.graphics.Typeface
+import android.net.Uri
+import android.print.PDFPrint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.koc.touchnotes.R
 import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.entities.TextSpan
@@ -21,6 +26,8 @@ import com.koc.touchnotes.util.Constants.NOTE_BODY
 import com.koc.touchnotes.util.Constants.NOTE_TITLE
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.viewModel.ext.createNote
+import com.tejpratapsingh.pdfcreator.utils.FileManager
+import com.tejpratapsingh.pdfcreator.utils.PDFUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
@@ -28,6 +35,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import javax.inject.Inject
 
 /**
@@ -102,19 +112,19 @@ class NoteEditViewModel @Inject constructor(
         if (note?.id != null) {
             repository.getTextSpans(note.id).first { textSpans ->
                 textSpans.forEach { textSpan ->
-                    if (textSpan.isBold){
+                    if (textSpan.isBold) {
                         applySpan(StyleSpan(Typeface.BOLD), textSpan.textStart, textSpan.textEnd)
-                    }else if (textSpan.isItalic) {
+                    } else if (textSpan.isItalic) {
                         applySpan(StyleSpan(Typeface.ITALIC), textSpan.textStart, textSpan.textEnd)
-                    }else if (textSpan.isUnderlined) {
+                    } else if (textSpan.isUnderlined) {
                         applySpan(UnderlineSpan(), textSpan.textStart, textSpan.textEnd)
-                    }else if (textSpan.isStrikeThrough) {
+                    } else if (textSpan.isStrikeThrough) {
                         applySpan(StrikethroughSpan(), textSpan.textStart, textSpan.textEnd)
                     }
                 }
                 return@first true
             }
-            _noteEditChannel.send(NoteEditEvent.TextSpannedEvent(0,0))
+            _noteEditChannel.send(NoteEditEvent.TextSpannedEvent(0, 0))
         }
     }
 
@@ -163,4 +173,44 @@ class NoteEditViewModel @Inject constructor(
                 )
             }
         }
+
+    fun generatePDF(pdfUri: Uri?, context: Context) {
+        val file = FileManager.getInstance().createTempFile(context, "pdf", false)
+        val contentResolver = context.contentResolver
+        PDFUtil.generatePDFFromHTML(
+            context,
+            file,
+            generateHTML(),
+            object : PDFPrint.OnPDFPrintListener {
+                override fun onSuccess(file: File?) {
+                    contentResolver.openFileDescriptor(pdfUri!!, "w").let { fileDescriptor ->
+                        FileOutputStream(fileDescriptor?.fileDescriptor).use {stream->
+                            val inputStream = FileInputStream(file)
+                            val bytes = ByteArray(file!!.length().toInt())
+                            inputStream.read(bytes)
+                            stream.write(bytes)
+                            inputStream.close()
+                        }
+                    }
+                    Toast.makeText(context, context.getString(R.string.pdf_successfull), Toast.LENGTH_SHORT).show()
+                    FileManager.getInstance().cleanTempFolder(context)
+                }
+
+                override fun onError(exception: Exception?) {
+                    exception?.printStackTrace()
+                }
+            })
+    }
+
+    private fun generateHTML(): String {
+        return " <!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<body>\n" +
+                "\n" +
+                "<h1>$title</h1>\n" +
+                "<p>$body</p>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html> "
+    }
 }

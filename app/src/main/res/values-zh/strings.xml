@@ -37,4 +37,9 @@
     <string name="underline">强调</string>
     <string name="strike_through">删除线</string>
     <string name="generate_pdf">产生PDF</string>
+    <string name="pdf_successfull">PDF已成功创建</string>
+    <string name="permission_title">要求写许可</string>
+    <string name="write_perm_message">没有授予写许可，我们将无法生成PDF。</string>
+    <string name="write_perm_positive">好的，再次请求</string>
+    <string name="write_perm_negative">不，我不需要</string>
 </resources>
