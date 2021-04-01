@@ -2,18 +2,17 @@ package com.koc.touchnotes.viewModel
 
 import android.content.Context
 import android.graphics.Typeface
-import android.net.Uri
 import android.print.PDFPrint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
-import android.widget.Toast
+import android.util.Log
+import androidx.core.content.FileProvider
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koc.touchnotes.R
 import com.koc.touchnotes.model.NoteRepository
 import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.entities.TextSpan
@@ -26,7 +25,6 @@ import com.koc.touchnotes.util.Constants.NOTE_BODY
 import com.koc.touchnotes.util.Constants.NOTE_TITLE
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.viewModel.ext.createNote
-import com.tejpratapsingh.pdfcreator.utils.FileManager
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -36,8 +34,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import javax.inject.Inject
 
 /**
@@ -174,32 +170,47 @@ class NoteEditViewModel @Inject constructor(
             }
         }
 
-    fun generatePDF(pdfUri: Uri?, context: Context) {
-        val file = FileManager.getInstance().createTempFile(context, "pdf", false)
-        val contentResolver = context.contentResolver
+    fun generatePDF(context: Context) {
+        val file = File(getPDFDir(context), "$title.pdf")
         PDFUtil.generatePDFFromHTML(
             context,
             file,
             generateHTML(),
             object : PDFPrint.OnPDFPrintListener {
                 override fun onSuccess(file: File?) {
-                    contentResolver.openFileDescriptor(pdfUri!!, "w").let { fileDescriptor ->
-                        FileOutputStream(fileDescriptor?.fileDescriptor).use {stream->
-                            val inputStream = FileInputStream(file)
-                            val bytes = ByteArray(file!!.length().toInt())
-                            inputStream.read(bytes)
-                            stream.write(bytes)
-                            inputStream.close()
+
+                    val fileUri = try {
+                        FileProvider.getUriForFile(
+                            context,
+                            "com.koc.touchnotes.fileprovider",
+                            file!!
+                        )
+                    } catch (exception: Exception) {
+                        Log.e("pdfCreated", "File can't be shared")
+                        null
+                    }
+
+                    viewModelScope.launch {
+                        fileUri?.let {
+                            NoteEditEvent.PDFCreatedEvent(it)
+                        }?.let {
+                            _noteEditChannel.send(it)
                         }
                     }
-                    Toast.makeText(context, context.getString(R.string.pdf_successfull), Toast.LENGTH_SHORT).show()
-                    FileManager.getInstance().cleanTempFolder(context)
                 }
 
                 override fun onError(exception: Exception?) {
                     exception?.printStackTrace()
                 }
+
             })
+    }
+
+    private fun getPDFDir(context: Context): String? {
+        val pdfDir = File("${context.filesDir}${File.separator}pdf")
+        if (!pdfDir.exists())
+            pdfDir.mkdir()
+        return pdfDir.absolutePath
     }
 
     private fun generateHTML(): String {

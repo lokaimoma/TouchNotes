@@ -1,5 +1,6 @@
 package com.koc.touchnotes.util
 
+import android.net.Uri
 import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.model.entities.Note
 
@@ -17,6 +18,7 @@ sealed class NoteEvent {
 sealed class NoteEditEvent {
     data class NoteSavedEvent(var id: Int) : NoteEditEvent()
     data class TextSpannedEvent(var textStart: Int, var textEnd: Int): NoteEditEvent()
+    data class PDFCreatedEvent(var pdfUri : Uri) :NoteEditEvent()
 }
 
 val <T> T.exhaustive: T
