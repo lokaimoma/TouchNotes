@@ -9,6 +9,7 @@ import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -38,6 +39,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.lang.Exception
 import javax.inject.Inject
 
 /**
@@ -176,6 +178,16 @@ class NoteEditViewModel @Inject constructor(
 
     fun generatePDF(context: Context) {
         val file = File(getPDFDir(context), "$title.pdf")
+        PDFUtil.generatePDFFromHTML(context, file, generateHTML(), object : PDFPrint.OnPDFPrintListener{
+            override fun onSuccess(file: File?) {
+                Log.i("pdfCreated", "${file?.absolutePath}")
+            }
+
+            override fun onError(exception: Exception?) {
+                exception?.printStackTrace()
+            }
+
+        })
     }
 
     private fun getPDFDir(context: Context): String? {
