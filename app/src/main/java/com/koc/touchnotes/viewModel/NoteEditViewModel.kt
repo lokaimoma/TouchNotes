@@ -191,7 +191,7 @@ class NoteEditViewModel @Inject constructor(
     }
 
     private fun getPDFDir(context: Context): String? {
-        val pdfDir = File("${context.filesDir}${File.separator}pdf")
+        val pdfDir = File("${context.getExternalFilesDir(null)}${File.separator}pdf")
         if (!pdfDir.exists())
             pdfDir.mkdir()
         return pdfDir.absolutePath
