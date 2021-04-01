@@ -47,7 +47,6 @@ class NoteEditFragment : Fragment() {
     val noteEditViewModel: NoteEditViewModel by viewModels()
 
     lateinit var createPDFFIle: ActivityResultLauncher<String>
-    lateinit var writePermission: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,11 +66,6 @@ class NoteEditFragment : Fragment() {
         createPDFFIle = registerForActivityResult(CreateFileContract("pdf")) { uri ->
             noteEditViewModel.generatePDF(uri, requireContext())
         }
-
-        writePermission =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                if (isGranted) createPDFFIle.launch(binding.noteTitle.text.toString())
-            }
 
         noteEditViewModel.processNoteSpans()
         populateViews()
@@ -214,17 +208,15 @@ class NoteEditFragment : Fragment() {
     }
 
     private fun createEmptyPDFFile() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q){
-            checkWritePermission()
-        }else {
-            createPDFFIle.launch(binding.noteTitle.text.toString())
-        }
+        createPDFFIle.launch(binding.noteTitle.text.toString())
     }
 
     private fun checkWritePermission() {
         when {
-            ContextCompat.checkSelfPermission(requireContext(),
-            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED -> {
                 createPDFFIle.launch(binding.noteTitle.text.toString())
             }
 
@@ -232,7 +224,7 @@ class NoteEditFragment : Fragment() {
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(getString(R.string.permission_title))
                     .setMessage(getString(R.string.write_perm_message))
-                    .setPositiveButton(getString(R.string.write_perm_positive)){ _, _->
+                    .setPositiveButton(getString(R.string.write_perm_positive)) { _, _ ->
                         writePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     }
                     .setNegativeButton(getString(R.string.write_perm_negative)) { dialogue, _ ->
