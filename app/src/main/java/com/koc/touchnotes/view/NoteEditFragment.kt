@@ -40,8 +40,6 @@ class NoteEditFragment : Fragment() {
 
     val noteEditViewModel: NoteEditViewModel by viewModels()
 
-    lateinit var createPDFFIle: ActivityResultLauncher<String>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -57,9 +55,6 @@ class NoteEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        createPDFFIle = registerForActivityResult(CreateFileContract("pdf")) { uri ->
-            noteEditViewModel.generatePDF(uri, requireContext())
-        }
 
         noteEditViewModel.processNoteSpans()
         populateViews()
@@ -202,7 +197,7 @@ class NoteEditFragment : Fragment() {
     }
 
     private fun createEmptyPDFFile() {
-        createPDFFIle.launch(binding.noteTitle.text.toString())
+        noteEditViewModel.generatePDF(requireContext())
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

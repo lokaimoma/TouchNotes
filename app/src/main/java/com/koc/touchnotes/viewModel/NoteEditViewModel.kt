@@ -174,32 +174,15 @@ class NoteEditViewModel @Inject constructor(
             }
         }
 
-    fun generatePDF(pdfUri: Uri?, context: Context) {
-        val file = FileManager.getInstance().createTempFile(context, "pdf", false)
-        val contentResolver = context.contentResolver
-        PDFUtil.generatePDFFromHTML(
-            context,
-            file,
-            generateHTML(),
-            object : PDFPrint.OnPDFPrintListener {
-                override fun onSuccess(file: File?) {
-                    contentResolver.openFileDescriptor(pdfUri!!, "w").let { fileDescriptor ->
-                        FileOutputStream(fileDescriptor?.fileDescriptor).use {stream->
-                            val inputStream = FileInputStream(file)
-                            val bytes = ByteArray(file!!.length().toInt())
-                            inputStream.read(bytes)
-                            stream.write(bytes)
-                            inputStream.close()
-                        }
-                    }
-                    Toast.makeText(context, context.getString(R.string.pdf_successfull), Toast.LENGTH_SHORT).show()
-                    FileManager.getInstance().cleanTempFolder(context)
-                }
+    fun generatePDF(context: Context) {
+        val file = File(getPDFDir(context), "$title.pdf")
+    }
 
-                override fun onError(exception: Exception?) {
-                    exception?.printStackTrace()
-                }
-            })
+    private fun getPDFDir(context: Context): String? {
+        val pdfDir = File("${context.filesDir}${File.separator}pdf")
+        if (!pdfDir.exists())
+            pdfDir.mkdir()
+        return pdfDir.absolutePath
     }
 
     private fun generateHTML(): String {
