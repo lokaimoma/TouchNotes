@@ -8,7 +8,6 @@ import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.*
-import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +18,6 @@ import com.koc.touchnotes.util.Constants.IS_BOLD
 import com.koc.touchnotes.util.Constants.IS_ITALIC
 import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
 import com.koc.touchnotes.util.Constants.IS_UNDERLINED
-import com.koc.touchnotes.util.CreateFileContract
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.extensions.*
