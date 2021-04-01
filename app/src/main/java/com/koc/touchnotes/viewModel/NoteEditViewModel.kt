@@ -11,6 +11,7 @@ import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -180,7 +181,16 @@ class NoteEditViewModel @Inject constructor(
         val file = File(getPDFDir(context), "$title.pdf")
         PDFUtil.generatePDFFromHTML(context, file, generateHTML(), object : PDFPrint.OnPDFPrintListener{
             override fun onSuccess(file: File?) {
-                Log.i("pdfCreated", "${file?.absolutePath}")
+
+                val fileUri = try {
+                    FileProvider.getUriForFile(context,
+                    "com.koc.touchnotes.fileprovider",
+                    file!!)
+                }catch (exception: Exception) {
+                    Log.e("pdfCreated", "File can't be shared")
+                }
+
+                Log.i("pdfCreated", "$fileUri")
             }
 
             override fun onError(exception: Exception?) {
@@ -191,7 +201,7 @@ class NoteEditViewModel @Inject constructor(
     }
 
     private fun getPDFDir(context: Context): String? {
-        val pdfDir = File("${context.getExternalFilesDir(null)}${File.separator}pdf")
+        val pdfDir = File("${context.filesDir}${File.separator}pdf")
         if (!pdfDir.exists())
             pdfDir.mkdir()
         return pdfDir.absolutePath
