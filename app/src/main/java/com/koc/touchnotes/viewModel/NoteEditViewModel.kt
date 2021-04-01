@@ -179,25 +179,38 @@ class NoteEditViewModel @Inject constructor(
 
     fun generatePDF(context: Context) {
         val file = File(getPDFDir(context), "$title.pdf")
-        PDFUtil.generatePDFFromHTML(context, file, generateHTML(), object : PDFPrint.OnPDFPrintListener{
-            override fun onSuccess(file: File?) {
+        PDFUtil.generatePDFFromHTML(
+            context,
+            file,
+            generateHTML(),
+            object : PDFPrint.OnPDFPrintListener {
+                override fun onSuccess(file: File?) {
 
-                val fileUri = try {
-                    FileProvider.getUriForFile(context,
-                    "com.koc.touchnotes.fileprovider",
-                    file!!)
-                }catch (exception: Exception) {
-                    Log.e("pdfCreated", "File can't be shared")
+                    val fileUri = try {
+                        FileProvider.getUriForFile(
+                            context,
+                            "com.koc.touchnotes.fileprovider",
+                            file!!
+                        )
+                    } catch (exception: Exception) {
+                        Log.e("pdfCreated", "File can't be shared")
+                        null
+                    }
+
+                    viewModelScope.launch {
+                        fileUri?.let {
+                            NoteEditEvent.PDFCreatedEvent(it)
+                        }?.let {
+                            _noteEditChannel.send(it)
+                        }
+                    }
                 }
 
-                Log.i("pdfCreated", "$fileUri")
-            }
+                override fun onError(exception: Exception?) {
+                    exception?.printStackTrace()
+                }
 
-            override fun onError(exception: Exception?) {
-                exception?.printStackTrace()
-            }
-
-        })
+            })
     }
 
     private fun getPDFDir(context: Context): String? {
