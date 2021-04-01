@@ -4,14 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -209,33 +207,6 @@ class NoteEditFragment : Fragment() {
 
     private fun createEmptyPDFFile() {
         createPDFFIle.launch(binding.noteTitle.text.toString())
-    }
-
-    private fun checkWritePermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                createPDFFIle.launch(binding.noteTitle.text.toString())
-            }
-
-            shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(getString(R.string.permission_title))
-                    .setMessage(getString(R.string.write_perm_message))
-                    .setPositiveButton(getString(R.string.write_perm_positive)) { _, _ ->
-                        writePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    }
-                    .setNegativeButton(getString(R.string.write_perm_negative)) { dialogue, _ ->
-                        dialogue.dismiss()
-                    }.show()
-            }
-
-            else -> {
-                writePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            }
-        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
