@@ -1,5 +1,6 @@
 package com.koc.touchnotes.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -145,6 +146,14 @@ class NoteEditFragment : Fragment() {
                 is NoteEditEvent.TextSpannedEvent -> {
                     binding.noteBody.text = noteEditViewModel.body
                     binding.noteBody.setSelection(event.textStart, event.textEnd)
+                }
+                is NoteEditEvent.PDFCreatedEvent -> {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.apply {
+                        setDataAndType(event.pdfUri, "application/pdf")
+                        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    }
+                    startActivity(intent)
                 }
             }.exhaustive
         }
