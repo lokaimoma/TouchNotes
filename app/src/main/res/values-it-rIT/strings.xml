@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">TouchNotes</string>
     <string name="add_note">Aggiungi nota</string>
-    <string name="note_title">Titolo della nota</string>
-    <string name="note_content">Nota contenuto</string>
+    <string name="note_title">Titolo</string>
+    <string name="note_content">Digita qui il contenuto della nota</string>
     <string name="save">Salva</string>
     <string name="delete">Elimina</string>
     <string name="share">Condividere</string>
