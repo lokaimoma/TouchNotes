@@ -49,6 +49,7 @@
     <!-- Note Content -->
     <style name="Theme.TouchNotes.EditBody">
         <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <style name="ThemeOverlay.TouchNotes.AppWidgetContainer" parent="">
