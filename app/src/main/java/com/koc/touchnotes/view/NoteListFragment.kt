@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
 import com.koc.touchnotes.enums.NoteLayout
@@ -29,12 +30,13 @@ class NoteListFragment : Fragment(), ClickListener {
 
     val noteListViewModel: NoteListViewModel by viewModels()
 
+    var itemsNotes: RecyclerView? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
-        noteListViewModel.collectNoteLayoutStyle()
         return _binding?.root
     }
 
@@ -67,7 +69,6 @@ class NoteListFragment : Fragment(), ClickListener {
             layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
             layoutToggle.title = resources.getString(R.string.grid_style)
         }
-        setUpViews()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

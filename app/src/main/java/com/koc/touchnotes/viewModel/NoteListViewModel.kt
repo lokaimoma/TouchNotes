@@ -30,6 +30,12 @@ class NoteListViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
+    private val noteLayoutStyle = preferenceManager.layoutPreferenceFlow
+
+    init {
+        collectNoteLayoutStyle()
+    }
+
     var lastRecyclerViewPosition = state.get(RECYCLER_VIEW_POSITION) ?: 0
 
     var layoutStyle : NoteLayout? = null
@@ -39,8 +45,6 @@ class NoteListViewModel @Inject constructor(
     val noteEvent = noteEventChannel.receiveAsFlow()
 
     private val noteSort = preferenceManager.sortPreferencesFlow
-
-    private val noteLayoutStyle = preferenceManager.layoutPreferenceFlow
 
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     private val noteListFlow = combine(
