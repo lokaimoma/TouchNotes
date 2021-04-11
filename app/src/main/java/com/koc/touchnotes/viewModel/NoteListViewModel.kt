@@ -86,7 +86,7 @@ class NoteListViewModel @Inject constructor(
         noteEventChannel.send(NoteEvent.UpdateNoteLayoutStyleEvent(layoutStyle))
     }
 
-    private fun collectNoteLayoutStyle() = viewModelScope.launch(IO) {
+    fun collectNoteLayoutStyle() = viewModelScope.launch(IO) {
         layoutStyle = noteLayoutStyle.first()
     }
 
