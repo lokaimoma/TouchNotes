@@ -1,7 +1,6 @@
 package com.koc.touchnotes.view.extensions
 
 import android.graphics.Color
-import android.util.Log
 import android.view.MenuItem
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.widget.SearchView
@@ -84,13 +83,11 @@ fun NoteListFragment.observeNoteList() {
         notesAdapter.submitList(notesList) {
 
             itemsNotes = binding.itemsNotesStub.inflate() as RecyclerView?
-            setUpViews()
-
-//            if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
-//                itemsNotes!!.smoothScrollToPosition(0)
-//            }else {
-//                itemsNotes!!.smoothScrollToPosition(noteListViewModel.lastRecyclerViewPosition)
-//            }
+            if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
+                setUpViews(0)
+            }else {
+                setUpViews(noteListViewModel.lastRecyclerViewPosition)
+            }
         }
         if (notesList.isEmpty()) {
             binding.ivEmpty.isVisible = true
@@ -102,7 +99,7 @@ fun NoteListFragment.observeNoteList() {
     }
 }
 
-fun NoteListFragment.setUpViews() {
+fun NoteListFragment.setUpViews(recyclerViewPosition: Int) {
 
     binding.apply {
         itemsNotes?.adapter = notesAdapter
@@ -132,6 +129,9 @@ fun NoteListFragment.setUpViews() {
             }
 
         }).attachToRecyclerView(itemsNotes)
+
+        itemsNotes?.scrollToPosition(recyclerViewPosition)
+
         fabAdd.setOnClickListener {
             noteListViewModel.addNoteClicked()
         }
