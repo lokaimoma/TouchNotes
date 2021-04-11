@@ -10,14 +10,13 @@
         android:id="@+id/itemsNotesStub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inflatedId="@+id/itemsNotes"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:inflatedId="@+id/itemsNotes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
@@ -37,14 +36,14 @@
         android:id="@+id/ivEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/no_note_saved_note"
         android:src="@drawable/ic_empty"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.425"
-        android:contentDescription="@string/no_note_saved_note" />
+        app:layout_constraintVertical_bias="0.425" />
 
     <TextView
         android:id="@+id/tvEmpty"

@@ -34,7 +34,6 @@ class NoteListFragment : Fragment(), ClickListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
-        noteListViewModel.collectNoteLayoutStyle()
         return _binding?.root
     }
 

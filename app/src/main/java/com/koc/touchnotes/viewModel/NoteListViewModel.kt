@@ -30,6 +30,10 @@ class NoteListViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
+    init {
+        collectNoteLayoutStyle()
+    }
+
     var lastRecyclerViewPosition = state.get(RECYCLER_VIEW_POSITION) ?: 0
 
     var layoutStyle : NoteLayout? = null
@@ -82,7 +86,7 @@ class NoteListViewModel @Inject constructor(
         noteEventChannel.send(NoteEvent.UpdateNoteLayoutStyleEvent(layoutStyle))
     }
 
-    fun collectNoteLayoutStyle() = viewModelScope.launch(IO) {
+    private fun collectNoteLayoutStyle() = viewModelScope.launch(IO) {
         layoutStyle = noteLayoutStyle.first()
     }
 
