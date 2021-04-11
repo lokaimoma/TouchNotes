@@ -5,17 +5,17 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.koc.touchnotes.R
 import com.koc.touchnotes.databinding.FragmentNoteListBinding
-import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.interfaces.ClickListener
 import com.koc.touchnotes.model.entities.Note
-import com.koc.touchnotes.view.extensions.*
+import com.koc.touchnotes.view.extensions.collectFlows
+import com.koc.touchnotes.view.extensions.observeNoteList
+import com.koc.touchnotes.view.extensions.queryTextListener
 import com.koc.touchnotes.viewModel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -63,18 +63,6 @@ class NoteListFragment : Fragment(), ClickListener {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        val layoutToggle = menu.findItem(R.id.actionChangeLayout)
-        if (noteListViewModel.layoutStyle == NoteLayout.GRID_VIEW) {
-            layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
-            layoutToggle.title = resources.getString(R.string.list_style)
-        } else {
-            layoutToggle.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
-            layoutToggle.title = resources.getString(R.string.grid_style)
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.actionSortByCreatedTime -> {
@@ -88,10 +76,6 @@ class NoteListFragment : Fragment(), ClickListener {
             }
             R.id.actionSortByTitle -> {
                 noteListViewModel.updateSortOrder(NoteSort.BY_TITLE)
-                true
-            }
-            R.id.actionChangeLayout -> {
-                changeLayout(item)
                 true
             }
             R.id.actionSettings -> {
