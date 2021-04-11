@@ -90,11 +90,6 @@ fun NoteListFragment.observeNoteList() {
                     setUpViews(noteListViewModel.lastRecyclerViewPosition)
                 }
             }catch (e:Exception) {
-//                if ((requireActivity() as MainActivity).isNoteSavedOrUpdated) {
-//                    setUpViews(0)
-//                } else {
-//                    setUpViews(noteListViewModel.lastRecyclerViewPosition)
-//                }
                 e.printStackTrace()
             }
         }
