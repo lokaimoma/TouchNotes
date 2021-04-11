@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.createDataStore
 import com.koc.touchnotes.enums.NoteSort
+import com.koc.touchnotes.util.Constants.NOTE_LAYOUT
 import com.koc.touchnotes.util.Constants.PREFERENCE_NAME
 import com.koc.touchnotes.util.Constants.SORT_ORDER
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -39,6 +40,12 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     suspend fun updateSortOrder(sortOrder: NoteSort) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.NOTE_SORT_ORDER] = sortOrder.name
+        }
+    }
+
+    suspend fun removeLayoutKey() {
+        dataStore.edit {
+            it.remove(stringPreferencesKey(NOTE_LAYOUT))
         }
     }
 

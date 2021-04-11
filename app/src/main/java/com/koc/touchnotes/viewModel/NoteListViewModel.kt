@@ -27,9 +27,16 @@ class NoteListViewModel @Inject constructor(
     private val preferenceManager: PreferenceManager,
     state: SavedStateHandle
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch(IO) {
+            preferenceManager.removeLayoutKey()
+        }
+    }
+
     var lastRecyclerViewPosition = state.get(RECYCLER_VIEW_POSITION) ?: 0
 
-    val searchQuery = state.getLiveData(SEARCH_QUERY,"")
+    val searchQuery = state.getLiveData(SEARCH_QUERY, "")
     private val noteEventChannel = Channel<NoteEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
 
@@ -52,11 +59,11 @@ class NoteListViewModel @Inject constructor(
         preferenceManager.updateSortOrder(sortOrder)
     }
 
-    fun noteClicked(note: Note)= viewModelScope.launch {
+    fun noteClicked(note: Note) = viewModelScope.launch {
         noteEventChannel.send(NoteEvent.NoteClickedEvent(note))
     }
 
-    fun addNoteClicked()= viewModelScope.launch {
+    fun addNoteClicked() = viewModelScope.launch {
         noteEventChannel.send(NoteEvent.AddNoteEvent)
     }
 
@@ -66,8 +73,12 @@ class NoteListViewModel @Inject constructor(
     }
 
     fun restoreNote(note: Note) = viewModelScope.launch {
-        repository.insertNote(note.copy(id = 0,_createdTime = System.currentTimeMillis(),
-        _modifiedTime = System.currentTimeMillis()))
+        repository.insertNote(
+            note.copy(
+                id = 0, _createdTime = System.currentTimeMillis(),
+                _modifiedTime = System.currentTimeMillis()
+            )
+        )
     }
 
     fun requestSettingsScreen() = viewModelScope.launch {
