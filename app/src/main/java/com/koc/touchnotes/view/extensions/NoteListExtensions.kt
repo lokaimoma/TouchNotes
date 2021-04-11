@@ -1,6 +1,7 @@
 package com.koc.touchnotes.view.extensions
 
 import android.graphics.Color
+import android.util.Log
 import android.view.MenuItem
 import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.widget.SearchView
@@ -62,12 +63,12 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
             }
             is NoteEvent.UpdateNoteLayoutStyleEvent -> {
                 if (event.layoutStyle == NoteLayout.GRID_VIEW) {
-                    binding.itemsNotes.layoutManager = GridLayoutManager(
+                    itemsNotes?.layoutManager = GridLayoutManager(
                         context, 2,
                         GridLayoutManager.VERTICAL, false
                     )
                 } else {
-                    binding.itemsNotes.layoutManager = LinearLayoutManager(context)
+                    itemsNotes?.layoutManager = LinearLayoutManager(context)
                 }
             }
             NoteEvent.GotoSettingsScreen -> {
@@ -80,17 +81,21 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
 @ExperimentalCoroutinesApi
 fun NoteListFragment.observeNoteList() {
     noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
-        notesAdapter.submitList(notesList){
-            if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
-                binding.itemsNotes.smoothScrollToPosition(0)
-            }else {
-                binding.itemsNotes.smoothScrollToPosition(noteListViewModel.lastRecyclerViewPosition)
-            }
+        notesAdapter.submitList(notesList) {
+
+            itemsNotes = binding.itemsNotesStub.inflate() as RecyclerView?
+            setUpViews()
+
+//            if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
+//                itemsNotes!!.smoothScrollToPosition(0)
+//            }else {
+//                itemsNotes!!.smoothScrollToPosition(noteListViewModel.lastRecyclerViewPosition)
+//            }
         }
         if (notesList.isEmpty()) {
             binding.ivEmpty.isVisible = true
             binding.tvEmpty.isVisible = true
-        }else {
+        } else {
             binding.ivEmpty.isVisible = false
             binding.tvEmpty.isVisible = false
         }
@@ -100,10 +105,10 @@ fun NoteListFragment.observeNoteList() {
 fun NoteListFragment.setUpViews() {
 
     binding.apply {
-        itemsNotes.adapter = notesAdapter
-        itemsNotes.itemAnimator = SlideInLeftAnimator(AnticipateInterpolator(1f))
+        itemsNotes?.adapter = notesAdapter
+        itemsNotes?.itemAnimator = SlideInLeftAnimator(AnticipateInterpolator(1f))
 
-        itemsNotes.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.LINEAR_VIEW)
+        itemsNotes?.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.LINEAR_VIEW)
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         else
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
