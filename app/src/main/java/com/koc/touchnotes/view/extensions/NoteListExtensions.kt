@@ -1,17 +1,18 @@
 package com.koc.touchnotes.view.extensions
 
 import android.graphics.Color
-import android.view.MenuItem
 import android.view.animation.AnticipateInterpolator
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.koc.touchnotes.R
-import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.util.NoteEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.MainActivity
@@ -47,6 +48,9 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
             is NoteEvent.NoteClickedEvent -> {
                 val action = NoteListFragmentDirections.actionListEdit(event.note)
                 findNavController().navigate(action)
+                itemsNotes = null
+                ivEmpty = null
+                tvEmpty = null
             }
             is NoteEvent.AddNoteEvent -> {
                 findNavController().navigate(R.id.action_list_edit)
@@ -60,16 +64,6 @@ fun NoteListFragment.collectFlows() = viewLifecycleOwner.lifecycleScope.launchWh
                     .setTextColor(Color.WHITE)
                     .show()
             }
-            is NoteEvent.UpdateNoteLayoutStyleEvent -> {
-                if (event.layoutStyle == NoteLayout.GRID_VIEW) {
-                    itemsNotes?.layoutManager = GridLayoutManager(
-                        context, 2,
-                        GridLayoutManager.VERTICAL, false
-                    )
-                } else {
-                    itemsNotes?.layoutManager = LinearLayoutManager(context)
-                }
-            }
             NoteEvent.GotoSettingsScreen -> {
                 findNavController().navigate(R.id.action_list_settings)
             }
@@ -82,28 +76,23 @@ fun NoteListFragment.observeNoteList() {
     noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
         notesAdapter.submitList(notesList) {
 
-            try {
-                itemsNotes = binding.itemsNotesStub.inflate() as RecyclerView?
-                if ((requireActivity() as MainActivity).isNoteSavedOrUpdated) {
-                    setUpViews(0)
-                } else {
-                    setUpViews(noteListViewModel.lastRecyclerViewPosition)
-                }
-            }catch (e:Exception) {
-//                if ((requireActivity() as MainActivity).isNoteSavedOrUpdated) {
-//                    setUpViews(0)
-//                } else {
-//                    setUpViews(noteListViewModel.lastRecyclerViewPosition)
-//                }
-                e.printStackTrace()
+            itemsNotes = itemsNotes ?: binding.itemsNotesStub.inflate() as RecyclerView?
+
+            if ((requireActivity() as MainActivity).isNoteSavedOrUpdated) {
+                setUpViews(0)
+            } else {
+                setUpViews(noteListViewModel.lastRecyclerViewPosition)
             }
-        }
-        if (notesList.isEmpty()) {
-            binding.ivEmpty.isVisible = true
-            binding.tvEmpty.isVisible = true
-        } else {
-            binding.ivEmpty.isVisible = false
-            binding.tvEmpty.isVisible = false
+
+            if (notesList.isEmpty()) {
+                ivEmpty = ivEmpty ?: binding.ivEmptyStub.inflate() as ImageView?
+                tvEmpty = tvEmpty ?: binding.tvEmptyStub.inflate() as TextView?
+                ivEmpty?.isVisible = true
+                tvEmpty?.isVisible = true
+            } else {
+                ivEmpty?.isVisible = false
+                tvEmpty?.isVisible = false
+            }
         }
     }
 }
@@ -114,10 +103,10 @@ fun NoteListFragment.setUpViews(recyclerViewPosition: Int) {
         itemsNotes?.adapter = notesAdapter
         itemsNotes?.itemAnimator = SlideInLeftAnimator(AnticipateInterpolator(1f))
 
-        itemsNotes?.layoutManager = if (noteListViewModel.layoutStyle == NoteLayout.LINEAR_VIEW)
-            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        else
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        itemsNotes?.layoutManager = StaggeredGridLayoutManager(
+                2,
+                StaggeredGridLayoutManager.VERTICAL
+            )
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
@@ -145,17 +134,5 @@ fun NoteListFragment.setUpViews(recyclerViewPosition: Int) {
             noteListViewModel.addNoteClicked()
         }
 
-    }
-}
-
-fun NoteListFragment.changeLayout(item: MenuItem) {
-    if (item.title.toString() == resources.getString(R.string.list_style)) {
-        item.title = resources.getString(R.string.grid_style)
-        item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_grid, null)
-        noteListViewModel.updateNoteLayoutStyle(NoteLayout.LINEAR_VIEW)
-    } else {
-        item.title = resources.getString(R.string.list_style)
-        item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_list, null)
-        noteListViewModel.updateNoteLayoutStyle(NoteLayout.GRID_VIEW)
     }
 }

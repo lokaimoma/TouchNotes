@@ -33,30 +33,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/ivEmpty"
+    <ViewStub
+        android:id="@+id/ivEmptyStub"
+        android:inflatedId="@+id/ivEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/no_note_saved_note"
-        android:src="@drawable/ic_empty"
-        android:visibility="invisible"
+        android:layout="@layout/iv_empty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.425" />
 
-    <TextView
-        android:id="@+id/tvEmpty"
-        style="@style/Theme.TouchNotes.Title"
+    <ViewStub
+        android:id="@+id/tvEmptyStub"
+        android:inflatedId="@+id/tvEmpty"
+        android:layout="@layout/tv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/added_notes_appear_here"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivEmpty" />
+        app:layout_constraintTop_toBottomOf="@+id/ivEmpty"
+        tools:ignore="UnknownId" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

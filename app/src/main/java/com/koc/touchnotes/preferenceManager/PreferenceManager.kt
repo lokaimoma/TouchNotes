@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.createDataStore
-import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
 import com.koc.touchnotes.util.Constants.NOTE_LAYOUT
 import com.koc.touchnotes.util.Constants.PREFERENCE_NAME
@@ -38,33 +37,19 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
                     preferences[PreferencesKeys.NOTE_SORT_ORDER] ?: NoteSort.BY_CREATED_TIME.name)
         }
 
-    val layoutPreferenceFlow = dataStore.data
-        .catch { exception ->
-            if(exception is IOException) {
-                emit(emptyPreferences())
-            }else {
-                throw exception
-            }
-        }
-        .map { preference ->
-            NoteLayout.valueOf(
-                preference[PreferencesKeys.NOTE_LAYOUT_STYLE] ?: NoteLayout.LINEAR_VIEW.name)
-        }
-
     suspend fun updateSortOrder(sortOrder: NoteSort) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.NOTE_SORT_ORDER] = sortOrder.name
         }
     }
 
-    suspend fun updateLayoutStyle(layout: NoteLayout) {
-        dataStore.edit {preference ->
-            preference[PreferencesKeys.NOTE_LAYOUT_STYLE] = layout.name
+    suspend fun removeLayoutKey() {
+        dataStore.edit {
+            it.remove(stringPreferencesKey(NOTE_LAYOUT))
         }
     }
 
     private object PreferencesKeys {
         val NOTE_SORT_ORDER = stringPreferencesKey(SORT_ORDER)
-        val NOTE_LAYOUT_STYLE = stringPreferencesKey(NOTE_LAYOUT)
     }
 }

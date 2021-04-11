@@ -1,10 +1,9 @@
 package com.koc.touchnotes.viewModel
 
 import androidx.lifecycle.*
-import com.koc.touchnotes.enums.NoteLayout
 import com.koc.touchnotes.enums.NoteSort
-import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.model.NoteRepository
+import com.koc.touchnotes.model.entities.Note
 import com.koc.touchnotes.preferenceManager.PreferenceManager
 import com.koc.touchnotes.util.Constants.RECYCLER_VIEW_POSITION
 import com.koc.touchnotes.util.Constants.SEARCH_QUERY
@@ -13,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -30,17 +28,15 @@ class NoteListViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
-    private val noteLayoutStyle = preferenceManager.layoutPreferenceFlow
-
     init {
-        collectNoteLayoutStyle()
+        viewModelScope.launch(IO) {
+            preferenceManager.removeLayoutKey()
+        }
     }
 
     var lastRecyclerViewPosition = state.get(RECYCLER_VIEW_POSITION) ?: 0
 
-    var layoutStyle : NoteLayout? = null
-
-    val searchQuery = state.getLiveData(SEARCH_QUERY,"")
+    val searchQuery = state.getLiveData(SEARCH_QUERY, "")
     private val noteEventChannel = Channel<NoteEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
 
@@ -63,11 +59,11 @@ class NoteListViewModel @Inject constructor(
         preferenceManager.updateSortOrder(sortOrder)
     }
 
-    fun noteClicked(note: Note)= viewModelScope.launch {
+    fun noteClicked(note: Note) = viewModelScope.launch {
         noteEventChannel.send(NoteEvent.NoteClickedEvent(note))
     }
 
-    fun addNoteClicked()= viewModelScope.launch {
+    fun addNoteClicked() = viewModelScope.launch {
         noteEventChannel.send(NoteEvent.AddNoteEvent)
     }
 
@@ -77,17 +73,12 @@ class NoteListViewModel @Inject constructor(
     }
 
     fun restoreNote(note: Note) = viewModelScope.launch {
-        repository.insertNote(note.copy(id = 0,_createdTime = System.currentTimeMillis(),
-        _modifiedTime = System.currentTimeMillis()))
-    }
-
-    fun updateNoteLayoutStyle(layoutStyle: NoteLayout) = viewModelScope.launch {
-        preferenceManager.updateLayoutStyle(layoutStyle)
-        noteEventChannel.send(NoteEvent.UpdateNoteLayoutStyleEvent(layoutStyle))
-    }
-
-    fun collectNoteLayoutStyle() = viewModelScope.launch(IO) {
-        layoutStyle = noteLayoutStyle.first()
+        repository.insertNote(
+            note.copy(
+                id = 0, _createdTime = System.currentTimeMillis(),
+                _modifiedTime = System.currentTimeMillis()
+            )
+        )
     }
 
     fun requestSettingsScreen() = viewModelScope.launch {
