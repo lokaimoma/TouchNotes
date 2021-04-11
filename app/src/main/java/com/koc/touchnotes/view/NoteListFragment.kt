@@ -2,6 +2,8 @@ package com.koc.touchnotes.view
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -31,6 +33,8 @@ class NoteListFragment : Fragment(), ClickListener {
     val noteListViewModel: NoteListViewModel by viewModels()
 
     var itemsNotes: RecyclerView? = null
+    var ivEmpty : ImageView? = null
+    var tvEmpty: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

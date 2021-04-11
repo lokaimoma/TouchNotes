@@ -4,6 +4,4 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@drawable/ic_empty"
-    android:contentDescription="@string/no_note_saved_note">
-
-</ImageView>
+    android:contentDescription="@string/no_note_saved_note"/>
