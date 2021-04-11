@@ -82,11 +82,20 @@ fun NoteListFragment.observeNoteList() {
     noteListViewModel.getAllNotes().observe(viewLifecycleOwner) { notesList ->
         notesAdapter.submitList(notesList) {
 
-            itemsNotes = binding.itemsNotesStub.inflate() as RecyclerView?
-            if ((requireActivity() as MainActivity).isNoteSavedOrUpdated){
-                setUpViews(0)
-            }else {
-                setUpViews(noteListViewModel.lastRecyclerViewPosition)
+            try {
+                itemsNotes = binding.itemsNotesStub.inflate() as RecyclerView?
+                if ((requireActivity() as MainActivity).isNoteSavedOrUpdated) {
+                    setUpViews(0)
+                } else {
+                    setUpViews(noteListViewModel.lastRecyclerViewPosition)
+                }
+            }catch (e:Exception) {
+//                if ((requireActivity() as MainActivity).isNoteSavedOrUpdated) {
+//                    setUpViews(0)
+//                } else {
+//                    setUpViews(noteListViewModel.lastRecyclerViewPosition)
+//                }
+                e.printStackTrace()
             }
         }
         if (notesList.isEmpty()) {
