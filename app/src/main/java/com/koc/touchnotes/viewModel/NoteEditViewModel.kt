@@ -170,7 +170,7 @@ class NoteEditViewModel @Inject constructor(
             }
         }
 
-    fun generatePDF(context: Context) {
+    fun generatePDF(context: Context, isShare: Boolean = false) {
         val file = File(getPDFDir(context), "$title.pdf")
         PDFUtil.generatePDFFromHTML(
             context,
@@ -192,7 +192,7 @@ class NoteEditViewModel @Inject constructor(
 
                     viewModelScope.launch {
                         fileUri?.let {
-                            NoteEditEvent.PDFCreatedEvent(it)
+                            NoteEditEvent.PDFCreatedEvent(it, isShare)
                         }?.let {
                             _noteEditChannel.send(it)
                         }

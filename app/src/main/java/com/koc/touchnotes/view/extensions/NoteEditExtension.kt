@@ -22,7 +22,7 @@ Created by kelvin_clark on 1/29/2021 3:04 AM
 fun NoteEditFragment.saveNoteState() {
     binding.apply {
         noteTitle.addTextChangedListener {
-            if (noteEditViewModel.note?.title != it.toString()){
+            if (noteEditViewModel.note?.title != it.toString()) {
                 noteEditViewModel.title = it.toString()
                 isModified = true
             }
@@ -30,7 +30,7 @@ fun NoteEditFragment.saveNoteState() {
         }
 
         noteBody.addTextChangedListener {
-            if (noteEditViewModel.note?.body.toString() != it.toString()){
+            if (noteEditViewModel.note?.body.toString() != it.toString()) {
                 noteEditViewModel.body = SpannableStringBuilder(it)
                 isModified = true
             }
@@ -52,7 +52,7 @@ fun NoteEditFragment.populateViews() = viewLifecycleOwner.lifecycleScope.launchW
             val dayTimeFormatter = SimpleDateFormat("EEEE, dd-MM-yyyy hh:mm", Locale.getDefault())
             timeCreated.text = dayTimeFormatter.format(dateCreated)
             timeModified.text = dayTimeFormatter.format(dateModified)
-        }else {
+        } else {
             timeCreated.isVisible = false
             timeModified.isVisible = false
             createdTimeTitle.isVisible = false
@@ -61,7 +61,7 @@ fun NoteEditFragment.populateViews() = viewLifecycleOwner.lifecycleScope.launchW
     }
 }
 
-fun NoteEditFragment.saveNote(forceSave: Boolean=false, onComplete: (()->Unit)? = null) {
+fun NoteEditFragment.saveNote(forceSave: Boolean = false, onComplete: (() -> Unit)? = null) {
     val time = System.currentTimeMillis()
     lifecycleScope.launch {
         if (noteId != null) {
@@ -72,7 +72,7 @@ fun NoteEditFragment.saveNote(forceSave: Boolean=false, onComplete: (()->Unit)? 
                     noteBody = binding.noteBody.text.toString(),
                     createdTime = createdTime!!, time, onComplete
                 )
-            }else {
+            } else {
                 (requireActivity() as MainActivity).isNoteSavedOrUpdated = false
             }
         } else {
@@ -84,14 +84,35 @@ fun NoteEditFragment.saveNote(forceSave: Boolean=false, onComplete: (()->Unit)? 
                     binding.noteBody.text.toString(), time, time,
                     onComplete
                 )
-            }else {
+            } else {
                 (requireActivity() as MainActivity).isNoteSavedOrUpdated = false
             }
         }
     }
 }
 
-fun NoteEditFragment.shareNote() {
+fun NoteEditFragment.showShareMethodDialog() {
+    val choices = arrayOf(getString(R.string.pdf), getString(R.string.plain_text))
+    val shareMethodDialog = MaterialAlertDialogBuilder(requireContext())
+
+    shareMethodDialog.apply {
+        setTitle(getString(R.string.share_as))
+        setItems(choices) {dialog, which ->
+            when(which) {
+                0 ->shareAsPDF()
+                1 -> shareAsMessage()
+                else -> dialog.dismiss()
+            }
+        }
+    }
+    shareMethodDialog.show()
+}
+
+fun NoteEditFragment.shareAsPDF() {
+    noteEditViewModel.generatePDF(requireContext(), true)
+}
+
+fun NoteEditFragment.shareAsMessage() {
     val title = binding.noteTitle.text.toString()
     val body = binding.noteBody.text.toString()
 
@@ -107,6 +128,7 @@ fun NoteEditFragment.shareNote() {
     Toast.makeText(context, "Sharing", Toast.LENGTH_SHORT).show()
 }
 
+
 fun NoteEditFragment.showDeleteDialogue() {
     val deleteAlert = MaterialAlertDialogBuilder(requireContext())
 
@@ -114,13 +136,17 @@ fun NoteEditFragment.showDeleteDialogue() {
         setTitle(getString(R.string.delete_note))
         setMessage(getString(R.string.delete_confirmation))
         setIcon(R.drawable.ic_delete_dialogue)
-        setPositiveButton(getString(R.string.yes)){ dialogue, _ ->
+        setPositiveButton(getString(R.string.yes)) { dialogue, _ ->
             noteEditViewModel.deleteNote(noteId)
             dialogue.dismiss()
-            Toast.makeText(requireContext(), getString(R.string.note_delete_success), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.note_delete_success),
+                Toast.LENGTH_SHORT
+            ).show()
             findNavController().navigateUp()
         }
-        setNegativeButton(getString(R.string.no)){ dialogue, _ ->
+        setNegativeButton(getString(R.string.no)) { dialogue, _ ->
             dialogue.dismiss()
         }
         setCancelable(false)

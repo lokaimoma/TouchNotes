@@ -42,4 +42,7 @@
     <string name="write_perm_message">Senza il permesso di scrittura concesso, non possiamo generare PDF.</string>
     <string name="write_perm_positive">Ok, richiedi di nuovo</string>
     <string name="write_perm_negative">No, non ne ho bisogno</string>
+    <string name="share_as">Condividi come</string>
+    <string name="pdf">PDF</string>
+    <string name="plain_text">Testo normale</string>
 </resources>

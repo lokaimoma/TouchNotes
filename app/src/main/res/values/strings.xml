@@ -61,4 +61,7 @@
     <string name="write_perm_message">Without write permission granted, we can\'t generate PDF.</string>
     <string name="write_perm_positive">OK, request again</string>
     <string name="write_perm_negative">No, I don\'t need it</string>
+    <string name="share_as">Share as</string>
+    <string name="pdf">PDF</string>
+    <string name="plain_text">Plain text</string>
 </resources>
