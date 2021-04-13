@@ -105,8 +105,7 @@ fun NoteEditFragment.showShareMethodDialog() {
             }
         }
     }
-
-    shareAsMessage()
+    shareMethodDialog.show()
 }
 
 fun NoteEditFragment.shareAsPDF() {
