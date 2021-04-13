@@ -92,11 +92,11 @@ fun NoteEditFragment.saveNote(forceSave: Boolean = false, onComplete: (() -> Uni
 }
 
 fun NoteEditFragment.showShareMethodDialog() {
-    val choices = arrayOf("PDF", "Plain text")
+    val choices = arrayOf(getString(R.string.pdf), getString(R.string.plain_text))
     val shareMethodDialog = MaterialAlertDialogBuilder(requireContext())
 
     shareMethodDialog.apply {
-        setTitle("Share as")
+        setTitle(getString(R.string.share_as))
         setItems(choices) {dialog, which ->
             when(which) {
                 0 ->shareAsPDF()
