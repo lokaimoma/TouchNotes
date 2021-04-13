@@ -42,4 +42,7 @@
     <string name="write_perm_message">Ohne erteilte Schreibgenehmigung können wir keine PDF-Dateien erstellen.</string>
     <string name="write_perm_positive">Ok, nochmal anfordern</string>
     <string name="write_perm_negative">Nein, ich brauche es nicht</string>
+    <string name="share_as">Teilen als</string>
+    <string name="pdf">PDF</string>
+    <string name="plain_text">Klartext</string>
 </resources>

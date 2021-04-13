@@ -42,4 +42,7 @@
     <string name="write_perm_message">没有授予写许可，我们将无法生成PDF。</string>
     <string name="write_perm_positive">好的，再次请求</string>
     <string name="write_perm_negative">不，我不需要</string>
+    <string name="share_as">分享为</string>
+    <string name="pdf">PDF格式</string>
+    <string name="plain_text">纯文本</string>
 </resources>
