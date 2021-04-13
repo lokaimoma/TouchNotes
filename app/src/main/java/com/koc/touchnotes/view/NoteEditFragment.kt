@@ -146,12 +146,21 @@ class NoteEditFragment : Fragment() {
                     binding.noteBody.setSelection(event.textStart, event.textEnd)
                 }
                 is NoteEditEvent.PDFCreatedEvent -> {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.apply {
-                        setDataAndType(event.pdfUri, "application/pdf")
-                        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    if (event.isShare) {
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.apply {
+                            setDataAndType(event.pdfUri, "application/pdf")
+                            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        }
+                        startActivity(intent)
+                    }else {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.apply {
+                            setDataAndType(event.pdfUri, "application/pdf")
+                            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
                 }
             }.exhaustive
         }
@@ -192,7 +201,7 @@ class NoteEditFragment : Fragment() {
                 true
             }
             R.id.actionShare -> {
-                shareNote()
+                showShareMethodDialog()
                 true
             }
             R.id.actionGeneratePDF -> {
