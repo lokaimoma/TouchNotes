@@ -10,7 +10,6 @@ import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
-import androidx.core.content.FileProvider
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -112,14 +111,19 @@ class NoteEditViewModel @Inject constructor(
         if (note?.id != null) {
             repository.getTextSpans(note.id).first { textSpans ->
                 textSpans.forEach { textSpan ->
-                    if (textSpan.isBold) {
-                        applySpan(StyleSpan(Typeface.BOLD), textSpan.textStart, textSpan.textEnd)
-                    } else if (textSpan.isItalic) {
-                        applySpan(StyleSpan(Typeface.ITALIC), textSpan.textStart, textSpan.textEnd)
-                    } else if (textSpan.isUnderlined) {
-                        applySpan(UnderlineSpan(), textSpan.textStart, textSpan.textEnd)
-                    } else if (textSpan.isStrikeThrough) {
-                        applySpan(StrikethroughSpan(), textSpan.textStart, textSpan.textEnd)
+                    when {
+                        textSpan.isBold -> {
+                            applySpan(StyleSpan(Typeface.BOLD), textSpan.textStart, textSpan.textEnd)
+                        }
+                        textSpan.isItalic -> {
+                            applySpan(StyleSpan(Typeface.ITALIC), textSpan.textStart, textSpan.textEnd)
+                        }
+                        textSpan.isUnderlined -> {
+                            applySpan(UnderlineSpan(), textSpan.textStart, textSpan.textEnd)
+                        }
+                        textSpan.isStrikeThrough -> {
+                            applySpan(StrikethroughSpan(), textSpan.textStart, textSpan.textEnd)
+                        }
                     }
                 }
                 return@first true
@@ -187,7 +191,7 @@ class NoteEditViewModel @Inject constructor(
                         val contentResolver = context.contentResolver
 
                         contentResolver.openFileDescriptor(createdFileUri, "w").use {
-                            FileOutputStream(it?.fileDescriptor)?.use { fileOutputStream ->
+                            FileOutputStream(it?.fileDescriptor).use { fileOutputStream ->
                                 fileOutputStream.write(file?.readBytes())
                             }
                         }
