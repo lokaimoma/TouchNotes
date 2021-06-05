@@ -2,6 +2,7 @@ package com.koc.touchnotes.viewModel
 
 import android.content.Context
 import android.graphics.Typeface
+import android.net.Uri
 import android.print.PDFPrint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -34,6 +35,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -45,6 +48,7 @@ class NoteEditViewModel @Inject constructor(
     private val noteState: SavedStateHandle
 ) : ViewModel() {
 
+    val TAG = NoteEditViewModel::class.java.simpleName
     private val _noteEditChannel = Channel<NoteEditEvent>()
     val noteEditEvent = _noteEditChannel.receiveAsFlow()
 
@@ -170,7 +174,7 @@ class NoteEditViewModel @Inject constructor(
             }
         }
 
-    fun generatePDF(context: Context, isShare: Boolean = false) {
+    fun generatePDF(context: Context, createdFileUri: Uri) {
         val file = File(getPDFDir(context), "$title.pdf")
         PDFUtil.generatePDFFromHTML(
             context,
@@ -179,31 +183,34 @@ class NoteEditViewModel @Inject constructor(
             object : PDFPrint.OnPDFPrintListener {
                 override fun onSuccess(file: File?) {
 
-                    val fileUri = try {
-                        FileProvider.getUriForFile(
-                            context,
-                            "com.koc.touchnotes.fileprovider",
-                            file!!
-                        )
-                    } catch (exception: Exception) {
-                        Log.e("pdfCreated", "File can't be shared")
-                        null
+                    try {
+                        val contentResolver = context.contentResolver
+
+                        contentResolver.openFileDescriptor(createdFileUri, "w").use {
+                            FileOutputStream(it?.fileDescriptor)?.use { fileOutputStream ->
+                                fileOutputStream.write(file?.readBytes())
+                            }
+                        }
+                    } catch (exception: IOException) {
+                        Log.e(TAG, "onSuccess: Error Writing To Created File", exception)
                     }
 
                     viewModelScope.launch {
-                        fileUri?.let {
-                            NoteEditEvent.PDFCreatedEvent(it, isShare)
-                        }?.let {
-                            _noteEditChannel.send(it)
-                        }
+                        _noteEditChannel.send(NoteEditEvent.PDFCreatedEvent(createdFileUri))
                     }
                 }
+
 
                 override fun onError(exception: Exception?) {
                     exception?.printStackTrace()
                 }
 
             })
+        try {
+            file.delete()
+        } catch (exception: IOException) {
+            Log.e(TAG, "generatePDF: Error Deleting File", exception)
+        }
     }
 
     private fun getPDFDir(context: Context): String? {
