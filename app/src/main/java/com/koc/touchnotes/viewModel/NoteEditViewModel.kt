@@ -202,6 +202,12 @@ class NoteEditViewModel @Inject constructor(
                     viewModelScope.launch {
                         _noteEditChannel.send(NoteEditEvent.PDFCreatedEvent(createdFileUri))
                     }
+
+                    try {
+                        file?.delete()
+                    } catch (exception: IOException) {
+                        Log.e(TAG, "generatePDF: Error Deleting File", exception)
+                    }
                 }
 
 
@@ -210,11 +216,7 @@ class NoteEditViewModel @Inject constructor(
                 }
 
             })
-        try {
-            file.delete()
-        } catch (exception: IOException) {
-            Log.e(TAG, "generatePDF: Error Deleting File", exception)
-        }
+
     }
 
     private fun getPDFDir(context: Context): String? {
