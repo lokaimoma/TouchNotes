@@ -17,8 +17,4 @@
         android:icon="@drawable/ic_share"
         android:title="@string/share"
         app:showAsAction="ifRoom|withText" />
-    <item
-        android:id="@+id/actionGeneratePDF"
-        android:title="@string/generate_pdf"
-        app:showAsAction="ifRoom"/>
 </menu>

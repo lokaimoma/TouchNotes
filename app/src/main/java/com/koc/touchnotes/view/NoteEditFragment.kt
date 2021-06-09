@@ -8,6 +8,7 @@ import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.*
+import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +19,7 @@ import com.koc.touchnotes.util.Constants.IS_BOLD
 import com.koc.touchnotes.util.Constants.IS_ITALIC
 import com.koc.touchnotes.util.Constants.IS_STRIKE_THROUGH
 import com.koc.touchnotes.util.Constants.IS_UNDERLINED
+import com.koc.touchnotes.util.CreateFileContract
 import com.koc.touchnotes.util.NoteEditEvent
 import com.koc.touchnotes.util.exhaustive
 import com.koc.touchnotes.view.extensions.*
@@ -37,11 +39,20 @@ class NoteEditFragment : Fragment() {
     var modifiedTime: Long? = null
     var isModified = false
 
+    lateinit var createPDFResultLauncher: ActivityResultLauncher<String>
+    lateinit var sharePDFResultLauncher: ActivityResultLauncher<String>
+
     val noteEditViewModel: NoteEditViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        createPDFResultLauncher = registerForActivityResult(CreateFileContract("pdf")) {pdfUri ->
+            if (pdfUri != null) {
+                noteEditViewModel.generatePDF(requireContext(), pdfUri)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -146,21 +157,12 @@ class NoteEditFragment : Fragment() {
                     binding.noteBody.setSelection(event.textStart, event.textEnd)
                 }
                 is NoteEditEvent.PDFCreatedEvent -> {
-                    if (event.isShare) {
-                        val intent = Intent(Intent.ACTION_SEND)
-                        intent.apply {
-                            setDataAndType(event.pdfUri, "application/pdf")
-                            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        }
-                        startActivity(intent)
-                    }else {
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.apply {
                             setDataAndType(event.pdfUri, "application/pdf")
                             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                         }
                         startActivity(intent)
-                    }
                 }
             }.exhaustive
         }
@@ -204,16 +206,12 @@ class NoteEditFragment : Fragment() {
                 showShareMethodDialog()
                 true
             }
-            R.id.actionGeneratePDF -> {
-                viewLifecycleOwner.lifecycleScope.launch { createEmptyPDFFile() }
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun createEmptyPDFFile() {
-        noteEditViewModel.generatePDF(requireContext())
+    fun createEmptyPDFFile() {
+        createPDFResultLauncher.launch(binding.noteTitle.text.toString())
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

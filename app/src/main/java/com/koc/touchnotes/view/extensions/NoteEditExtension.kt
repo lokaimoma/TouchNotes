@@ -99,7 +99,7 @@ fun NoteEditFragment.showShareMethodDialog() {
         setTitle(getString(R.string.share_as))
         setItems(choices) {dialog, which ->
             when(which) {
-                0 ->shareAsPDF()
+                0 -> createEmptyPDFFile()
                 1 -> shareAsMessage()
                 else -> dialog.dismiss()
             }
@@ -109,7 +109,7 @@ fun NoteEditFragment.showShareMethodDialog() {
 }
 
 fun NoteEditFragment.shareAsPDF() {
-    noteEditViewModel.generatePDF(requireContext(), true)
+    sharePDFResultLauncher.launch(binding.noteTitle.text.toString())
 }
 
 fun NoteEditFragment.shareAsMessage() {
